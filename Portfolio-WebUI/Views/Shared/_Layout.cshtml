@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Portfolio_WebUI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white mb-3 px-1 pt-4">
+            <a class="navbar-brand text-dark bg-white px-4 h1" asp-area="" asp-controller="Home" asp-action="Index">Selin Özoğlu</a>
+            <a href="" class="btn btn-hover menu-btn">
+                <span class="bg-dark"></span>
+                <span class="bg-dark"></span>
+                <span class="bg-dark"></span>
+            </a>
+        </nav>
+    </header>
+    <div class="right-menu bg-dark">
+        <a href="" class="btn btn-hover right-menu-btn close-btn">
+            <span class="x"></span>
+        </a>
+        <div class="right-menu-items">
+            <div class="right-menu-item">
+                <a class="right-menu-link" href="#">
+                    Home
+                </a>
+            </div>
+            <div class="right-menu-item">
+                <a class="right-menu-link" href="#">
+                    Portfolio
+                </a>
+            </div>
+            <div class="right-menu-item">
+                <a class="right-menu-link" href="#">
+                    About
+                </a>
+            </div>
+            <div class="right-menu-item">
+                <a class="right-menu-link" href="#">
+                    About
+                </a>
+            </div>
+        </div>
+        <div class="col-12 social text-center py-4">
+            <a href="#" id="facebook">
+                <i class="fab fa-facebook-f social-media-icon "></i>
+            </a>
+            <a href="#" id="instagram">
+                <i class="fa-brands fa-instagram social-media-icon  "></i>
+            </a>
+            <a href="#" id="behance">
+                <i class="fa-brands fa-behance social-media-icon "></i>
+            </a>
+            <a href="#" id="linkedin">
+                <i class="fa-brands fa-linkedin-in social-media-icon "></i>
+            </a>
+        </div>
+    </div>
+    <div class="container-fuild">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted bg-dark">
+        <div class="container text-center text-light">
+            <div class="row">
+                <div class="col-12 social text-center py-4">
+                    <a href="#" id="facebook">
+                        <i class="fab fa-facebook-f social-media-icon "></i>
+                    </a>
+                    <a href="#" id="instagram">
+                        <i class="fa-brands fa-instagram social-media-icon  "></i>
+                    </a>
+                    <a href="#" id="behance">
+                        <i class="fa-brands fa-behance social-media-icon "></i>
+                    </a>
+                    <a href="#" id="linkedin">
+                        <i class="fa-brands fa-linkedin-in social-media-icon "></i>
+                    </a>
+                </div>
+            </div>
+            &copy; 2022 - Tüm Haklar Saklıdır - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

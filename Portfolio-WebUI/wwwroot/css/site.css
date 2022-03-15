@@ -1,0 +1,386 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+/*    margin-bottom: 60px;*/
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+.footer {
+    width: 100%;
+    background:rgb(0,0,0,0.9) !important;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.image-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+    .image-bg:hover {
+        background-size: 100%;
+        text-align: left;
+        background-position-x: 50%;
+        background-position-y: 50%;
+        -webkit-animation: zoomin 0.3s;
+        animation: zoomin 0.3s;
+        animation-fill-mode: forwards;
+    }
+
+@-webkit-keyframes zoomin {
+    0% {
+        background-size: 100%;
+    }
+
+    100% {
+        background-size: 110%;
+    }
+}
+
+.square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.row{
+    margin:0;
+}
+
+    .square:before {
+        content: "";
+        display: block;
+        padding-top: 100%; /* initial ratio of 1:1*/
+    }
+
+    .square a {
+        position: absolute;
+        z-index: 9998;
+        display: block;
+        float: none !important;
+        justify-content: center;
+        display: inline-block;
+        clear: both;
+        width: 95%;
+        height: 95%;
+        right: 0;
+        left: 0;
+        top: 0;
+        padding: 1rem;
+        bottom: 0;
+        margin: auto;
+    }
+
+        .square a:hover {
+            background-color: rgb(0, 0, 0, 0.3) !important;
+        }
+
+            .square a:hover > .texts {
+                opacity: 1;
+            }
+
+                .square a:hover > .texts h4:after {
+                    width: 40%;
+                }
+
+                .square a:hover > .texts p {
+                    -webkit-transform: translate3d(0,0,0);
+                    -ms-transform: translate3d(0,0,0);
+                    transform: translate3d(0,0,0);
+                    -moz-transform: translate3d(0,0,0);
+                    opacity: 1;
+                }
+
+    .square .texts {
+        position: absolute;
+        opacity: 0;
+        top: 50%;
+        padding: 15px;
+        width: 100%;
+        color: white;
+        text-align: left;
+        margin: auto;
+        position: absolute;
+        top: 50%;
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 100%;
+    }
+
+        .square .texts h4 {
+            position: relative;
+            padding-bottom: 11px;
+            font-size:1.7rem;
+            font-weight:800;
+            margin-bottom: 2.5rem;
+        }
+
+            .square .texts h4:after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                transition: width 0.5s;
+                background: #fff;
+                content: '';
+            }
+
+        .square .texts p {
+            padding: 1em 1em 1em 0;
+            opacity: 0;
+            font-weight:700;
+            font-size:1.2rem;
+            -webkit-transition: opacity 0.8s, -webkit-transform 0.5s;
+            transition: opacity 0.5s, transform 0.5s;
+            -webkit-transform: translate3d(100%,0,0);
+            -ms-transform: translate3d(100%,0,0);
+            transform: translate3d(100%,0,0);
+            -moz-transform: translate3d(100%,0,0);
+        }
+
+.menu-btn {
+    right: 1rem;
+    position: absolute;
+    outline: none;
+    z-index: 10000;
+    background:white;
+    border-radius:0;
+
+}
+
+    .menu-btn:hover >  span {
+        background-color:wheat !important;
+        margin-bottom:5px;
+        background-color:rgb(0,0,0,0.8) !important;
+    }
+    .menu-btn:focus {
+        outline: 0;
+        box-shadow: 0 0 0 0 rgb(0 123 255 / 25%);
+    }
+
+    .menu-btn span {
+        height: 3px;
+        display: block;
+        width: 30px;
+        margin-bottom: 4px;
+        transition: margin 0.4s;
+    }
+
+.navbar {
+    top: 0px;
+    width: 100%;
+    background-color: transparent !important;
+    z-index: 9999;
+    overflow:hidden;
+}
+.right-menu{
+    position:absolute;
+    width:80%;
+    
+    height:100%;
+    z-index:99999;
+    right:-120%;
+    transition:right 1s;
+    top:0;
+    bottom:0;
+    height:100%;
+}
+    .right-menu .right-menu-btn {
+        position: absolute;
+        z-index: 99999;
+        left: 10px;
+        top: 30px;
+        height: 80px;
+        width: 15px;
+    }
+        .x {
+            background-color: red;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px 0 white;
+        }
+            .x:before, .x:after {
+                content: '';
+                position: absolute;
+                width: 36px;
+                height: 3px;
+                background-color: white;
+                box-shadow: 0 0 2px 0 #ccc;
+            }
+.x:before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+            .x:after {
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+.right-menu-btn:hover > .x:after {
+    animation: transformRX2 1s;
+    animation-fill-mode: forwards;
+}
+.right-menu-btn:hover > .x:before {
+    animation: transformRX1 1s;
+    animation-fill-mode: forwards;
+}
+.right-menu-btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0 rgb(0 123 255 / 25%);
+}
+@-webkit-keyframes transformRX1 {
+    0% {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+}
+@-webkit-keyframes transformRX2 {
+    0% {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+}
+
+            .right-menu .right-menu-btn {
+            }
+            .social a {
+                text-decoration: none !important;
+                width: 45px;
+                height: 45px;
+            }
+
+.right-menu-items{
+    padding-top:10em;
+    text-align:center;
+}
+    .right-menu-items .right-menu-item{
+        padding:2rem  0;
+    }
+        .right-menu-items .right-menu-item .right-menu-link{
+            color:white;
+            font-size:2rem;
+            font-weight:800;
+            text-decoration:none;
+        }
+        .social-media-icon {
+            color: white;
+            padding: 10px;
+            transition: background 0.2s;
+            font-size: 1.2rem;
+        }
+#instagram {
+    
+}
+    #instagram:hover > i {
+        border-radius: 100%;
+        background: -webkit-gradient(linear, left top, left bottom, from(#aa2fb5), color-stop(93%, #f1762c)) !important;
+        background: -o-linear-gradient(top, #aa2fb5 0%, #f1762c 93%) !important;
+        background: linear-gradient(to bottom, #aa2fb5 0%, #f1762c 93%) !important;
+    }
+#facebook{
+    padding:5px;
+}
+#facebook:hover > i {
+    background: #4267B2 !important;
+}
+#linkedin:hover > i {
+    background: rgb(0, 119, 181) !important;
+}
+#behance:hover > i {
+    background: rgb(0, 0, 0,0.9) !important;
+}
