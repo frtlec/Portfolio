@@ -1,0 +1,39 @@
+<div [@openClose]="(rightMenu$ | async) ? 'open' : 'closed'" class="right-menu bg-dark">
+    <a class="btn btn-hover right-menu-btn close-btn" (click)="closeRightMenu()">
+        <span class="x"></span>
+    </a>
+   
+    <div class="right-menu-items">
+        <div class="right-menu-item">
+            <a class="right-menu-link" routerLink="/">
+                Home
+            </a>
+        </div>
+        <div class="right-menu-item">
+            <a class="right-menu-link" routerLink="/portfolio">
+                Portfolio
+            </a>
+        </div>
+        <div class="right-menu-item">
+            <a class="right-menu-link" routerLink="/about">
+                About
+            </a>
+        </div>
+        <div class="right-menu-item">
+            <a class="right-menu-link" href="#">
+                Contact
+            </a>
+        </div>
+    </div>
+    <div class="col-12 social text-center py-4">
+        <a href="https://www.behance.net/selinzolu" target="_blank" id="behance">
+            <fa-icon [icon]="faBehance" class="social-media-icon"></fa-icon>
+        </a>
+        <a href="#" id="instagram">
+            <fa-icon [icon]="faInstagram" class="social-media-icon"></fa-icon>
+        </a>
+        <a href="https://www.linkedin.com/in/selin-%C3%B6zo%C4%9Flu-093b46153" target="_blank" id="linkedin">
+            <fa-icon [icon]="faLinkedin" class="social-media-icon"></fa-icon>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { IResponse } from 'src/shared/sharedModels/Response';
+import { WorkItemSMO, WorkSMO } from 'src/app/models/serviceModels/WorkServiceModel';
+import { SaveWorkSMO } from 'src/app/models/serviceModels/SaveWorkSMO';
+import { WorkAddModel, WorkFilterModel } from 'src/app/models/inputModels/WorkAddModel';
+import { WORK_API_BASE_URL } from 'src/shared/constants/urlConstants';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WorkServiceService {
+
+  constructor(private _httpClient: HttpClient) { }
+
+  getAllWork(filter: WorkFilterModel) {
+    console.log("filter",filter);
+    const headers = { 'content-type': 'application/json' }
+    const body = JSON.stringify(filter);
+    return this._httpClient.post<IResponse<WorkSMO[]>>(
+      `${WORK_API_BASE_URL}/api/works/getworks`,
+      body,
+      { 'headers': headers, observe: 'response' }
+    );
+  }
+  getWorkItemById(workId: number) {
+    return this._httpClient.get<IResponse<WorkItemSMO[]>>(`${WORK_API_BASE_URL}/api/workitems/getworkitems/${workId}`);
+  }
+  saveWork(work: WorkAddModel) {
+    const headers = { 'content-type': 'application/json' }
+    const body = JSON.stringify(work);
+    return this._httpClient.post<IResponse<SaveWorkSMO>>(
+      `${WORK_API_BASE_URL}/api/Works/savework`,
+      body,
+      { 'headers': headers, observe: 'response' }
+    );
+  }
+}

@@ -1,0 +1,26 @@
+<app-default-header></app-default-header>
+<div class="container-fuild">
+    <div class="row">
+        <ng-template #content let-modal>
+            <div class="modal-body p-0">
+                <img [src]="currentPicture" width="100%" />
+               
+
+                <div class="text-left bg-dark py-5 px-4 text-light" *ngIf="currentDescription!=undefined" innerHTML="{{currentDescription}}">
+                 
+                </div>
+            </div>
+        </ng-template>
+        <div *ngFor="let work of works" class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+            <a (click)="open(content,work.id)">
+                <div class="texts">
+                    <h4>{{work.title}}</h4>
+                    <p>
+                        {{work.description}}
+                    </p>
+                </div>
+            </a>
+        </div>
+       
+    </div>
+</div>

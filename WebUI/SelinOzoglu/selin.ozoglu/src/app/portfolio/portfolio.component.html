@@ -1,0 +1,45 @@
+<app-default-header [whiteNavbar]="false"></app-default-header>
+<div class="container mb-4">
+    <div class="row">
+        <ng-template #content let-modal>
+            <div class="modal-body p-0">
+                <img [src]="currentPicture" width="100%" />
+               
+
+                <div innerHTML="{{currentDescription}}"></div>
+            </div>
+        </ng-template>
+        <!-- <div *ngFor="let work of works" class="col-md-4 text-center image-bg square portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+            <a (click)="open(content,work.id)">
+                <div class="texts">
+                    <h4>{{work.title}}</h4>
+                    <p>
+                        {{work.description}}
+                    </p>
+                </div>
+            </a>
+        </div> -->
+
+        <div class="col-md-8 px-2 py-3">
+            
+            
+            <button *ngFor="let category of categories" class="btn btn-secondary slnBtn" (click)="filterCategory(category.id)">{{category.title}}</button> 
+        </div>
+        <div class="col-md-4 py-3 text-right d-flex flex-column justify-content-end align-items-end">
+            <input type="text" (keyup)="search($event)" placeholder="search.." class="form-control searchBar"/>
+        </div>
+      
+    </div>
+    <div class="row mt-3">
+        <div *ngFor="let work of works" class="col-md-3 text-center image-bg square border portfolio-div-size" [@slideInOut] [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+            <a (click)="open(content,work.id)">
+                <div class="texts">
+                    <h4>{{work.title}}</h4>
+                    <p>
+                        {{work.description}}
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

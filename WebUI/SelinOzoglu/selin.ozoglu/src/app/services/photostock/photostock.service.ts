@@ -1,0 +1,38 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { PhotoSMO } from 'src/app/models/serviceModels/PhotoSMO';
+import { PHOTO_STOCK_API_BASE_URL } from 'src/shared/constants/urlConstants';
+import { IResponse } from 'src/shared/sharedModels/Response';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PhotostockService {
+
+  constructor(private _httpClient: HttpClient) { }
+
+  savePhoto(image:File,title:string,photoType:number){
+    let formData = new FormData();
+    formData.append('image', image);
+    formData.append('title', title);
+ 
+    let result;
+    if(photoType==1){
+      result=this._httpClient.post<IResponse<PhotoSMO>>(
+        `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSquareSave`,
+        formData
+      );
+    }
+    if(photoType==2){
+      result=this._httpClient.post<IResponse<PhotoSMO>>(
+        `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSaveWithPName`,
+        formData
+      );
+    }
+    return result;
+  }
+  deletePhoto(photoName:string){
+    
+    return this._httpClient.delete(`${PHOTO_STOCK_API_BASE_URL}/photos/photodelete/${photoName}`);
+  }
+}

@@ -1,0 +1,32 @@
+<div class="row mt-4">
+  
+    <main role="main" class="col-12 ml-auto bg-soft px-5  py-5">
+        <div class="row ">
+            <div class="card col-md-2  p-0 work" id="new-work" >
+              
+                <div class="card-body square image-bg text-center bg-soft">
+                    <fa-icon [icon]="faPlus" routerLink="/admin/works/add" style="font-size: 8rem;color:#c3c3c3" ></fa-icon>
+                </div>
+            
+            </div>
+            <div class="card col-md-2  work" *ngFor="let number of [0,1,2,3,4,5,6,7,1,2,3]">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body square image-bg"
+                    style="background-image:url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/e58bdc111995433.600c3b4f297f2.jpg')">
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a routerLink="/admin/works/edit/3">
+                        <fa-icon [icon]="faEdit"></fa-icon>
+                    </a>
+                    <a routerLink="/admin/works/edit/3">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </a>
+                </div>
+
+            </div>
+        
+        </div>
+    </main>
+</div>

@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  workitemsdb:
+    image: postgres
+  identity4db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+volumes:
+  workitemsdb_volume:
+  identity4db_volume:

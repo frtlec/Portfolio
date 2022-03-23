@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  workitemsdb:
+    container_name: workitemsdb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - workitemsdb_volume:/var/lib/postgresql/data2
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=zk147olu
+      - POSTGRES_DB=workitemsdb
+  identity4db:
+    container_name: identity4db
+    user: root
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - identity4db_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=zk147olu

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Portfolio.Services.WorkItems.Domain\Portfolio.Services.WorkItems.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Portfolio.Shared\Portfolio.Shared.csproj" />
+    <ProjectReference Include="..\Portfolio.Services.WorkItems.Infrastructure\Portfolio.Services.WorkItems.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
