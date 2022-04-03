@@ -1,0 +1,39 @@
+<div class="container py-5">
+    
+<form #aboutForm="ngForm" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <h4>Portre</h4>
+            <input type="file" />
+            <div class="square image-bg px-3">
+              
+            </div>
+        </div>
+        <div class="col-6 mb-3">
+            <h4>Kısa özet</h4>
+            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
+            name=""></angular-editor>
+        </div>
+        <div class="col-6 mb-3">
+            <h4>Öğrenim</h4>
+            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
+            name=""></angular-editor>
+        </div>
+        <div class="col-6 mb-3">
+            <h4>İş Hayatı</h4>
+            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
+            name=""></angular-editor>
+        </div>
+       
+    </div>
+  <div class="row mt-4">
+      <div class="col-12 d-flex justify-content-end">
+        <div class="form-group d-flex justify-content-between">
+            <button class="btn btn-success" type="submit">Kaydet</button>
+        </div>
+      </div>
+  </div>
+
+
+</form>
+</div>

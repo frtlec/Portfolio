@@ -6,6 +6,7 @@ using Portfolio.Services.WorkItems.Application.Validations.FluentValidation;
 using Portfolio.Services.WorkItems.Domain.WorkAggregate;
 using Portfolio.Services.WorkItems.Infrastructure;
 using Portfolio.Shared.Dtos;
+using Portfolio.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
             {
                 ValidationResult validationResult = new CreateWorkCommandValidator().Validate(request);
                 if (validationResult.IsValid==false)
-                    return Response<CreatedWorkDto>.Fail(JsonSerializer.Serialize(validationResult.Errors), 400);
+                    return Response<CreatedWorkDto>.Fail(validationResult.Errors.FluentValidationErrorToListString(), 400);
 
                 if(_context.Works.Any(f=>f.Title==request.Title))
                     return Response<CreatedWorkDto>.Fail($"{request.Title} is already exits", 400);

@@ -15,7 +15,10 @@ namespace Portfolio.Services.WorkItems.Application.Mapping
         {
             CreateMap<Work, WorkDto>().ReverseMap();
             CreateMap<WorkItem, WorkItemDto>().ReverseMap();
+            CreateMap<Work, WorkAndWorkItemsDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<GeneralSetting, GeneralSettingDto>().ReverseMap();
+            
         }
     }
 }

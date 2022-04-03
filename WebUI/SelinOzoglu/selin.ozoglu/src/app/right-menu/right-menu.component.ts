@@ -11,11 +11,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
   styleUrls: ['./right-menu.component.css'],
   animations: [
     trigger("openClose", [
-      state("open", style({ 
-        right: "0" 
+      state("open", style({
+        transform: "translateX(0)",
+     
       })),
       state('closed', style({
-        right:"-120%"
+        transform: "translateX(150%)",
+      
       })),
       transition('open => closed', [
         animate('1s')
@@ -38,7 +40,6 @@ export class RightMenuComponent implements OnInit {
       library.add(faFacebook as any);
     }
   ngOnInit(): void {
-    console.log(this.rightMenu$.pipe());
   }
   closeRightMenu(){
     this.store.dispatch(closeRightMenu());

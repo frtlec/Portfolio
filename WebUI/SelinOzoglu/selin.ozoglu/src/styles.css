@@ -1,6 +1,12 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
+@font-face {
+    font-family: "Raleway";
+    src: url(assets/fonts/Raleway-VariableFont_wght.ttf) format("truetype");
+  }
+  * {
+    font-family: 'Raleway',sans-serif;
+  }
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -23,7 +29,9 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
-
+.text-right{
+    text-align: right !important;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -75,11 +83,17 @@ body {
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
 }
+.bg-purple{
+    background-color: #aa2fb5;
+}
 
 .image-bg {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    cursor: pointer;
+}
+.cursor-pointer{
     cursor: pointer;
 }
 
@@ -263,35 +277,49 @@ body {
 }
 .right-menu{
     position:absolute;
-    width:80%;
-    
+    width:30%;
+    display: none;
     height:100%;
     z-index:99999;
     right:0;
-    transition:right 1s;
     top:0;
     bottom:0;
     height:100%;
+}
+@media only screen and (max-width:1366px) {
+    .right-menu{
+        width: 80% !important;
+    }
+}
+@media only screen and (max-width:768px) {
+    .right-menu{
+        width: 100% !important;
+    }
 }
 
     .right-menu .right-menu-btn {
         position: absolute;
         z-index: 99999;
         left: 10px;
-        top: 30px;
+        top: 10px;
         height: 80px;
         width: 15px;
     }
         .x {
-            background-color: red;
-            position: relative;
+            position: absolute;
             border-radius: 6px;
-            box-shadow: 2px 2px 4px 0 white;
+            height: 50px;
+            width: 50px;
         }
             .x:before, .x:after {
                 content: '';
                 position: absolute;
                 width: 36px;
+                margin: auto;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 0;
                 height: 3px;
                 background-color: white;
                 box-shadow: 0 0 2px 0 #ccc;
@@ -442,7 +470,7 @@ body {
 }
 .searchBar:focus{
     box-shadow: none;
-    border-bottom-color: red ;
+    border-bottom-color: #aa2fb5 ;
 }
 
 .toTop{
@@ -465,9 +493,10 @@ body {
 }
 .slnBtn:after{
     content: '';
-    height: 1px;
+    height: 2px;
     position: absolute;
-    width: 20px;
+    width: 30px;
+    border-radius: 1px;
     transition: width 0.5s;
     left:0;
     bottom: 0;
@@ -475,7 +504,7 @@ body {
 }
 
 .slnBtn:hover:after{
-    background: #e705c2;
+    background: #aa2fb5;
     width: 100%;
 }
 .slnBtn:focus{
@@ -483,4 +512,42 @@ body {
 }
 .slnBtn:hover{
     color: #333;
+}
+.slnBtn:focus{
+    color: #333;
+}
+.slnBtn.slnActive:after{
+    background: #aa2fb5;
+}
+
+.modal-open{
+    padding: 0 !important;
+}
+.modal-header{
+    height: 0 !important;
+ padding: 0 !important;
+}
+.modal-header .close-btn{
+    position: absolute;
+    right: 50px;
+    z-index: 99999999;
+    margin: 0 !important;
+    top: 6px;
+ 
+}
+.modal-header .close-btn:focus{
+    box-shadow: none;
+}
+.modal-header .close-btn .x{
+    background-color: #f9f9f9;
+    border-radius: 1%;
+
+}
+.modal-header .close-btn .x:before,
+.modal-header .close-btn .x:after{
+    background-color:#aa2fb5;
+    box-shadow:none;
+}
+.swal2-container{
+    z-index: 9999999999 !important;
 }

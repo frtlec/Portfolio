@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Services.PhotoStock.Dtos;
 using Portfolio.Shared.ControllerBases;
@@ -16,6 +17,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
     public class PhotosController : CustomBaseController
     {
         [HttpPost("PhotoSave")]
+        [Authorize(Policy = "WriteEditWork")]
         public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken)
         {
             try
@@ -45,6 +47,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
 
         }
         [HttpPost("PhotoSaveWithPName")]
+        [Authorize(Policy = "WriteEditWork")]
         public async Task<IActionResult> PhotoSaveWithPName([FromForm] PhotoWithTitleSaveDto dto, CancellationToken cancellationToken)
         {
             try
@@ -81,6 +84,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
 
         }
         [HttpPost("PhotoSquareSave")]
+        [Authorize(Policy = "WriteEditWork")]
         public async Task<IActionResult> PhotoSquareSave([FromForm]PhotoSquareSaveDto dto,CancellationToken cancellationToken)
         {
             try
@@ -119,6 +123,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
 
         }
         [HttpDelete("PhotoDelete/{photoUrl}")]
+        [Authorize(Policy = "ReadAndWrite")]
         public IActionResult PhotoDelete(string photoUrl)
         {
             if (string.IsNullOrEmpty(photoUrl))

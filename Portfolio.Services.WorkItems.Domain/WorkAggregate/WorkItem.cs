@@ -37,7 +37,7 @@ namespace Portfolio.Services.WorkItems.Domain.WorkAggregate
         {
 
         }
-        public void UpdateOrderItem(List<string> pictures, WorkItemsTemplateType templateType, string title, string desc, int creatorUserId)
+        public void UpdateWorkItem(List<string> pictures, WorkItemsTemplateType templateType, string title, string desc)
         {
             Pictures = pictures;
             TemplateType = templateType;

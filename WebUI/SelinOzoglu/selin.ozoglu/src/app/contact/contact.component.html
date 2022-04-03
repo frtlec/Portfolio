@@ -1,0 +1,74 @@
+<app-default-header></app-default-header>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-8 m-auto py-3">
+            <h2 class="heading mb-5">Contact Form</h2>
+            <form #contactForm="ngForm" (ngSubmit)="submit()">
+                <div class="row">
+                    <div class="col-md-6 p-2">
+                        <div class="contact-card bg-dark h100">
+                            <div class="line top"></div>
+                            <div class="line bottom"></div>
+                            <div class="contact-card-image">
+                                <fa-icon *ngIf="contactModel.gender==''" [@gender]="true" [icon]="faUserLarge" class="people-icon"></fa-icon>
+                                <fa-icon *ngIf="contactModel.gender=='men'" [@gender]="true" [icon]="faUserTie" class="people-icon"></fa-icon>
+                                <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon>
+                            </div>
+                            <div class="contact-card-content py-4">
+                                <div><span>{{contactModel.fullName}}</span></div>
+                                <div><span>{{contactModel.email}}</span></div>
+                                <div><span>{{contactModel.phone}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-4">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                placeholder="Full Name" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off">
+                        </div>
+                        <div class="form-group mb-4">
+                            <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" >
+                                <option value=''>Gender</option>
+                                <option value="women">Women</option>
+                                <option value="men">Men</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <input type="email" class="form-control" aria-label="Sizing example input"
+                                placeholder="Email" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off">
+                               <div class="text-right">
+                                <small class="text-muted">example@exdomain.com</small>
+                               </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <input type="tel" class="form-control" aria-label="Sizing example input" placeholder="Phone"
+                                aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off">
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row  mt-5">
+                    <div class="col-12">
+                        <div class="form-group mb-4">
+                            <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon">
+                                <option selected value="-1">Subject Category</option>
+                                <option *ngFor="let cat of categories" [value]="cat.id">{{cat.title}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" placeholder="enter your message"></textarea>
+                        </div>
+                        <div class="submitbtn mt-4">
+                            <button class="btn btn-primary" type="submit">Forward</button>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </form>
+        </div>
+    </div>
+
+</div>

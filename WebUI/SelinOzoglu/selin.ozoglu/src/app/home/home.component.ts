@@ -4,6 +4,7 @@ import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
 import { WorkServiceService } from '../services/work/work-service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { WorkFilterModel } from '../models/inputModels/WorkAddModel';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',

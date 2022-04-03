@@ -5,35 +5,32 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" routerLink="/admin/works" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    İşler
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+            <li ngbDropdown class="nav-item">
+                <a href (click)="false" class="nav-link" ngbDropdownToggle>İşler</a>
+                <div ngbDropdownMenu>
+                    <button ngbDropdownItem routerLink="/admin/works">Tüm İşler</button>
+                    <button ngbDropdownItem routerLink="/admin/works/add">İş ekle</button>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" routerLink="/admin/works" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    İşler
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+            <li ngbDropdown class="nav-item">
+                <a href (click)="false" class="nav-link" ngbDropdownToggle>Kategori</a>
+                <div ngbDropdownMenu>
+                    <button ngbDropdownItem routerLink="/admin/categories">Tüm kategoriler</button>
+                </div>
+            </li>
+            <li ngbDropdown class="nav-item">
+                <a href (click)="false" class="nav-link" ngbDropdownToggle>Ayarlar</a>
+                <div ngbDropdownMenu>
+                    <button ngbDropdownItem routerLink="/admin/about">Hakkımda</button>
+                    <button ngbDropdownItem routerLink="/admin/settings">Ayarlar</button>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav  px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" routerLink="/admin/logout">Çıkış Yap</a>
+                <a class="nav-link cursor-pointer" (click)="logout()">Çıkış Yap</a>
             </li>
         </ul>
     </div>

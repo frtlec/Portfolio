@@ -29,7 +29,11 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
             try
             {
                 IQueryable<Work> query = _context.Works.AsQueryable().AsNoTracking();
-                query = query.Where(f => f.IsActive == request.IsActive);
+                if (request.IsActive!=null)
+                {
+                    query = query.Where(f => f.IsActive == request.IsActive);
+                }
+               
                 if (string.IsNullOrEmpty(request.Search)==false)
                 {
                     query = query.Where(f => f.Title.ToLower().Contains(request.Search.ToLower()) || f.Description.ToLower().Contains(request.Search.ToLower()));

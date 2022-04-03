@@ -20,6 +20,30 @@ namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("Portfolio.Services.WorkItems.Domain.WorkAggregate.About", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AboutType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BeforeValue")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Abouts", "works");
+                });
+
             modelBuilder.Entity("Portfolio.Services.WorkItems.Domain.WorkAggregate.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -55,6 +79,27 @@ namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", "works");
+                });
+
+            modelBuilder.Entity("Portfolio.Services.WorkItems.Domain.WorkAggregate.GeneralSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SettingType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralSettings", "works");
                 });
 
             modelBuilder.Entity("Portfolio.Services.WorkItems.Domain.WorkAggregate.Work", b =>

@@ -1,0 +1,7 @@
+export enum settingType{
+    EMPTY,
+    SOCIAL,
+    HOMEPAGEITEMLIMIT,
+    HOMEPAGECONTAINERCSS,
+    RIGHTMENUBACKGROUND
+}

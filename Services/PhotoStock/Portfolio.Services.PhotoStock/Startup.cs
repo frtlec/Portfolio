@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,25 @@ namespace Portfolio.Services.PhotoStock
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+                  AddJwtBearer(opt =>
+                  {
+                      opt.Authority = Configuration["IdentityServerURL"];
+                      opt.Audience = "resource_photostock";
+                      opt.RequireHttpsMetadata = false;
+                  });
+
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("ReadAndWrite", policy =>
+                {
+                    policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write", "selin.ozoglu.com.work.read" });
+                });
+                opts.AddPolicy("WriteEditWork", policy =>
+                {
+                    policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write" });
+                });
+            });
             services.AddCors(options =>
             {
                 options.AddPolicy(
@@ -53,13 +73,14 @@ namespace Portfolio.Services.PhotoStock
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.PhotoStock v1"));
             }
-            //http://google.com ---> https://google.com --->> https://www.google.com
-            app.UseHttpsRedirection();//--
-            app.UseStaticFiles();//-----selinozoglu.com/photos/12321.jpg
-            app.UseRouting();//---
 
-            app.UseAuthorization();
             app.UseCors("AllowOrigin");
+            app.UseStaticFiles();
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

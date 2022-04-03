@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace Portfolio.IdentityServer.Controllers
 {
     [Authorize(LocalApi.PolicyName)]
     [Route("api/[controller]/[action]")]
+    [EnableCors()]
     [ApiController]
     public class UserController : ControllerBase
     {

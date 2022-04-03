@@ -14,6 +14,6 @@ namespace Portfolio.Services.WorkItems.Application.Queries
         public int Limit { get; set; }
         public string Search { get; set; }
         public short CategoryId { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool? IsActive { get; set; } = true;
     }
 }

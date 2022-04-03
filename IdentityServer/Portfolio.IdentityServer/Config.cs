@@ -13,6 +13,8 @@ namespace Portfolio.IdentityServer
     {
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {
             new ApiResource("resource_workitem"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
+            new ApiResource("resource_photostock"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
+            new ApiResource("resource_mailsender"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
            new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -27,8 +29,8 @@ namespace Portfolio.IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                    new ApiScope("selin.ozoglu.com.work.read","work okuma yetkisi"),
-                    new ApiScope("selin.ozoglu.com.work.write","work yazma yetkisi"),
+                    new ApiScope("selin.ozoglu.com.work.read","okuma yetkisi"),
+                    new ApiScope("selin.ozoglu.com.work.write","yazma yetkisi"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { getPasswordCredential } from 'src/app/handler/ApiCredentialInterceptorService';
 import { PhotoSMO } from 'src/app/models/serviceModels/PhotoSMO';
 import { PHOTO_STOCK_API_BASE_URL } from 'src/shared/constants/urlConstants';
 import { IResponse } from 'src/shared/sharedModels/Response';
@@ -20,19 +21,21 @@ export class PhotostockService {
     if(photoType==1){
       result=this._httpClient.post<IResponse<PhotoSMO>>(
         `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSquareSave`,
-        formData
+        formData,
+        {context:getPasswordCredential()}
       );
     }
     if(photoType==2){
       result=this._httpClient.post<IResponse<PhotoSMO>>(
         `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSaveWithPName`,
-        formData
+        formData,
+        {context:getPasswordCredential()}
       );
     }
     return result;
   }
   deletePhoto(photoName:string){
     
-    return this._httpClient.delete(`${PHOTO_STOCK_API_BASE_URL}/photos/photodelete/${photoName}`);
+    return this._httpClient.delete(`${PHOTO_STOCK_API_BASE_URL}/photos/photodelete/${photoName}`,{context:getPasswordCredential()});
   }
 }

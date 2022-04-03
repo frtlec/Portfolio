@@ -1,7 +1,13 @@
 <app-default-header></app-default-header>
-<div class="container-fuild">
+<div  class="container-fuild">
     <div class="row">
         <ng-template #content let-modal>
+            <div class="modal-header ">
+                <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+                <a class="btn btn-hover right-menu-btn close-btn" (click)="modal.dismiss('Cross click')">
+                    <span class="x"></span>
+                </a>
+              </div>
             <div class="modal-body p-0">
                 <img [src]="currentPicture" width="100%" />
                

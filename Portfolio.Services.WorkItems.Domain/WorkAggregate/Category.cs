@@ -28,14 +28,25 @@ namespace Portfolio.Services.WorkItems.Domain.WorkAggregate
         {
 
         }
-        public Category(string title,string description,bool isActive,int creatorUserId)
+        public Category(string title, string description, bool isActive, int creatorUserId, short sort)
         {
-          
+
             Title = title;
             Description = description;
             IsActive = isActive;
             CreatorUserId = creatorUserId;
+            Sort = sort;
             CreatedDate = DateTime.Now;
+        }
+
+        public void UpdateCategory(string title, string description, bool isActive, short sort)
+        {
+            Title = title;
+            Description = description;
+            IsActive = isActive;
+            Sort = sort;
+            UpdatedDate = DateTime.Now;
+           
         }
     }
 }

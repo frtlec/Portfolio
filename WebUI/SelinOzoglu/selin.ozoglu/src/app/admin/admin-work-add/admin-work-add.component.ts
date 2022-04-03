@@ -9,6 +9,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ViewChild } from '@angular/core';
 import { CategorySMO } from 'src/app/models/serviceModels/CategorySMO';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { ActivatedRoute } from '@angular/router';
+import { WorkItemUpdateModel, WorkUpdateModel } from 'src/app/models/inputModels/WorkUpdateModel';
 @Component({
   selector: 'app-admin-work-add',
   templateUrl: './admin-work-add.component.html',
@@ -21,6 +23,8 @@ export class AdminWorkAddComponent implements OnInit {
   faPlus = faPlus;
   faTrash = faTrash;
 
+  edit:boolean=false;
+  id:number;
   title: string;
   description: string;
   mainPicture: string;
@@ -39,16 +43,62 @@ export class AdminWorkAddComponent implements OnInit {
   @ViewChild('mainPhotoInput')
   mainPhotoInputVariable: ElementRef;
 
-  constructor(private photostockService: PhotostockService, private workService: WorkServiceService, private modalService: NgbModal, private categoryService: CategoryService) {
-    this.description = "";
-    this.title = "";
-    this.mainPicture = "";
-    this.isActive = true;
+  constructor(private photostockService: PhotostockService, private workService: WorkServiceService, private modalService: NgbModal, private categoryService: CategoryService,private activatedRoute:ActivatedRoute) {
+    
+    let workId:number;
+    this.activatedRoute.params.subscribe(params => {
+      workId=params["workId"];
+      
+    });
+
+    console.log(workId);
+    if(workId!=undefined){
+      this.editMain(workId);
+
+    }else{
+ 
+      this.description = "";
+      this.title = "";
+      this.mainPicture = "";
+      this.isActive = true;
+    }
+   
+   
     categoryService.getCategoriesByFilter(null).subscribe(res => {
       console.log(res);
       this.categories =res.data;
     });
     
+  }
+  private editMain(workId:number){
+    this.edit=true;
+    this.workService.getWorkByWorkId(workId).subscribe(res=>{
+     
+      if(res.data==undefined){
+        this.errorMessageWriter("Sonuç bulunamadı");
+        return;
+      }
+      console.log(res.data);
+      this.id=res.data.id;
+      this.title=res.data.title?? "";
+      this.description=res.data.description??"";
+      this.isActive=res.data.isActive??false;
+      this.categoryID=res.data.categoryId??0;
+      this.mainPicture=res.data.mainPicture??"";
+      this.mainPictureSRC=this.mainPicture?this.photoStockApiURL+this.mainPicture:"";
+      
+
+      let workItem=res.data?.workItems[0];
+      if(workItem!=undefined){
+        this.detailPicture=workItem.pictures[0]??"";
+        this.detailPictureSRC=workItem.pictures[0]?this.photoStockApiURL+workItem.pictures[0]:"";
+        this.workItem.description=workItem.description;
+        this.workItem.id=workItem.workId;
+      }
+
+
+
+    })
   }
   open(content) {
     if (this.detailPicture == undefined || this.detailPicture == "")
@@ -234,6 +284,14 @@ export class AdminWorkAddComponent implements OnInit {
     })
   }
   submit() {
+    if(this.edit==false){
+      this.add();
+    }else{
+      this.update();
+    }
+    
+  }
+  add(){
     const WorkModel = new WorkAddModel();
     WorkModel.description = this.description;
     WorkModel.mainPicture = this.mainPicture;
@@ -269,5 +327,44 @@ export class AdminWorkAddComponent implements OnInit {
         }
       )
   }
+  update(){
+    const WorkModel = new WorkUpdateModel();
+    WorkModel.workId=this.id;
+    WorkModel.description = this.description;
+    WorkModel.mainPicture = this.mainPicture;
+    WorkModel.title = this.title;
+    WorkModel.workItems = new Array<WorkItemUpdateModel>();
+    WorkModel.isActive = this.isActive;
+    WorkModel.categoryId=this.categoryID;
 
+    //mapped
+    let itemModel=new WorkItemUpdateModel();
+    itemModel.id=this.workItem.id;
+    itemModel.description=this.workItem.description;
+    itemModel.title=this.workItem.description;
+    itemModel.templateType=0;
+    itemModel.pictures = [this.detailPicture]
+    WorkModel.workItems.push(itemModel);
+    console.log(WorkModel)
+    const validationAddModel: string[] = this.validationAddModel(WorkModel);
+    if (validationAddModel.length > 0) {
+      this.errorsMessageWriter(validationAddModel);
+      return;
+    }
+    const validationItemAddModel: string[] = this.validationItemAddModel(WorkModel.workItems);
+    if (validationItemAddModel.length > 0) {
+      this.errorsMessageWriter(validationItemAddModel);
+      return;
+    }
+
+    this.workService.updateWork(WorkModel)
+      .subscribe(
+        response => {
+          Swal.fire({
+            icon: "success",
+            text: "Başarıyla güncellendi"
+          });
+        }
+      )
+  }
 }

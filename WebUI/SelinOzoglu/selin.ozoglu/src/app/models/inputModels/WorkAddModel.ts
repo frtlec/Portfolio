@@ -9,6 +9,7 @@ export  class WorkAddModel{
     categoryId:number;
 }
 export class WorkItemAddModel{
+    id:number;
     pictures:string[];
     templateType:WorkItemsTemplateType;
     title:string;

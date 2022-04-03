@@ -19,3 +19,12 @@ export class WorkItemSMO {
     description?: any;
 }
 
+export class WorkAndWorkITemsSMO{
+    id:number;
+    title:string;
+    description:string;
+    mainPicture:string;
+    categoryId:number;
+    isActive:boolean;
+    workItems:WorkItemSMO[];
+}

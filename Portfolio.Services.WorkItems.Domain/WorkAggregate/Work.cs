@@ -33,7 +33,7 @@ namespace Portfolio.Services.WorkItems.Domain.WorkAggregate
         public DateTime? UpdatedDate { get; private set; }
 
         private readonly List<WorkItem> _workItems;
-        public IReadOnlyCollection<WorkItem> WorkItems => _workItems;
+        public List<WorkItem> WorkItems => _workItems;
         public Category Category { get; set; }
 
         public Work()
@@ -64,6 +64,16 @@ namespace Portfolio.Services.WorkItems.Domain.WorkAggregate
             _workItems.Add(newOrderItem);
 
             return (true, "Ok");
+        }
+        public void UpdateWork(string mainPicture,string title,string description, bool isActive,short categoryId )
+        {
+
+            UpdatedDate = DateTime.Now;
+            MainPicture = mainPicture;
+            Title = title;
+            Description= description;
+            IsActive = isActive;
+            CategoryId = categoryId;
         }
     }
 }

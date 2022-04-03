@@ -1,12 +1,15 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/internal/Observable';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 import { WorkFilterModel } from '../models/inputModels/WorkAddModel';
 import { CategorySMO } from '../models/serviceModels/CategorySMO';
 import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
 import { CategoryService } from '../services/category/category.service';
 import { WorkServiceService } from '../services/work/work-service.service';
+import { closeRightMenu } from '../state/defaultMenu/defaultMenu.actions';
 
 @Component({
   selector: 'app-portfolio',
@@ -29,8 +32,20 @@ export class PortfolioComponent implements OnInit {
   categories:CategorySMO[]=[];
   filter = new WorkFilterModel();
   closeResult: string = '';
+  currentCategoryId:number=0;
   constructor(private workService: WorkServiceService, private modalService: NgbModal,private categoryService:CategoryService) {
 
+    this.categoryService.getCategoriesByFilter().subscribe(
+      res=>{
+        this.categories=res.data;
+
+        let All=new CategorySMO();
+        All.id=0;
+        All.title="All";
+        this.categories.splice(0,0,All);
+        this.currentCategoryId=res.data[0]?.id;
+      }
+    )
     this.filter.isActive = true;
     this.filter.limit = 9999;
     this.filter.search = "";
@@ -40,14 +55,12 @@ export class PortfolioComponent implements OnInit {
         this.works = res.body.data;
       }
     )
-    this.categoryService.getCategoriesByFilter().subscribe(
-      res=>{
-        this.categories=res.data;
-      }
-    )
+   
   }
 
-  filterCategory(categoryId:number){
+  filterCategory(categoryId:number=0){
+    console.log(categoryId);
+    this.currentCategoryId=categoryId;
     this.filter.categoryId=categoryId;
 
     this.workService.getAllWork(this.filter).subscribe(

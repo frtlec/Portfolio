@@ -41,11 +41,10 @@ namespace Portfolio.Services.WorkItems.API
 
             services.AddAuthorization(opts =>
             {
-                opts.AddPolicy("ReadWork", policy =>
+                opts.AddPolicy("ReadAndWrite", policy =>
                 {
-                    policy.RequireClaim("scope", "selin.ozoglu.com.work.read");
+                    policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write", "selin.ozoglu.com.work.read" });
                 });
-
                 opts.AddPolicy("WriteEditWork", policy =>
                 {
                     policy.RequireClaim("scope", new[] {  "selin.ozoglu.com.work.write" });
@@ -63,6 +62,7 @@ namespace Portfolio.Services.WorkItems.API
                     });
             });
             services.AddControllers();
+       
             services.AddDbContext<WorkItemsDbContext>(opt => {
 
                 opt.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), configure =>
@@ -90,12 +90,12 @@ namespace Portfolio.Services.WorkItems.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
             }
 
+            app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowOrigin");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

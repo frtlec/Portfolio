@@ -14,5 +14,6 @@ namespace Portfolio.Services.WorkItems.Application.Commands
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public short Sort { get; set; }
     }
 }

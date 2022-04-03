@@ -13,5 +13,7 @@ namespace Portfolio.Services.WorkItems.Application.Dtos
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public short Sort { get; set; }
+        public DateTime? CreatedDate { get;  set; }
+        public DateTime? UpdatedDate { get;  set; }
     }
 }

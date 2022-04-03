@@ -4,4 +4,12 @@ export class CategorySMO {
     description: string;
     isActive: boolean;
     sort:number;
+    createdDate:Date;
+    updatedDate:Date;
+}
+export class CategoryAddSMO{
+    categoryId: number;
+}
+export class CategoryUpdateSMO{
+    categoryId:number;
 }

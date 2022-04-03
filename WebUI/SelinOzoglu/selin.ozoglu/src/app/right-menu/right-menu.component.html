@@ -1,4 +1,4 @@
-<div [@openClose]="(rightMenu$ | async) ? 'open' : 'closed'" class="right-menu bg-dark">
+<div [@openClose]="(rightMenu$ | async) ? 'open' : 'closed'" [ngStyle]="(rightMenu$ | async)  && { 'display': 'block' }"  class="right-menu bg-dark">
     <a class="btn btn-hover right-menu-btn close-btn" (click)="closeRightMenu()">
         <span class="x"></span>
     </a>
@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="right-menu-item">
-            <a class="right-menu-link" href="#">
+            <a class="right-menu-link" routerLink="/contact">
                 Contact
             </a>
         </div>

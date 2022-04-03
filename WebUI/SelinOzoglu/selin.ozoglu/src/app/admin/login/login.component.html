@@ -2,8 +2,8 @@
     <div class="row h-100">
       <div class="col-md-5  m-auto">
         <div class="card card-signin my-5">
-        <div class="card-header bg-danger py-3">
-            <h5 class="text-center text-light">Admin Girişi</h5>
+        <div class="card-header bg-soft py-3">
+            <h2 class="text-center text-dark">Admin Girişi</h2>
         </div>
           <div class="card-body py-5 px-5  text-center">
             <form  #loginForm="ngForm" (ngSubmit)="login()" class="">
@@ -15,9 +15,13 @@
                 <input class="form-control mr-sm-2" name="password" 
                 [(ngModel)]="password" required type="password" placeholder="Password">
              </div>
+           
        
            
              <button class="btn btn-danger my-2 my-sm-0 mx-auto"   type="submit">Giriş yap</button>
+             <div class="alert alert-danger mt-3" *ngFor="let err of errors">
+                {{err}}
+            </div>
             </form>
           </div>
         </div>

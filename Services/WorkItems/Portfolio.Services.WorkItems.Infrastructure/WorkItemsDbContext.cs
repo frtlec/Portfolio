@@ -18,11 +18,15 @@ namespace Portfolio.Services.WorkItems.Infrastructure
         public DbSet<Work> Works { get; set; }
         public DbSet<WorkItem> WorkItems { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<About> Abouts { get; set; }
+        public DbSet<GeneralSetting> GeneralSettings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Work>().ToTable("Works", DEFAULT_SCHEMA);
             modelBuilder.Entity<WorkItem>().ToTable("WorkItems", DEFAULT_SCHEMA);
             modelBuilder.Entity<Category>().ToTable("Categories", DEFAULT_SCHEMA);
+            modelBuilder.Entity<About>().ToTable("Abouts", DEFAULT_SCHEMA);
+            modelBuilder.Entity<GeneralSetting>().ToTable("GeneralSettings", DEFAULT_SCHEMA);
 
             base.OnModelCreating(modelBuilder);
         }

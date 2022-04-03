@@ -30,6 +30,7 @@ namespace Portfolio.Shared.Dtos
         {
             return new Response<T> { StatusCode = statusCode, IsSuccessful = false, Errors = errors };
         }
+
         public static Response<T> Fail(string error, int statusCode)
         {
             return new Response<T> { StatusCode = statusCode, IsSuccessful = false, Errors = new List<string> { error } };

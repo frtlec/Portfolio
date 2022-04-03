@@ -9,7 +9,8 @@ export class HttpClientErrorHandler implements ErrorHandler {
 
   static readonly REFRESH_PAGE_ON_TOAST_CLICK_MESSAGE: string = "An error occurred: Please click this message to refresh";
   static readonly DEFAULT_ERROR_TITLE: string = "Something went wrong";
-
+  static readonly SERVICE_401: string = "services could not be accessed";
+  static readonly SERVICE_403: string = "services could not be accessed";
   constructor(private router: Router) { };
 
 
@@ -18,10 +19,10 @@ export class HttpClientErrorHandler implements ErrorHandler {
     console.log(error);
     switch (httpErrorCode) {
       case HttpStatusCode.Unauthorized:
-        this.router.navigateByUrl("/login");
+        this.showError(HttpClientErrorHandler.SERVICE_401);
         break;
       case HttpStatusCode.Forbidden:
-        this.router.navigateByUrl("/unauthorized");
+        this.showError(HttpClientErrorHandler.SERVICE_401);
         break;
       case HttpStatusCode.BadRequest:
         this.showError(error.error);
@@ -40,15 +41,17 @@ export class HttpClientErrorHandler implements ErrorHandler {
     }
     if (typeof (err) == "object") {
 
-
+      let message: string="";
       for (let item of err.errors) {
         let lang = LangApiMessages.find(f => f.key.toLocaleLowerCase() == item.toLocaleLowerCase())
-        let message: string = lang == undefined || lang.value == "" ? item : lang.value;
-        Swal.fire({
-          icon: "error",
-          text: message
-        })
+        message+= lang == undefined || lang.value == "" ? item : lang.value;
+        message+="<br/>"
+      
       }
+      Swal.fire({
+        icon: "error",
+        html: message
+      })
     }
 
 

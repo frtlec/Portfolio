@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Services.WorkItems.Application.Dtos;
 using Portfolio.Services.WorkItems.Application.Queries;
@@ -21,7 +22,7 @@ namespace Portfolio.Services.WorkItems.API.Controllers
         {
             _mediator = mediator;
         }
-        //[Authorize(Policy = "ReadWork")]
+        [Authorize(Policy = "ReadAndWrite")]
         [HttpGet("getworkitems/{workId:int}")]
         [Produces(typeof(Response<List<WorkItemDto>>))]
         public async Task<IActionResult> GetWorkItems(int workId)
