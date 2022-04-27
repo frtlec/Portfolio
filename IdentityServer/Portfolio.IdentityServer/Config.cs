@@ -9,34 +9,35 @@ using System.Collections.Generic;
 
 namespace Portfolio.IdentityServer
 {
-    public static class Config
-    {
-        public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {
+  public static class Config
+  {
+    public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {
             new ApiResource("resource_workitem"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
             new ApiResource("resource_photostock"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
             new ApiResource("resource_mailsender"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
+            new ApiResource("resource_gateway"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
            new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
-        public static IEnumerable<IdentityResource> IdentityResources =>
-                   new IdentityResource[]
-                   {
+    public static IEnumerable<IdentityResource> IdentityResources =>
+               new IdentityResource[]
+               {
                        new IdentityResources.Email(),
                        new IdentityResources.OpenId(),
                        new IdentityResources.Profile(),
                         new IdentityResource(){Name="roles",DisplayName="Roles",Description="Kullanıcı Rolleri",UserClaims=new[]{"role"} }
-                   };
+               };
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
+    public static IEnumerable<ApiScope> ApiScopes =>
+        new ApiScope[]
+        {
                     new ApiScope("selin.ozoglu.com.work.read","okuma yetkisi"),
                     new ApiScope("selin.ozoglu.com.work.write","yazma yetkisi"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
-            };
+        };
 
-        public static IEnumerable<Client> Clients =>
-            new Client[]
-            {
+    public static IEnumerable<Client> Clients =>
+        new Client[]
+        {
                 // m2m client credentials flow client
                  new Client
                 {
@@ -44,7 +45,9 @@ namespace Portfolio.IdentityServer
                     ClientId="SelinOzogluUI",
                     ClientSecrets= {new Secret("secret".Sha256())},
                     AllowedGrantTypes= GrantTypes.ClientCredentials,
-                    AllowedScopes={ "selin.ozoglu.com.work.read",  IdentityServerConstants.LocalApi.ScopeName }
+                    AllowedScopes={
+                     "selin.ozoglu.com.work.read", IdentityServerConstants.LocalApi.ScopeName
+                   }
                 },
                 new Client
                 {
@@ -59,6 +62,6 @@ namespace Portfolio.IdentityServer
                     AbsoluteRefreshTokenLifetime= (int) (DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
                     RefreshTokenUsage= TokenUsage.ReUse
                 }
-            };
-    }
+        };
+  }
 }

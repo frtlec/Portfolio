@@ -39,7 +39,7 @@ export class ContactService {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(inputModel);
     return this._httpClient.post(
-      `${MAIL_SENDER_API_BASE_URL}/api/Contacts/create`,
+      `${MAIL_SENDER_API_BASE_URL}/Contacts/create`,
       body,
       { 'headers': headers, observe: 'response',context:getClientCredential() }
     );

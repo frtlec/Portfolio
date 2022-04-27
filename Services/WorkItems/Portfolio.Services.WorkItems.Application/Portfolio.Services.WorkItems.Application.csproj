@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Portfolio.Services.WorkItems.Domain\Portfolio.Services.WorkItems.Domain.csproj" />
     <ProjectReference Include="..\..\..\Shared\Portfolio.Shared\Portfolio.Shared.csproj" />
     <ProjectReference Include="..\Portfolio.Services.WorkItems.Infrastructure\Portfolio.Services.WorkItems.Infrastructure.csproj" />
   </ItemGroup>

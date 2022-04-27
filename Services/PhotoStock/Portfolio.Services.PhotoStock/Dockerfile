@@ -1,22 +1,12 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
-COPY ["Services/PhotoStock/Portfolio.Services.PhotoStock/Portfolio.Services.PhotoStock.csproj", "Services/PhotoStock/Portfolio.Services.PhotoStock/"]
-RUN dotnet restore "Services/PhotoStock/Portfolio.Services.PhotoStock/Portfolio.Services.PhotoStock.csproj"
+COPY Shared/Portfolio.Shared/*.csproj Shared/Portfolio.Shared/
+COPY Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj Services/PhotoStock/Portfolio.Services.PhotoStock/ 
+RUN dotnet restore Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj
 COPY . .
-WORKDIR "/src/Services/PhotoStock/Portfolio.Services.PhotoStock"
-RUN dotnet build "Portfolio.Services.PhotoStock.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "Portfolio.Services.PhotoStock.csproj" -c Release -o /app/publish
-
-FROM base AS final
+RUN dotnet publish Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj -c Release -o out
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Portfolio.Services.PhotoStock.dll"]
+COPY --from=build /app/out .
+ENTRYPOINT [ "dotnet","Portfolio.Services.PhotoStock.dll" ]

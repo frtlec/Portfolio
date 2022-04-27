@@ -14,92 +14,123 @@ using Microsoft.OpenApi.Models;
 using Portfolio.Services.WorkItems.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.API
 {
-    public class Startup
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+      Configuration = configuration;
+    }
 
-        public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+  
+      services.AddAuthorization(opts =>
+      {
+        opts.AddPolicy("ReadAndWrite", policy =>
+              {
+            policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write", "selin.ozoglu.com.work.read" });
+          });
+        opts.AddPolicy("WriteEditWork", policy =>
+              {
+            policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write" });
+          });
+      });
+      services.AddCors(options =>
+      {
+        options.AddPolicy(
+                  name: "AllowOrigin",
+                  builder =>
+                  {
+                builder.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+              });
+      });
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
                   AddJwtBearer(opt =>
                   {
-                      opt.Authority = Configuration["IdentityServerURL"];
-                      opt.Audience = "resource_workitem";
-                      opt.RequireHttpsMetadata = false;
+                    opt.Authority = Configuration["IdentityServerURL"];
+                    opt.Audience = "resource_workitem";
+                    opt.RequireHttpsMetadata = false;
+                    //opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    //{
+                    //  ValidateIssuer = false,
+                    //  ValidateAudience = false,
+                      
+                    //};
+                    opt.Events = new JwtBearerEvents
+                    {
+                      OnAuthenticationFailed = context =>
+                      {
+                        var x = new
+                        {
+                          LogName="WorkItem",
+                          ExMessage = context.Exception.Message,
+                          Audience = context.Options.Audience,
+                          Authority = context.Options.Authority
+                        };
+                        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(x));
+                        //Log failed authentications
+                        return Task.CompletedTask;
+                      },
+                      OnTokenValidated = context =>
+                      {
+                        //Log successful authentications
+                        return Task.CompletedTask;
+                      }
+                    };
                   });
 
-            services.AddAuthorization(opts =>
-            {
-                opts.AddPolicy("ReadAndWrite", policy =>
-                {
-                    policy.RequireClaim("scope", new[] { "selin.ozoglu.com.work.write", "selin.ozoglu.com.work.read" });
-                });
-                opts.AddPolicy("WriteEditWork", policy =>
-                {
-                    policy.RequireClaim("scope", new[] {  "selin.ozoglu.com.work.write" });
-                });
-            });
-            services.AddCors(options =>
-            {
-                options.AddPolicy(
-                    name: "AllowOrigin",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                    });
-            });
-            services.AddControllers();
-       
-            services.AddDbContext<WorkItemsDbContext>(opt => {
+      services.AddControllers();
 
-                opt.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), configure =>
-                {
-                    configure.MigrationsAssembly("Portfolio.Services.WorkItems.Infrastructure");
-                });
-            });
-            services.AddMediatR(typeof(Portfolio.Services.WorkItems.Application.Handlers.GetAllWorkByFilterHandler).Assembly);
+      services.AddDbContext<WorkItemsDbContext>(opt =>
+      {
 
-            services.AddSwaggerGen(c =>
-            {
-                c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio.Services.WorkItems.API", Version = "v1" });
-            });
-           
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        opt.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), configure =>
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
-            }
+          configure.MigrationsAssembly("Portfolio.Services.WorkItems.Infrastructure");
+        });
+      });
+      services.AddMediatR(typeof(Portfolio.Services.WorkItems.Application.Handlers.GetAllWorkByFilterHandler).Assembly);
 
-            app.UseCors("AllowOrigin");
-            app.UseHttpsRedirection();
+      services.AddSwaggerGen(c =>
+      {
+        c.EnableAnnotations();
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio.Services.WorkItems.API", Version = "v1" });
+      });
 
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
     }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
+      }
+
+      app.UseCors("AllowOrigin");
+      //app.UseHttpsRedirection();
+
+      app.UseRouting();
+      app.UseAuthentication();
+      app.UseAuthorization();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllers();
+      });
+    }
+  }
 }

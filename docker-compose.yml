@@ -8,7 +8,38 @@ services:
     image: rabbitmq:3.8.14-management
   maildb:
     image: mongo
+  identityserver.api:
+    image: identityserver_api_image
+    build:
+      context: .
+      dockerfile: IdentityServer/Portfolio.IdentityServer/Dockerfile
+  photostock.api:
+    image: photostock_image
+    build:
+      context: .
+      dockerfile: Services/PhotoStock/Portfolio.Services.PhotoStock/Dockerfile  
+  mailsender.api:
+    image: mailsender_image
+    build:
+      context: .
+      dockerfile: MailSender/Portfolio.Services.MailSender/Dockerfile  
+  workitem.api:
+    image: workitem_image
+    build:
+      context: .
+      dockerfile: Services/WorkItems/Portfolio.Services.WorkItems.API/Dockerfile
+  selinozoglu.webui:
+    image: selinozoglu_webui_image
+    build:
+      context: .
+      dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
+  gateway.api:
+    image: gateway_api_image
+    build:
+      context: .
+      dockerfile: Gateway/Portfolio.Gateway/Dockerfile
 volumes:
   workitemsdb_volume:
   identity4db_volume:
   maildb_volume:
+      

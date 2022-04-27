@@ -18,12 +18,12 @@ export class CategoryService {
     if(isActive!=null){
       linkQuery="?isActive="+isActive;
     }
-    return this._httpClient.get<IResponse<CategorySMO[]>>(`${WORK_API_BASE_URL}/api/categories/getcategories${linkQuery}`,{
+    return this._httpClient.get<IResponse<CategorySMO[]>>(`${WORK_API_BASE_URL}/categories/getcategories${linkQuery}`,{
       context: getClientCredential()
     });
   }
   getCategoryById(categoryId:number){
-    return this._httpClient.get<IResponse<CategorySMO>>(`${WORK_API_BASE_URL}/api/categories/get/${categoryId}`,{
+    return this._httpClient.get<IResponse<CategorySMO>>(`${WORK_API_BASE_URL}/categories/get/${categoryId}`,{
       context: getClientCredential()
     });
   }
@@ -31,7 +31,7 @@ export class CategoryService {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(inputModel);
     return this._httpClient.post<IResponse<CategoryAddSMO>>(
-      `${WORK_API_BASE_URL}/api/categories/addcategory`,
+      `${WORK_API_BASE_URL}/categories/addcategory`,
       body,
       { 'headers': headers, observe: 'response', context: getPasswordCredential() }
     );
@@ -40,12 +40,12 @@ export class CategoryService {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(inputModel);
     return this._httpClient.post<IResponse<CategoryUpdateSMO>>(
-      `${WORK_API_BASE_URL}/api/categories/UpdateCategory`,
+      `${WORK_API_BASE_URL}/categories/UpdateCategory`,
       body,
       { 'headers': headers, observe: 'response', context: getPasswordCredential() }
     );
   }
   deleteCategory(categoryId:number){
-    return this._httpClient.delete(`${WORK_API_BASE_URL}/api/categories/delete/${categoryId}`,{ context: getPasswordCredential()});
+    return this._httpClient.delete(`${WORK_API_BASE_URL}/categories/delete/${categoryId}`,{ context: getPasswordCredential()});
   }
 }

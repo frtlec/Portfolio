@@ -20,23 +20,24 @@ export class WorkServiceService {
     console.log("filter",filter);
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(filter);
+    console.log(WORK_API_BASE_URL);
     return this._httpClient.post<IResponse<WorkSMO[]>>(
-      `${WORK_API_BASE_URL}/api/works/getworks`,
+      `${WORK_API_BASE_URL}/works/getworks`,
       body,
       { 'headers': headers, observe: 'response' ,context: getClientCredential()}
     );
   }
   getWorkByWorkId(workId: number) {
-    return this._httpClient.get<IResponse<WorkAndWorkITemsSMO>>(`${WORK_API_BASE_URL}/api/works/get/${workId}`,{context: getClientCredential()});
+    return this._httpClient.get<IResponse<WorkAndWorkITemsSMO>>(`${WORK_API_BASE_URL}/works/get/${workId}`,{context: getClientCredential()});
   }
   getWorkItemById(workId: number) {
-    return this._httpClient.get<IResponse<WorkItemSMO[]>>(`${WORK_API_BASE_URL}/api/workitems/getworkitems/${workId}`,{context: getClientCredential()});
+    return this._httpClient.get<IResponse<WorkItemSMO[]>>(`${WORK_API_BASE_URL}/workitems/getworkitems/${workId}`,{context: getClientCredential()});
   }
   saveWork(work: WorkAddModel) {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(work);
     return this._httpClient.post<IResponse<SaveWorkSMO>>(
-      `${WORK_API_BASE_URL}/api/Works/savework`,
+      `${WORK_API_BASE_URL}/Works/savework`,
       body,
       { 'headers': headers, observe: 'response', context: getPasswordCredential() }
     );
@@ -45,12 +46,12 @@ export class WorkServiceService {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(work);
     return this._httpClient.post<IResponse<SaveWorkSMO>>(
-      `${WORK_API_BASE_URL}/api/Works/updatework`,
+      `${WORK_API_BASE_URL}/Works/updatework`,
       body,
       { 'headers': headers, observe: 'response', context: getPasswordCredential() }
     );
   }
   deleteWork(workId:number){
-    return this._httpClient.delete(`${WORK_API_BASE_URL}/api/works/delete/${workId}`,{context: getPasswordCredential()});
+    return this._httpClient.delete(`${WORK_API_BASE_URL}/works/delete/${workId}`,{context: getPasswordCredential()});
   }
 }

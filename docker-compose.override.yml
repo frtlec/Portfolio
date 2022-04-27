@@ -38,3 +38,63 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=zk147olu
+  photostock.api:
+    container_name: photostock.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identityserver.api
+    ports:
+      - "5104:80"
+    volumes:
+      - type: bind
+        source: C:\Users\zafer\Desktop\photos
+        target: /app/wwwroot/photos
+  mailsender.api:
+    container_name: mailsender.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQUrl=rabbitmq
+      - IdentityServerURL=http://identityserver.api
+      - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
+    restart: always
+    ports:
+      - "5103:80"
+    depends_on:
+      - maildb
+  workitem.api:
+    container_name: workitem.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identityserver.api
+      - "ConnectionStrings:PostgreSql=User ID=admin; Password=zk147olu; Server=workitemsdb; Port=5432;Database=workitemsdb;Integrated Security=true;Pooling=true"
+    ports:
+      - "5102:80"
+    depends_on:
+      - workitemsdb
+  identityserver.api:
+    container_name: identityserver.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=identity4db,1433;Database=Identity4DbDeploy;User=sa;Password=zk147olu"
+      - TokenOptions:IssuerUri=http://identityserver.api
+    ports:
+      - "5101:80"
+    depends_on:
+      - identity4db
+  gateway.api:
+    container_name: gateway.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - IdentityServerURL=http://identityserver.api
+    ports:
+      - "5100:80"
+  selinozoglu.webui:
+    container_name: selinozoglu.webui
+    ports:
+      - "5110:80"
+    depends_on:
+      - identityserver.api
+      - mailsender.api
+      - workitem.api
+      - photostock.api
