@@ -1,7 +1,4 @@
 pipeline {
-    environment {
-        PATH = "$PATH:/usr/local/bin/"
-    }
   agent any
   stages {
     stage("verify tooling") {
@@ -9,7 +6,7 @@ pipeline {
         sh '''
           docker version
           docker info
-          docker-compose version
+          /usr/local/bin/docker-compose version
         '''
       }
     }
