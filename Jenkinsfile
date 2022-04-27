@@ -23,14 +23,5 @@ pipeline {
         sh 'docker compose ps'
       }
     }
-    stage('Run tests against the container') {
-      steps {
-       
-      }
-    }
-  }
-  post {
-    always {
-    }
   }
 }
