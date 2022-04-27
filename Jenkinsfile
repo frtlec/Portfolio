@@ -6,9 +6,7 @@ pipeline {
         sh '''
           docker version
           docker info
-          docker compose version 
-          curl --version
-          jq --version
+          docker-compose version
         '''
       }
     }
@@ -19,8 +17,8 @@ pipeline {
     }
     stage('Start container') {
       steps {
-        sh 'docker compose up -d --no-color --wait'
-        sh 'docker compose ps'
+        sh 'docker-compose up -d'
+        sh 'docker-compose ps'
       }
     }
   }
