@@ -47,7 +47,7 @@ services:
       - "5104:80"
     volumes:
       - type: bind
-        source: C:\Users\zafer\Desktop\photos
+        source: /root/opt/app_data/portfolio_photostock_data
         target: /app/wwwroot/photos
   mailsender.api:
     container_name: mailsender.api
