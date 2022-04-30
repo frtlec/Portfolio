@@ -57,7 +57,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=rabbitmq
       - IdentityServerURL=http://identityserver.api
-      - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
+      - DatabaseSettings:ConnectionString=mongodb://maildb:27017
     restart: always
     ports:
       - "5103:80"
