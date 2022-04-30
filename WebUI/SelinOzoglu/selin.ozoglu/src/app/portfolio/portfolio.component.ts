@@ -33,6 +33,7 @@ export class PortfolioComponent implements OnInit {
   filter = new WorkFilterModel();
   closeResult: string = '';
   currentCategoryId:number=0;
+  imageLoading:boolean=false;
   constructor(private workService: WorkServiceService, private modalService: NgbModal,private categoryService:CategoryService) {
 
     this.categoryService.getCategoriesByFilter().subscribe(
@@ -79,7 +80,7 @@ export class PortfolioComponent implements OnInit {
   }
   open(content, workId) {
 
-
+    this.imageLoading=true;
     if (!workId)
       return;
     this.workService.getWorkItemById(Number(workId)).subscribe(res => {
@@ -99,6 +100,11 @@ export class PortfolioComponent implements OnInit {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
   }
+  onImageLoad(){
+    setTimeout(() => {
+      this.imageLoading=false;
+    }, 600);
+   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

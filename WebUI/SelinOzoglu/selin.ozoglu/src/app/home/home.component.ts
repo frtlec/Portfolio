@@ -4,7 +4,6 @@ import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
 import { WorkServiceService } from '../services/work/work-service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { WorkFilterModel } from '../models/inputModels/WorkAddModel';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +16,7 @@ export class HomeComponent implements OnInit {
   currentPicture: string = "";
   currentDescription:string="";
   closeResult: string = '';
+  imageLoading:boolean=false;
   constructor(private workService: WorkServiceService, private modalService: NgbModal) {
     const filter=new WorkFilterModel();
     filter.isActive=true;
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
   open(content,workId) {
 
-    
+    this.imageLoading=true;
    if (!workId)
       return;
     this.workService.getWorkItemById(Number(workId)).subscribe(res => {
@@ -49,6 +49,11 @@ export class HomeComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+   onImageLoad(){
+    setTimeout(() => {
+      this.imageLoading=false;
+    }, 600);
+   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

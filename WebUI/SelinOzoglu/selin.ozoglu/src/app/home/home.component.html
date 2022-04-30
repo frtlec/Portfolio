@@ -1,5 +1,6 @@
 <app-default-header></app-default-header>
 <div  class="container-fuild">
+
     <div class="row">
         <ng-template #content let-modal>
             <div class="modal-header ">
@@ -8,11 +9,18 @@
                     <span class="x"></span>
                 </a>
               </div>
-            <div class="modal-body p-0">
-                <img [src]="currentPicture" width="100%" />
+            <div class="modal-body p-0 min100hv" >
+                   <div class="spinner-wrapper">
+                    <div class="spinner-border"  [hidden]="imageLoading==false" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                   </div>
+
+                  <img [src]="currentPicture" [hidden]="imageLoading==true"  (load)="onImageLoad()"  width="100%" />
                
 
-                <div class="text-left bg-dark py-5 px-4 text-light" *ngIf="currentDescription!=undefined" innerHTML="{{currentDescription}}">
+                  <div class="text-left bg-dark py-5 px-4 text-light" *ngIf="currentDescription!=undefined" innerHTML="{{currentDescription}}">
+         
                  
                 </div>
             </div>

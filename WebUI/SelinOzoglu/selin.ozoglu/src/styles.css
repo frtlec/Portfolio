@@ -286,6 +286,24 @@ body {
     bottom:0;
     height:100%;
 }
+.spinner-border{
+    color:#aa2fb5;
+}
+.min100hv{
+    min-height:100vh;
+}
+.spinner-wrapper{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex: 1 1 1;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
 @media only screen and (max-width:1366px) {
     .right-menu{
         width: 80% !important;

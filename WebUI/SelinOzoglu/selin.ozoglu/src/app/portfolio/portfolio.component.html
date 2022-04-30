@@ -8,8 +8,13 @@
                     <span class="x"></span>
                 </a>
               </div>
-            <div class="modal-body p-0">
-                <img [src]="currentPicture" width="100%" />
+            <div class="modal-body p-0 min100hv">
+                <div class="spinner-wrapper">
+                    <div class="spinner-border"  [hidden]="imageLoading==false" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                   </div>
+                <img [src]="currentPicture" [hidden]="imageLoading==true" width="100%" (load)="onImageLoad()"  />
          
 
                 <div innerHTML="{{currentDescription}}"></div>
