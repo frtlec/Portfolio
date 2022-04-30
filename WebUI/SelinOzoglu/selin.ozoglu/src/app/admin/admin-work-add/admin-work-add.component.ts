@@ -34,7 +34,7 @@ export class AdminWorkAddComponent implements OnInit {
   detailPictureSRC: string;
   isActive: boolean;
   categoryID:number=0;
-  photoStockApiURL: string = PHOTO_STOCK_API_PHOTOS_FILE_URL+"/";//"https://localhost:5012/photos/";
+  photoStockApiURL: string = PHOTO_STOCK_API_PHOTOS_FILE_URL;//"https://localhost:5012/photos/";
   workItem: WorkItemAddModel = new WorkItemAddModel();
   closeResult: string = '';
   categories: CategorySMO[]=[];

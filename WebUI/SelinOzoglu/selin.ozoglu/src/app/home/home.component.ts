@@ -13,7 +13,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class HomeComponent implements OnInit {
   works: WorkSMO[] = [];
-  photoStockPhotosFile: string = PHOTO_STOCK_API_PHOTOS_FILE_URL;
+  photoStockPhotosFile: string = `${PHOTO_STOCK_API_PHOTOS_FILE_URL}`;
   currentPicture: string = "";
   currentDescription:string="";
   closeResult: string = '';
