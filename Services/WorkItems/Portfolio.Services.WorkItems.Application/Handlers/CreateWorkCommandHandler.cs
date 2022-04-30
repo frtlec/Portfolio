@@ -57,7 +57,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
             }
             catch (Exception ex)
             {
-                return Response<CreatedWorkDto>.Fail("Error", 500);
+                return Response<CreatedWorkDto>.Fail("error:" + ex.Message, 500);
             }
         }
     }

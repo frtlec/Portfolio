@@ -13,31 +13,31 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Handlers
 {
-    public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, Response<DeleteCategoryDto>>
+  public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, Response<DeleteCategoryDto>>
+  {
+    private readonly WorkItemsDbContext _context;
+
+    public DeleteCategoryHandler(WorkItemsDbContext context)
     {
-        private readonly WorkItemsDbContext _context;
-
-        public DeleteCategoryHandler(WorkItemsDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<Response<DeleteCategoryDto>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                Category category = _context.Categories.FirstOrDefault(f => f.Id == request.CategoryId);
-                if (category == null)
-                    return Response<DeleteCategoryDto>.Fail("Silinecek kategori bulunamadı",400);
-                _context.Categories.Remove(category);
-                await _context.SaveChangesAsync();
-
-                return Response<DeleteCategoryDto>.Success(200);
-            }
-            catch (Exception ex)
-            {
-                return Response<DeleteCategoryDto>.Success(200);
-            }
-        }
+      _context = context;
     }
+
+    public async Task<Response<DeleteCategoryDto>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    {
+      try
+      {
+        Category category = _context.Categories.FirstOrDefault(f => f.Id == request.CategoryId);
+        if (category == null)
+          return Response<DeleteCategoryDto>.Fail("Silinecek kategori bulunamadı", 400);
+        _context.Categories.Remove(category);
+        await _context.SaveChangesAsync();
+
+        return Response<DeleteCategoryDto>.Success(200);
+      }
+      catch (Exception ex)
+      {
+        return Response<DeleteCategoryDto>.Fail("error:" + ex.Message, 500);
+      }
+    }
+  }
 }

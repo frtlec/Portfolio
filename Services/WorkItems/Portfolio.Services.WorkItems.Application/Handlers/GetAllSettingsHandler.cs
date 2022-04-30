@@ -34,7 +34,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
                 }
                 catch (Exception ex)
                 {
-                    return Response<List<GeneralSettingDto>>.Fail("error", 500);
+                    return Response<List<GeneralSettingDto>>.Fail("error:"+ex.Message, 500);
                 }
             }
         }

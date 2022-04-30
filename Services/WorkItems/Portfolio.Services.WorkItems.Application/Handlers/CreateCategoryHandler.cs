@@ -44,7 +44,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
             }
             catch (Exception ex)
             {
-                return Response<CreateCategoryDto>.Fail("Error", 500);
+                return Response<CreateCategoryDto>.Fail("error:" + ex.Message, 500);
             }
         }
     }

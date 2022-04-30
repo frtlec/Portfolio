@@ -13,30 +13,30 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Handlers
 {
-    public class DeleteWorkHandler : IRequestHandler<DeleteWorkCommand, Response<DeleteWorkDto>>
+  public class DeleteWorkHandler : IRequestHandler<DeleteWorkCommand, Response<DeleteWorkDto>>
+  {
+    private readonly WorkItemsDbContext _context;
+
+    public DeleteWorkHandler(WorkItemsDbContext context)
     {
-        private readonly WorkItemsDbContext _context;
-
-        public DeleteWorkHandler(WorkItemsDbContext context)
-        {
-            _context = context;
-        }
-        public async Task<Response<DeleteWorkDto>> Handle(DeleteWorkCommand request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                Work work = _context.Works.FirstOrDefault(f => f.Id == request.WorkId);
-                if (work == null)
-                    return Response<DeleteWorkDto>.Fail("Silinecek iş bulunamadı", 400);
-                _context.Works.Remove(work);
-                await _context.SaveChangesAsync();
-
-                return Response<DeleteWorkDto>.Success(200);
-            }
-            catch (Exception ex)
-            {
-                return Response<DeleteWorkDto>.Success(200);
-            }
-        }
+      _context = context;
     }
+    public async Task<Response<DeleteWorkDto>> Handle(DeleteWorkCommand request, CancellationToken cancellationToken)
+    {
+      try
+      {
+        Work work = _context.Works.FirstOrDefault(f => f.Id == request.WorkId);
+        if (work == null)
+          return Response<DeleteWorkDto>.Fail("Silinecek iş bulunamadı", 400);
+        _context.Works.Remove(work);
+        await _context.SaveChangesAsync();
+
+        return Response<DeleteWorkDto>.Success(200);
+      }
+      catch (Exception ex)
+      {
+        return Response<DeleteWorkDto>.Fail("error:" + ex.Message, 500);
+      }
+    }
+  }
 }
