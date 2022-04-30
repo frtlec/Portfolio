@@ -42,7 +42,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
             catch (System.Exception ex)
             {
 
-                return CreateActionResultInstance(Response<PhotoDto>.Fail("error", 500));
+                return CreateActionResultInstance(Response<PhotoDto>.Fail("error:" + ex.Message, 500));
             }
 
         }
@@ -79,7 +79,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
             catch (System.Exception ex)
             {
 
-                return CreateActionResultInstance(Response<PhotoDto>.Fail("error", 500));
+                return CreateActionResultInstance(Response<PhotoDto>.Fail("error:" + ex.Message, 500));
             }
 
         }
@@ -118,7 +118,7 @@ namespace Portfolio.Services.PhotoStock.Controllers
             catch (System.Exception ex)
             {
 
-                return CreateActionResultInstance(Response<PhotoDto>.Fail("error", 500));
+                return CreateActionResultInstance(Response<PhotoDto>.Fail("error:"+ex.Message, 500));
             }
 
         }
