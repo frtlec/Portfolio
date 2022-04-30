@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+RUN apt-get update && apt-get install -y libgdiplus
 WORKDIR /app
 EXPOSE 80
 COPY Shared/Portfolio.Shared/*.csproj Shared/Portfolio.Shared/
