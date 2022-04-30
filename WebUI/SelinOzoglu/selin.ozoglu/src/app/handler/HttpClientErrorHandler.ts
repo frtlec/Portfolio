@@ -19,6 +19,8 @@ export class HttpClientErrorHandler implements ErrorHandler {
     console.log(error);
     switch (httpErrorCode) {
       case HttpStatusCode.Unauthorized:
+        localStorage.removeItem("client_token");
+        location.reload();
         this.showError(HttpClientErrorHandler.SERVICE_401);
         break;
       case HttpStatusCode.Forbidden:
@@ -53,8 +55,5 @@ export class HttpClientErrorHandler implements ErrorHandler {
         html: message
       })
     }
-
-
-
   }
 }
