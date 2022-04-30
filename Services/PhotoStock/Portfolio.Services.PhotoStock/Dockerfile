@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
-RUN apt-get update && apt-get install -y libgdiplus
 WORKDIR /app
 EXPOSE 80
 COPY Shared/Portfolio.Shared/*.csproj Shared/Portfolio.Shared/
@@ -10,4 +9,5 @@ RUN dotnet publish Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj -c
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 COPY --from=build /app/out .
+RUN apt-get update && apt-get install -y libgdiplus
 ENTRYPOINT [ "dotnet","Portfolio.Services.PhotoStock.dll" ]
