@@ -25,7 +25,7 @@
 
 const PHOTO_STOCK_API_BASE_URL="http://107.173.251.36:5100/services/PhotoStock";
 const WORK_API_BASE_URL="http://107.173.251.36:5100/services/workitems";
-const PHOTO_STOCK_API_PHOTOS_FILE_URL="http://107.173.251.36:5100/services/PhotoStock/photos";
+const PHOTO_STOCK_API_PHOTOS_FILE_URL="http://107.173.251.36:5104/photos";
 const MAIL_SENDER_API_BASE_URL="http://107.173.251.36:5100/services/MailSender";
 const IDENTITY4_SERVER_BASE_URL="http://107.173.251.36:5101";
 export {

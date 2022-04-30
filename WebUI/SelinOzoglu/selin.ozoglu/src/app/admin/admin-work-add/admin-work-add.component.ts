@@ -11,6 +11,7 @@ import { CategorySMO } from 'src/app/models/serviceModels/CategorySMO';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { ActivatedRoute } from '@angular/router';
 import { WorkItemUpdateModel, WorkUpdateModel } from 'src/app/models/inputModels/WorkUpdateModel';
+import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 @Component({
   selector: 'app-admin-work-add',
   templateUrl: './admin-work-add.component.html',
@@ -33,7 +34,7 @@ export class AdminWorkAddComponent implements OnInit {
   detailPictureSRC: string;
   isActive: boolean;
   categoryID:number=0;
-  photoStockApiURL: string = "https://localhost:5012/photos/";
+  photoStockApiURL: string = PHOTO_STOCK_API_PHOTOS_FILE_URL+"/";//"https://localhost:5012/photos/";
   workItem: WorkItemAddModel = new WorkItemAddModel();
   closeResult: string = '';
   categories: CategorySMO[]=[];
