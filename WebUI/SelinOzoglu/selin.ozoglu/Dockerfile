@@ -20,7 +20,7 @@ RUN npm run build
 
 # Use official nginx image as the base image
 FROM nginx:latest
-
+COPY WebUI/SelinOzoglu/selin.ozoglu/nginx.conf /etc/nginx/nginx.conf
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/selin.ozoglu /usr/share/nginx/html
 
