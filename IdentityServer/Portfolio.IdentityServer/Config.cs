@@ -43,7 +43,7 @@ namespace Portfolio.IdentityServer
                 {
                     ClientName="Selin Ozoglu Angular ",
                     ClientId="SelinOzogluUI",
-                    ClientSecrets= {new Secret("VkYp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbP".Sha256())},
+                    ClientSecrets= {new Secret("VkYp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(GKbP".Sha256())},
                     AllowedGrantTypes= GrantTypes.ClientCredentials,
                     AllowedScopes={
                      "selin.ozoglu.com.work.read"
