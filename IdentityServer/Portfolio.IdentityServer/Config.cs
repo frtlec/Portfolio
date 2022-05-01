@@ -43,18 +43,19 @@ namespace Portfolio.IdentityServer
                 {
                     ClientName="Selin Ozoglu Angular ",
                     ClientId="SelinOzogluUI",
-                    ClientSecrets= {new Secret("secret".Sha256())},
+                    ClientSecrets= {new Secret("VkYp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbP".Sha256())},
                     AllowedGrantTypes= GrantTypes.ClientCredentials,
                     AllowedScopes={
-                     "selin.ozoglu.com.work.read", IdentityServerConstants.LocalApi.ScopeName
-                   }
+                     "selin.ozoglu.com.work.read"
+                   },
+                    AccessTokenLifetime=60
                 },
                 new Client
                 {
                    ClientName="Selin Ozoglu Angular Admin Panel",
                     ClientId="SelinOzogluUIAdminPanel",
                     AllowOfflineAccess=true,
-                    ClientSecrets= {new Secret("secret".Sha256())},
+                    ClientSecrets= {new Secret("t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbPeShVmYq3t6v9y$B&E)H@McQfTjWn".Sha256())},
                     AllowedGrantTypes= GrantTypes.ResourceOwnerPassword,
                     AllowedScopes={ "selin.ozoglu.com.work.read", "selin.ozoglu.com.work.write", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
                     AccessTokenLifetime=1*60*60,
