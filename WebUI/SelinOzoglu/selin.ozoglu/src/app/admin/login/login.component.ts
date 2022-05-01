@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       success=>{
         const tokenModel=new TokenSaveModel<PasswordTokenModel>();
         tokenModel.token=new PasswordTokenModel();
-        tokenModel.expire=new Date(new Date().getTime() + success.expires_in);
+        tokenModel.expire=new Date(new Date().getTime() + success.expires_in*1000);
         tokenModel.token.access_token=success.access_token;
         tokenModel.token.refresh_token=success.refresh_token;
         tokenModel.token.token_type=success.token_type;

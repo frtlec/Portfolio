@@ -3,6 +3,7 @@ import { nullSafeIsEquivalent } from "@angular/compiler/src/output/output_ast";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { from } from "rxjs";
+import * as moment from 'moment';
 import { AuthService, ClientCredentialTokenModel, PasswordTokenModel } from "../services/auth/auth.service";
 const CLIENTCREDENTIAL = new HttpContextToken<boolean>(() => false);
 const PASSWORDCREDENTIAL = new HttpContextToken<boolean>(() => false);
@@ -29,6 +30,7 @@ export class ApiCredentialInterceptorService implements HttpInterceptor {
 
   }
   private async adminAccess(req: HttpRequest<any>, next: HttpHandler):Promise<HttpEvent<any>> {
+    Date.prototype.toJSON = function(){ return moment(this).format(); }
     let getLocalStoreToken= localStorage.getItem("admin_token");
 
     let accessToken:TokenSaveModel<PasswordTokenModel>=new TokenSaveModel<PasswordTokenModel>();
@@ -40,7 +42,7 @@ export class ApiCredentialInterceptorService implements HttpInterceptor {
     }else{
       accessToken=<TokenSaveModel<PasswordTokenModel>>JSON.parse(getLocalStoreToken);
     }
-    if(accessToken.expire>new Date()){
+    if(new Date()>=new Date(accessToken.expire)){
       this.router.navigateByUrl("/login");
       return next.handle(req).toPromise();
     }
@@ -50,22 +52,27 @@ export class ApiCredentialInterceptorService implements HttpInterceptor {
      return next.handle(modifiedRequest).toPromise();
   }
   private async clientAccess(req: HttpRequest<any>, next: HttpHandler):Promise<HttpEvent<any>> {
+    Date.prototype.toJSON = function(){ return moment(this).format(); }
     let getLocalStoreToken= localStorage.getItem("client_token");
     let accessToken:TokenSaveModel<ClientCredentialTokenModel>=new TokenSaveModel<PasswordTokenModel>();
+
     if(getLocalStoreToken==null){
 
       let  authServiceResult = await (await this.authService.getClientCredentialToken()).toPromise();
       accessToken.token=authServiceResult;
-      accessToken.expire=new Date(new Date().getTime() + authServiceResult.expires_in);
+      accessToken.expire=new Date(new Date().getTime() + authServiceResult.expires_in*1000);
       localStorage.setItem("client_token",JSON.stringify(accessToken));
     }else{
    
       accessToken=<TokenSaveModel<ClientCredentialTokenModel>>JSON.parse(getLocalStoreToken);
-
-      if(accessToken.expire>new Date()){
+      console.log(accessToken);
+      console.log(new Date(),new Date(accessToken.expire));
+      console.log(new Date()>=new Date(accessToken.expire));
+      if(new Date()>=new Date(accessToken.expire)){
+        console.log("token güncel");
         let  authServiceResult = await (await this.authService.getClientCredentialToken()).toPromise();
         accessToken.token=authServiceResult;
-        accessToken.expire=new Date(new Date().getTime() + authServiceResult.expires_in);
+        accessToken.expire=new Date(new Date().getTime() + authServiceResult.expires_in*1000);
         localStorage.removeItem("client_token");
         localStorage.setItem("client_token",JSON.stringify(accessToken));
       }
