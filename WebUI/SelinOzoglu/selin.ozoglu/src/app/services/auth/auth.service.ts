@@ -15,7 +15,7 @@ export class AuthService {
     const headers = { 'content-type': 'application/x-www-form-urlencoded' }
     const body = new HttpParams()
     .set('client_id', "SelinOzogluUI")
-    .set('client_secret', "VkYp3s6v9y$B&E)H@McQfTjWmZq4t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(GKbP")
+    .set('client_secret', "4sxQ54123!1x8Ss23.?")
     .set('grant_type', "client_credentials");
     let result= await this._httpClient.post<ClientCredentialTokenModel>(`${IDENTITY4_SERVER_BASE_URL}/connect/token`,body.toString(),{headers:headers});
     return result;
@@ -24,7 +24,7 @@ export class AuthService {
     const headers = { 'content-type': 'application/x-www-form-urlencoded' }
     const body = new HttpParams()
     .set('client_id', "SelinOzogluUIAdminPanel")
-    .set('client_secret', "t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbPeShVmYq3t6v9y$B&E)H@McQfTjWn")
+    .set('client_secret', "7sxQ54123!.19DSs23")
     .set('grant_type', "password")
     .set('username', email)
     .set('password', password);
@@ -34,7 +34,7 @@ export class AuthService {
     const headers = { 'content-type': 'application/x-www-form-urlencoded' }
     const body = new HttpParams()
     .set('client_id', "SelinOzogluUIAdminPanel")
-    .set('client_secret', "t7w!z%C*F-JaNdRgUkXp2r5u8x/A?D(G+KbPeShVmYq3t6v9y$B&E)H@McQfTjWn")
+    .set('client_secret', "7sxQ54123!.19DSs23")
     .set('grant_type', "refresh_token")
     .set('refresh_token', refreshToken)
     return this._httpClient.post<RefreshTokenModel>(`${IDENTITY4_SERVER_BASE_URL}/connect/token`,body.toString(),{headers:headers});;
