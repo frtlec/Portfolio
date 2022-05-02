@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpErrorResponse, HttpStatusCode } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { LangApiMessages } from "src/langresource/HttpClientErrorHandlerLangResource";
 
@@ -11,16 +11,21 @@ export class HttpClientErrorHandler implements ErrorHandler {
   static readonly DEFAULT_ERROR_TITLE: string = "Something went wrong";
   static readonly SERVICE_401: string = "services could not be accessed";
   static readonly SERVICE_403: string = "services could not be accessed";
-  constructor(private router: Router) { };
+  constructor(private router: Router,private routeA:ActivatedRoute) { };
 
 
   public handleError(error: HttpErrorResponse) {
     let httpErrorCode = error.status;
-    console.log(error);
+    console.log("x!!",error);
+    
     switch (httpErrorCode) {
       case HttpStatusCode.Unauthorized:
+       if(this.router.url.includes("admin")){
+        localStorage.removeItem("admin_token");
+       }else{
         localStorage.removeItem("client_token");
-        location.reload();
+       }
+       this.showError(HttpClientErrorHandler.SERVICE_401);
         break;
       case HttpStatusCode.Forbidden:
         this.showError(HttpClientErrorHandler.SERVICE_401);
@@ -32,6 +37,8 @@ export class HttpClientErrorHandler implements ErrorHandler {
         this.showError(HttpClientErrorHandler.REFRESH_PAGE_ON_TOAST_CLICK_MESSAGE);
     }
   }
+
+
 
   private showError(err: any) {
     if (typeof (err) == "string") {

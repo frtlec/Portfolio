@@ -13,6 +13,7 @@ export class AdminGuard implements CanActivate {
 
    canActivate(route:ActivatedRouteSnapshot,state:RouterStateSnapshot):boolean{
     let logged=localStorage.getItem("admin_token");
+    console.log("accessToken",logged)
     if(logged==null){
         this.router.navigateByUrl("/login");
         return false;
@@ -20,7 +21,7 @@ export class AdminGuard implements CanActivate {
     let accessToken:TokenSaveModel<PasswordTokenModel>=new TokenSaveModel<PasswordTokenModel>();
 
     accessToken=<TokenSaveModel<PasswordTokenModel>>JSON.parse(logged);
-    if(accessToken.expire>new Date()){
+    if(new Date()>new Date(accessToken.expire)){
         this.router.navigateByUrl("/login");
         return false;
     }

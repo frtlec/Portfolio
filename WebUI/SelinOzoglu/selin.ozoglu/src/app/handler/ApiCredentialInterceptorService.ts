@@ -65,11 +65,7 @@ export class ApiCredentialInterceptorService implements HttpInterceptor {
     }else{
    
       accessToken=<TokenSaveModel<ClientCredentialTokenModel>>JSON.parse(getLocalStoreToken);
-      console.log(accessToken);
-      console.log(new Date(),new Date(accessToken.expire));
-      console.log(new Date()>=new Date(accessToken.expire));
       if(new Date()>=new Date(accessToken.expire)){
-        console.log("token güncel");
         let  authServiceResult = await (await this.authService.getClientCredentialToken()).toPromise();
         accessToken.token=authServiceResult;
         accessToken.expire=new Date(new Date().getTime() + authServiceResult.expires_in*1000);
