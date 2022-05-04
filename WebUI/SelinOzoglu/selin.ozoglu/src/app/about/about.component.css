@@ -1,10 +1,88 @@
 .portre{
-    border-radius: 100%;
+    border-radius: 30%;
+    box-shadow: 2px 2px  30px 10px #aa2fb5;
+    cursor: pointer;
     
 }
-li{
-    list-style: none;
-}
+
 .about span.text-muted{
     font-size: 0.8rem;
 }
+.about p{
+  font-size: 1.3rem;
+}
+
+.softwareIconContainer img{
+    height: 38px;
+    width: 39px;
+    margin-right: 4px;
+}
+.about h3{
+    font-weight: bold;
+    font-size: 2.2rem;
+}
+.paddingleft-5{
+    padding-left: 5rem;
+}
+.first.row{
+    margin-bottom: 9rem;
+}
+h1{
+    font-weight: bold;
+}
+.row{
+    margin-bottom: 2.5rem;
+}
+.about .row .col-md-6:nth-child(1){
+  padding-right: 2.5rem;
+}
+.about .row .col-md-6:nth-child(2){
+    padding-left: 2.5rem;
+  }
+.matters{
+    padding: 0;
+    margin-bottom: 0;
+}
+.matters li{
+    margin: 0;
+	padding: 0px 0 20px 64px;
+	list-style: none;
+    background-image: url("../../assets/about/madde-01.svg");;
+	background-repeat: no-repeat;
+	background-position: left 15%;
+	background-size: 34px;
+}
+.matters span{
+
+    display: block;
+    color:#414042;
+
+}
+.matters span.big{
+    font-size: 1.8rem;
+}
+.matters span.normal{
+    font-size: 1.2rem;
+}
+.matters a{
+    text-decoration: none;
+    color:#aa2fb5;
+}
+.project{
+    margin-top: 5rem;
+}
+.project .matters li{
+    background-position: center 0 !important;
+    padding: 40px 0 64px 0;
+}
+
+/* .matters li::before {
+    content: '';
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    background-image: url("../../assets/about/madde-01.svg");;
+    background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 40px;
+  } */
