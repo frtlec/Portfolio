@@ -31,11 +31,12 @@ textarea.form-control{
     border-radius: 0;
     outline: none !important;
     box-shadow: none !important;
+    width: 150px;
 }
 .submitbtn{
     text-align: right;
 }
-.submitbtn .btn:after{
+.submitbtn .btn::before{
     content: '';
     background-color: #aa2fb5;
     width: 100%;
@@ -43,7 +44,6 @@ textarea.form-control{
     position:absolute;
     top: 0;
     left:0;
-    z-index: -1;
     transition: transform 0.3s;
     transform: translateX(-150%);
     transform: translate3d(-150%);
@@ -51,11 +51,16 @@ textarea.form-control{
 .submitbtn .btn:hover{
     color: #ffffff;
 }
-.submitbtn .btn:hover:after{
+.submitbtn .btn:hover:before{
     transform: translateX(0) !important;
+}
+.submitbtn .btn span{
+    z-index: 2;
+    position: relative;
 }
 .heading{
     position: relative;
+    color:white;
 }
 .heading::after{
     
@@ -65,8 +70,9 @@ textarea.form-control{
     height: 2px;
     bottom: 0;
     left:0;
-    background-color: #aa2fb5a4;
+    background-color: #aa2fb5;
 }
+
 
 .heading-soft::after{
     height: 1px;
@@ -78,7 +84,26 @@ textarea.form-control{
 }
 .contact-card{
     position: relative;
+    box-shadow: 7px 16px 17px 3px rgba(0,0,0,0.28);
+    background-color: white;
+    cursor: pointer;
 }
+.contact-card:hover{
+  
+    transition: transform 1s;
+    transform: scale(1.1);
+
+}
+@keyframes shake {
+    0% { transform:rotate(0deg); }
+    50% { transform:rotate(-20deg); }
+    100% { transform:rotate(0); }
+  }
+  @keyframes shake2 {
+    0% { transform: scale(1); }
+    50% {  }
+    100% { transform:scale(1); }
+  }
 .contact-card-image {
     width: 40%;
     float: left;
@@ -99,11 +124,15 @@ textarea.form-control{
     justify-content: center;
     height: 100%;
     min-height: 170px;
-    color:white;
+    color:#9D9E9E;
     display: flex;
     flex-direction: column;
     flex: 1;
     flex-wrap: wrap;
+}
+.people-icon-svg{
+    border-radius: 100%;
+    width: 100%;
 }
 .contact-card-content div{
    /* flex:0 0 100%; */
@@ -114,7 +143,7 @@ textarea.form-control{
 }
 .contact-card-image .people-icon{
     font-size: 5rem;
-    color:#f8f8f8;
+    /* color:#f8f8f8; */
     padding: 1rem;
 }
 .w100{
@@ -132,6 +161,16 @@ textarea.form-control{
 }
 .line.top{
     top:10px;
+}
+.container-fuild{
+    background-color: #BB7CB4 !important;
+  min-height: 100vh;
+
+}
+
+
+textarea{
+    background-color: #C38CBD !important;
 }
 @media  screen and (min-width: 800px) {
     .pr-5{

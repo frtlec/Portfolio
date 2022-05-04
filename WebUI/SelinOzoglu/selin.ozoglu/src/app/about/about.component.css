@@ -2,3 +2,9 @@
     border-radius: 100%;
     
 }
+li{
+    list-style: none;
+}
+.about span.text-muted{
+    font-size: 0.8rem;
+}

@@ -11,6 +11,7 @@ export class HttpClientErrorHandler implements ErrorHandler {
   static readonly DEFAULT_ERROR_TITLE: string = "Something went wrong";
   static readonly SERVICE_401: string = "services could not be accessed";
   static readonly SERVICE_403: string = "services could not be accessed";
+  static readonly SERVICE_429="Limit exceeded, try again later";
   constructor(private router: Router,private routeA:ActivatedRoute) { };
 
 
@@ -33,6 +34,9 @@ export class HttpClientErrorHandler implements ErrorHandler {
       case HttpStatusCode.BadRequest:
         this.showError(error.error);
         break;
+      case HttpStatusCode.TooManyRequests:
+        this.showError(HttpClientErrorHandler.SERVICE_429);
+      break;
       default:
         this.showError(HttpClientErrorHandler.REFRESH_PAGE_ON_TOAST_CLICK_MESSAGE);
     }

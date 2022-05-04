@@ -19,7 +19,7 @@
                   <img [src]="currentPicture" [hidden]="imageLoading==true"  (load)="onImageLoad()"  width="100%" />
                
 
-                  <div class="text-left bg-dark py-5 px-4 text-light" *ngIf="currentDescription!=undefined" innerHTML="{{currentDescription}}">
+                  <div class="text-left bg-dark py-5 px-4 text-light" [hidden]="currentDescription==undefined || currentDescription=='' " innerHTML="{{currentDescription}}">
          
                  
                 </div>

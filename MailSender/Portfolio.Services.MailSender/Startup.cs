@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Portfolio.Services.MailSender.Consumers;
+using Portfolio.Services.MailSender.Middlewares;
 using Portfolio.Services.MailSender.Services;
 using Portfolio.Services.MailSender.Settings;
 using System;
@@ -83,11 +84,13 @@ namespace Portfolio.Services.MailSender
       services.AddTransient<IMailSenderService, MailSenderService>();
       services.AddAutoMapper(typeof(Startup));
       services.AddControllers();
+      services.AddMemoryCache();
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio.Services.MailSender", Version = "v1" });
       });
       services.Configure<DataBaseSettings>(Configuration.GetSection("DatabaseSettings"));
+      services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
       services.AddSingleton<IDataBaseSettings>(sp =>
       {
         return sp.GetRequiredService<IOptions<DataBaseSettings>>().Value;
@@ -107,7 +110,8 @@ namespace Portfolio.Services.MailSender
 
       app.UseCors("AllowOrigin");
       //app.UseHttpsRedirection();
-
+      app.UseMiddleware<AntiForgeryTokenMiddleware>();
+      app.UseMiddleware<CreateMailLimiterMiddleware>();
       app.UseRouting();
 
       app.UseAuthentication();

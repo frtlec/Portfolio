@@ -1,34 +1,33 @@
 <app-default-header></app-default-header>
-<div class="container">
+<div class="container-fuild">
     <div class="row">
         <div class="col-xl-8 m-auto py-3">
             <h2 class="heading mb-5">Contact Form</h2>
             <form #contactForm="ngForm" (ngSubmit)="submit()">
                 <div class="row">
                     <div class="col-md-6 p-2">
-                        <div class="contact-card bg-dark h100">
-                            <div class="line top"></div>
-                            <div class="line bottom"></div>
-                            <div class="contact-card-image">
+                        <div class="contact-card h100">
+                            <div class="contact-card-image p-4">
                                 <fa-icon *ngIf="contactModel.gender==''" [@gender]="true" [icon]="faUserLarge" class="people-icon"></fa-icon>
                                 <fa-icon *ngIf="contactModel.gender=='men'" [@gender]="true" [icon]="faUserTie" class="people-icon"></fa-icon>
-                                <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon>
+                                <!-- <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon> -->
+                                <img *ngIf="contactModel.gender=='women'"  src="../../assets/characters/char-women.svg" class="people-icon-svg" [@gender]="true" />
                             </div>
-                            <div class="contact-card-content py-4">
+                            <div class="contact-card-content py-4 px-4">
                                 <div><span>{{contactModel.fullName}}</span></div>
                                 <div><span>{{contactModel.email}}</span></div>
                                 <div><span>{{contactModel.phone}}</span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 p-2 px-4">
 
                         <div class="form-group mb-4">
                             <input type="text" class="form-control" aria-label="Sizing example input"
-                                placeholder="Full Name" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off">
+                                placeholder="Full Name" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off" [disabled]="isSubmit">
                         </div>
                         <div class="form-group mb-4">
-                            <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" >
+                            <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" [disabled]="isSubmit" >
                                 <option value=''>Gender</option>
                                 <option value="women">Women</option>
                                 <option value="men">Men</option>
@@ -36,7 +35,7 @@
                         </div>
                         <div class="form-group mb-4">
                             <input type="email" class="form-control" aria-label="Sizing example input"
-                                placeholder="Email" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off">
+                                placeholder="Email" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off" [disabled]="isSubmit">
                                <div class="text-right">
                                 <small class="text-muted">example@exdomain.com</small>
                                </div>
@@ -44,15 +43,15 @@
 
                         <div class="form-group mb-4">
                             <input type="tel" class="form-control" aria-label="Sizing example input" placeholder="Phone"
-                                aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off">
+                                aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off" [disabled]="isSubmit">
                         </div>
                     </div>
                    
                 </div>
-                <div class="row  mt-5">
+                <div class="row  mt-4">
                     <div class="col-12">
                         <div class="form-group mb-4">
-                            <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon">
+                            <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon" [disabled]="isSubmit">
                                 <option selected value="-1">Subject Category</option>
                                 <option *ngFor="let cat of categories" [value]="cat.id">{{cat.title}}</option>
                             </select>
@@ -61,7 +60,13 @@
                             <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" placeholder="enter your message"></textarea>
                         </div>
                         <div class="submitbtn mt-4">
-                            <button class="btn btn-primary" type="submit">Forward</button>
+                            <button class="btn btn-primary" type="submit" [disabled]="isSubmit">
+                                <span  [hidden]="isSubmit">Forward</span>
+                                <div class="spinner-border"  [hidden]="!isSubmit" role="status">
+                                    <span class="sr-only"></span>
+                                  </div>
+                            </button>
+                       
                         </div>
                     </div>
                 </div>

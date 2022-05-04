@@ -48,7 +48,7 @@ namespace Portfolio.IdentityServer
                     AllowedScopes={
                      "selin.ozoglu.com.work.read"
                    },
-                    AccessTokenLifetime=10
+                    AccessTokenLifetime=3600*24
                 },
                 new Client
                 {

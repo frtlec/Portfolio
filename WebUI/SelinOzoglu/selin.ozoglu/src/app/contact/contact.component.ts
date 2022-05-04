@@ -37,6 +37,7 @@ export class ContactComponent implements OnInit {
   contactModel:ContactModel=new ContactModel();
 
   categories:CategorySMO[]=new Array<CategorySMO>();
+  isSubmit:boolean=false;
   constructor(private contactService:ContactService,private categoryService:CategoryService) { }
 
   ngOnInit(): void {
@@ -93,6 +94,7 @@ export class ContactComponent implements OnInit {
     if(this.validator()==false){
       return;
     }
+    this.isSubmit=true;
     this.contactModel.categoryName=this.categories.find(f=>f.id==this.contactModel.categoryId)?.title;
     this.contactService.createContact(this.contactModel).subscribe(res=>{
       Swal.fire({
@@ -101,6 +103,7 @@ export class ContactComponent implements OnInit {
       });
 
       this.resetForm();
+      this.isSubmit=false;
     });
   }
   resetForm(){
