@@ -6,6 +6,7 @@ export class CategorySMO {
     sort:number;
     createdDate:Date;
     updatedDate:Date;
+    isShowMainPage:boolean;
 }
 export class CategoryAddSMO{
     categoryId: number;

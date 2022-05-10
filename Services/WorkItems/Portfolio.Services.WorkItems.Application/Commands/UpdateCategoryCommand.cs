@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Commands
 {
-    public class UpdateCategoryCommand:IRequest<Response<UpdateCategoryDto>>
-    {
-        public short CategoryId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public short Sort { get; set; }
-    }
+  public class UpdateCategoryCommand : IRequest<Response<UpdateCategoryDto>>
+  {
+    public short CategoryId { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public bool IsShowMainPage { get; set; }
+    public bool IsActive { get; set; }
+    public short Sort { get; set; }
+  }
 }

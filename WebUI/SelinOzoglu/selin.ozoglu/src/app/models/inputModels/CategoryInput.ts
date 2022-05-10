@@ -4,4 +4,5 @@ export class CategoryInput {
     description:string;
     isActive:boolean;
     sort:number;
+    isShowMainPage:boolean;
 }

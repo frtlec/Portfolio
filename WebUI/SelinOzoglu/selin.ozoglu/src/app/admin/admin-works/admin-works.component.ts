@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faEdit, faTrash, faPlusSquare, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { WorkFilterModel } from 'src/app/models/inputModels/WorkAddModel';
 import { WorkSMO } from 'src/app/models/serviceModels/WorkServiceModel';
+import { PhotostockService } from 'src/app/services/photostock/photostock.service';
 import { WorkServiceService } from 'src/app/services/work/work-service.service';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 import Swal from 'sweetalert2';
@@ -19,7 +20,7 @@ export class AdminWorksComponent implements OnInit {
 
   works: WorkSMO[];
   photoStockPhotosFile: string = PHOTO_STOCK_API_PHOTOS_FILE_URL;
-  constructor(private workService: WorkServiceService) {
+  constructor(private workService: WorkServiceService,private photoService:PhotostockService) {
     this.render();
   }
   render(){
@@ -28,6 +29,7 @@ export class AdminWorksComponent implements OnInit {
     filter.isActive = null;
     filter.limit = 9999;
     filter.search = "";
+    filter.isShowMainPage=null;
     this.workService.getAllWork(filter).subscribe(
       res => {
         this.works = res.body.data;

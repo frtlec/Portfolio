@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Queries
 {
-    public class GetAllWorkByFilterQuery : IRequest<Response<List<WorkDto>>>
-    {
-        public int Limit { get; set; }
-        public string Search { get; set; }
-        public short CategoryId { get; set; }
-        public bool? IsActive { get; set; } = true;
-    }
+  public class GetAllWorkByFilterQuery : IRequest<Response<List<WorkDto>>>
+  {
+    public int Limit { get; set; }
+    public string Search { get; set; }
+    public short CategoryId { get; set; }
+    public bool? IsActive { get; set; } = true;
+    public bool? IsShowMainPage { get; set; }
+  }
 }

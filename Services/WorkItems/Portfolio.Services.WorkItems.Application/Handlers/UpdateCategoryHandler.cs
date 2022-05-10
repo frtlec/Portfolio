@@ -36,7 +36,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
                 Category category = _context.Categories.FirstOrDefault(f => f.Id == request.CategoryId);
 
 
-                category.UpdateCategory(request.Title,request.Description,request.IsActive,request.Sort);
+                category.UpdateCategory(request.Title,request.Description,request.IsActive,request.Sort,request.IsShowMainPage);
 
                  _context.Update(category);
 

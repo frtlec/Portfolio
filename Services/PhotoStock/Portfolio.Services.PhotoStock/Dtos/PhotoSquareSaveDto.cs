@@ -5,8 +5,7 @@ namespace Portfolio.Services.PhotoStock.Dtos
 {
     public class PhotoSquareSaveDto
     {
-        public string Title { get; set; }
-        public IFormFile Image { get; set; }
-
+       public string Title { get; set; }//kaldırıldı
+       public IFormFile Image { get; set; }
     }
 }

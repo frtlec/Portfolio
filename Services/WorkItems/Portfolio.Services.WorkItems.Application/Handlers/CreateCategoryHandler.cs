@@ -33,7 +33,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
                 if (validationResult.IsValid == false)
                     return Response<CreateCategoryDto>.Fail(validationResult.Errors.FluentValidationErrorToListString(), 400);
 
-                Category category = new Category(request.Title, request.Description, request.IsActive, 1, request.Sort);
+                Category category = new Category(request.Title, request.Description, request.IsActive, 1, request.Sort,request.IsShowMainPage);
 
                 await _context.AddAsync(category);
 

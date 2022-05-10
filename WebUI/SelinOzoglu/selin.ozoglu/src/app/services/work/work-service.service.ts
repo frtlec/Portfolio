@@ -17,10 +17,8 @@ export class WorkServiceService {
   constructor(private _httpClient: HttpClient) { }
 
   getAllWork(filter: WorkFilterModel) {
-    console.log("filter",filter);
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(filter);
-    console.log(WORK_API_BASE_URL);
     return this._httpClient.post<IResponse<WorkSMO[]>>(
       `${WORK_API_BASE_URL}/works/getworks`,
       body,

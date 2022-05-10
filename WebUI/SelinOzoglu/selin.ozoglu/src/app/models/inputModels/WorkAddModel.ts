@@ -20,4 +20,5 @@ export class WorkFilterModel{
     search:string;
     isActive:boolean=true;
     categoryId:number;
+    isShowMainPage:boolean=true;
 }

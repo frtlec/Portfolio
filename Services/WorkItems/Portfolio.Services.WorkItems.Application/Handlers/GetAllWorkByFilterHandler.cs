@@ -15,50 +15,60 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Handlers
 {
-    public class GetAllWorkByFilterHandler : IRequestHandler<GetAllWorkByFilterQuery, Response<List<WorkDto>>>
+  public class GetAllWorkByFilterHandler : IRequestHandler<GetAllWorkByFilterQuery, Response<List<WorkDto>>>
+  {
+    private readonly WorkItemsDbContext _context;
+
+    public GetAllWorkByFilterHandler(WorkItemsDbContext context)
     {
-        private readonly WorkItemsDbContext _context;
-
-        public GetAllWorkByFilterHandler(WorkItemsDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<Response<List<WorkDto>>> Handle(GetAllWorkByFilterQuery request, CancellationToken cancellationToken)
-        {
-            try
-            {
-                IQueryable<Work> query = _context.Works.AsQueryable().AsNoTracking();
-                if (request.IsActive!=null)
-                {
-                    query = query.Where(f => f.IsActive == request.IsActive);
-                }
-               
-                if (string.IsNullOrEmpty(request.Search)==false)
-                {
-                    query = query.Where(f => f.Title.ToLower().Contains(request.Search.ToLower()) || f.Description.ToLower().Contains(request.Search.ToLower()));
-                }
-                if (request.CategoryId!=0)
-                {
-                    query = query.Where(f=>f.CategoryId==request.CategoryId);
-                }
-                query = query.Take(request.Limit);
-
-
-                List<Work> works = await query.OrderByDescending(f=>f.Id).ToListAsync();
-                if (!works.Any())
-                {
-                    return Response<List<WorkDto>>.Success(new List<WorkDto>(), 200);
-                }
-
-                var worksDto = ObjectMapper.Mapper.Map<List<WorkDto>>(works);
-                return Response<List<WorkDto>>.Success(worksDto, 200);
-            }
-            catch (Exception ex)
-            {
-
-                return Response<List<WorkDto>>.Fail("error", 500);
-            }
-        }
+      _context = context;
     }
+
+    public async Task<Response<List<WorkDto>>> Handle(GetAllWorkByFilterQuery request, CancellationToken cancellationToken)
+    {
+      try
+      {
+        IQueryable<Work> query = _context.Works.Include(f=>f.Category).AsQueryable();
+
+        string str = query.ToQueryString();
+
+        if (request.IsShowMainPage!=null)
+        {
+          query = query.Where(f => f.Category.IsShowMainPage == request.IsShowMainPage);
+        }
+
+
+        if (request.IsActive != null)
+        {
+          query = query.Where(f => f.IsActive == request.IsActive);
+        }
+
+        if (string.IsNullOrEmpty(request.Search) == false)
+        {
+          query = query.Where(f => f.Title.ToLower().Contains(request.Search.ToLower()) || f.Description.ToLower().Contains(request.Search.ToLower()));
+        }
+        if (request.CategoryId != 0)
+        {
+          query = query.Where(f => f.CategoryId == request.CategoryId);
+        }
+
+        query = query.Take(request.Limit);
+
+
+        List<Work> works = await query.OrderByDescending(f => f.Id).ToListAsync();
+        if (!works.Any())
+        {
+          return Response<List<WorkDto>>.Success(new List<WorkDto>(), 200);
+        }
+
+        var worksDto = ObjectMapper.Mapper.Map<List<WorkDto>>(works);
+        return Response<List<WorkDto>>.Success(worksDto, 200);
+      }
+      catch (Exception ex)
+      {
+
+        return Response<List<WorkDto>>.Fail("error", 500);
+      }
+    }
+  }
 }

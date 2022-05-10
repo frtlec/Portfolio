@@ -30,7 +30,7 @@ namespace Portfolio.Services.WorkItems.Application.Handlers
           return Response<DeleteWorkDto>.Fail("Silinecek iş bulunamadı", 400);
         _context.Works.Remove(work);
         await _context.SaveChangesAsync();
-
+       
         return Response<DeleteWorkDto>.Success(200);
       }
       catch (Exception ex)

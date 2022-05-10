@@ -8,45 +8,47 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Domain.WorkAggregate
 {
-    public class Category : Entity, IAggregateRoot
+  public class Category : Entity, IAggregateRoot
+  {
+    [MaxLength(150)]
+    [Required]
+    public string Title { get; set; }
+    [MaxLength(200)]
+    [Required]
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    [Required]
+    public int CreatorUserId { get; set; }
+
+    public short Sort { get; set; }
+    public bool IsShowMainPage { get; set; }
+    public DateTime? CreatedDate { get; private set; }
+    public DateTime? UpdatedDate { get; private set; }
+
+    public Category()
     {
-        [MaxLength(150)]
-        [Required]
-        public string Title { get; set; }
-        [MaxLength(200)]
-        [Required]
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        [Required]
-        public int CreatorUserId { get; set; }
 
-        public short Sort { get; set; }
-        public DateTime? CreatedDate { get; private set; }
-        public DateTime? UpdatedDate { get; private set; }
-
-        public Category()
-        {
-
-        }
-        public Category(string title, string description, bool isActive, int creatorUserId, short sort)
-        {
-
-            Title = title;
-            Description = description;
-            IsActive = isActive;
-            CreatorUserId = creatorUserId;
-            Sort = sort;
-            CreatedDate = DateTime.Now;
-        }
-
-        public void UpdateCategory(string title, string description, bool isActive, short sort)
-        {
-            Title = title;
-            Description = description;
-            IsActive = isActive;
-            Sort = sort;
-            UpdatedDate = DateTime.Now;
-           
-        }
     }
+    public Category(string title, string description, bool isActive, int creatorUserId, short sort,bool isShowMainPage=true)
+    {
+
+      Title = title;
+      Description = description;
+      IsActive = isActive;
+      CreatorUserId = creatorUserId;
+      Sort = sort;
+      CreatedDate = DateTime.Now;
+      IsShowMainPage = isShowMainPage;
+    }
+
+    public void UpdateCategory(string title, string description, bool isActive, short sort, bool isShowMainPage)
+    {
+      Title = title;
+      Description = description;
+      IsActive = isActive;
+      Sort = sort;
+      UpdatedDate = DateTime.Now;
+      IsShowMainPage = isShowMainPage;
+    }
+  }
 }

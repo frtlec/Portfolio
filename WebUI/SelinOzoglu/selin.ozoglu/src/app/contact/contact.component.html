@@ -9,7 +9,7 @@
                         <div class="contact-card h100">
                             <div class="contact-card-image p-4">
                                 <fa-icon *ngIf="contactModel.gender==''" [@gender]="true" [icon]="faUserLarge" class="people-icon"></fa-icon>
-                                <fa-icon *ngIf="contactModel.gender=='men'" [@gender]="true" [icon]="faUserTie" class="people-icon"></fa-icon>
+                                <img *ngIf="contactModel.gender=='men'"  src="../../assets/characters/char-man.svg" class="people-icon-svg" [@gender]="true" />
                                 <!-- <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon> -->
                                 <img *ngIf="contactModel.gender=='women'"  src="../../assets/characters/char-women.svg" class="people-icon-svg" [@gender]="true" />
                             </div>

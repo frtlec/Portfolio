@@ -1,6 +1,6 @@
 .portre{
     border-radius: 30%;
-    box-shadow: 2px 2px  30px 10px #aa2fb5;
+  
     cursor: pointer;
     
 }
@@ -21,9 +21,7 @@
     font-weight: bold;
     font-size: 2.2rem;
 }
-.paddingleft-5{
-    padding-left: 5rem;
-}
+
 .first.row{
     margin-bottom: 9rem;
 }
@@ -33,12 +31,7 @@ h1{
 .row{
     margin-bottom: 2.5rem;
 }
-.about .row .col-md-6:nth-child(1){
-  padding-right: 2.5rem;
-}
-.about .row .col-md-6:nth-child(2){
-    padding-left: 2.5rem;
-  }
+
 .matters{
     padding: 0;
     margin-bottom: 0;
@@ -76,6 +69,31 @@ h1{
     padding: 40px 0 64px 0;
 }
 
+@media only screen and (min-width: 1280px) {
+    .paddingleft-5{
+        padding-left: 5rem;
+    }
+    .about .row .col-md-6:nth-child(1){
+        padding-right: 2.5rem;
+      }
+      .about .row .col-md-6:nth-child(2){
+          padding-left: 2.5rem;
+        }
+}
+@media only screen and (max-width: 1280px) {
+   .matters{
+       background-size: 20px;
+       padding: 0px 0 20px 0px;
+   }
+   .softwareIconContainer img{
+    height: 25px;
+    width: 26px;
+    margin-right: 4px;
+    }
+    .first.row{
+        margin-bottom:2rem;
+    }
+}  
 /* .matters li::before {
     content: '';
     display: inline-block;

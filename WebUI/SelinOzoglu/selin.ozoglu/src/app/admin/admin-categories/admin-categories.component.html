@@ -7,6 +7,7 @@
                     <th scope="col">Ad</th>
                     <th scope="col">Açıklama</th>
                     <th scope="col">Aktif</th>
+                    <th scope="col">Görünüm</th>
                     <th scope="col">Sıra</th>
                     <th scope="col">Oluşturma T.</th>
                     <th scope="col">Güncelleme T.</th>
@@ -18,6 +19,7 @@
                         <td>{{category.title}}</td>
                         <td width="250px">{{category.description}}</td>
                         <td>{{category.isActive?'evet':'hayır'}}</td>
+                        <td>{{category.isShowMainPage?'evet':'hayır'}}</td>
                         <td>{{category.sort}}</td>
                         <td>{{category.createdDate?(category.createdDate | date:'yyyy-MM-dd'):''}}</td>
                         <td>{{category.updatedDate?(category.updatedDate | date:'yyyy-MM-dd'):''}}</td>
@@ -49,6 +51,10 @@
                 <div class="form-group  form-check mb-4">
                     <input type="checkbox"  [(ngModel)]="category.isActive" name="isActive" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Aktif</label>
+                </div>
+                <div class="form-group  form-check mb-4">
+                    <input type="checkbox"  [(ngModel)]="category.isShowMainPage" name="isShowMainPage" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Anasayfada Görünsün mü?</label>
                 </div>
                 <div class="form-group mb-4">
                     <label>Kategori Sırası</label>

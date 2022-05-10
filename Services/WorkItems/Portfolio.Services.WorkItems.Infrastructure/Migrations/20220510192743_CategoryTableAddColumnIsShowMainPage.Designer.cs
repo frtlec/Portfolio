@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Portfolio.Services.WorkItems.Infrastructure;
@@ -10,9 +11,10 @@ using Portfolio.Services.WorkItems.Infrastructure;
 namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
 {
     [DbContext(typeof(WorkItemsDbContext))]
-    partial class WorkItemsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220510192743_CategoryTableAddColumnIsShowMainPage")]
+    partial class CategoryTableAddColumnIsShowMainPage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,10 @@ namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<short>("CategoryId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("CategoryId1")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -145,7 +150,7 @@ namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId1");
 
                     b.ToTable("Works", "works");
                 });
@@ -196,9 +201,7 @@ namespace Portfolio.Services.WorkItems.Infrastructure.Migrations
                 {
                     b.HasOne("Portfolio.Services.WorkItems.Domain.WorkAggregate.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId1");
 
                     b.Navigation("Category");
                 });

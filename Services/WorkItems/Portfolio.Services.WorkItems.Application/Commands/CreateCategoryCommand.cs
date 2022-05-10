@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Commands
 {
-    public class CreateCategoryCommand : IRequest<Response<CreateCategoryDto>>
-    { 
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public short Sort { get; set; }
-    }
+  public class CreateCategoryCommand : IRequest<Response<CreateCategoryDto>>
+  {
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsShowMainPage { get; set; }
+    public short Sort { get; set; }
+  }
 }

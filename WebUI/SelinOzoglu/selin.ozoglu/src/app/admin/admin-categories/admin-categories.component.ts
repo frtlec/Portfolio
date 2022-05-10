@@ -20,8 +20,8 @@ export class AdminCategoriesComponent implements OnInit {
     this.render();
 
     this.category = new CategoryInput();
-
-
+    this.category.isShowMainPage=true;
+    this.category.isActive=true;
 
   }
   render() {
@@ -113,6 +113,7 @@ export class AdminCategoriesComponent implements OnInit {
       this.category.isActive=res.data.isActive;
       this.category.sort=res.data.sort;
       this.category.title=res.data.title;
+      this.category.isShowMainPage=res.data.isShowMainPage;
     })
 
    

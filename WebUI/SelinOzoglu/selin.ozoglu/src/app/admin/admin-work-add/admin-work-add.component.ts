@@ -125,20 +125,20 @@ export class AdminWorkAddComponent implements OnInit {
     element.nativeElement.value = "";
   }
   mainPhotoChange(event: any) {
-    if (this.title == "") {
-      Swal.fire({
-        icon: "error",
-        text: "Fotoğraf yükleyebilmek için iş adı dolu olmalıdır"
-      })
-      this.resetElement(this.mainPhotoInputVariable);
-      return;
-    }
+    // if (this.title == "") {
+    //   Swal.fire({
+    //     icon: "error",
+    //     text: "Fotoğraf yükleyebilmek için iş adı dolu olmalıdır"
+    //   })
+    //   this.resetElement(this.mainPhotoInputVariable);
+    //   return;
+    // }
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       let image: File = fileList[0];
 
       this.photoDelete(this.mainPicture);
-      this.photostockService.savePhoto(image, this.title + "-main", 1)
+      this.photostockService.savePhoto(image, 1)
         .subscribe(
           res => {
 
@@ -213,20 +213,20 @@ export class AdminWorkAddComponent implements OnInit {
     ]
   };
   detailPhotoChange(event: any) {
-    if (this.title == "") {
-      Swal.fire({
-        icon: "error",
-        text: "Fotoğraf yükleyebilmek için Metin dolu olmalıdır"
-      })
-      this.resetElement(this.detailPhotoInputVariable);
-      return;
-    }
+    // if (this.title == "") {
+    //   Swal.fire({
+    //     icon: "error",
+    //     text: "Fotoğraf yükleyebilmek için Metin dolu olmalıdır"
+    //   })
+    //   this.resetElement(this.detailPhotoInputVariable);
+    //   return;
+    // }
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       let image: File = fileList[0];
 
       this.photoDelete(this.detailPicture);
-      this.photostockService.savePhoto(image, this.title + "-detail", 2)
+      this.photostockService.savePhoto(image,2)
         .subscribe(
           res => {
 

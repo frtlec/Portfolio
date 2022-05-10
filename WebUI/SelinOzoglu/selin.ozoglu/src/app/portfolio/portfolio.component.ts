@@ -51,6 +51,7 @@ export class PortfolioComponent implements OnInit {
     this.filter.limit = 9999;
     this.filter.search = "";
     this.filter.categoryId=0;
+    this.filter.isShowMainPage=null;
     this.workService.getAllWork(this.filter).subscribe(
       res => {
         this.works = res.body.data;

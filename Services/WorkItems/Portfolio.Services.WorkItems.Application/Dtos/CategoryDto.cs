@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.Application.Dtos
 {
-    public class CategoryDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public short Sort { get; set; }
-        public DateTime? CreatedDate { get;  set; }
-        public DateTime? UpdatedDate { get;  set; }
-    }
+  public class CategoryDto
+  {
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    public short Sort { get; set; }
+    public bool IsShowMainPage { get; set; }
+    public DateTime? CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
+  }
 }

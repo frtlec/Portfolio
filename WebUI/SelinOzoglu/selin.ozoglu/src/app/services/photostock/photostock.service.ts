@@ -12,7 +12,7 @@ export class PhotostockService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  savePhoto(image:File,title:string,photoType:number){
+  savePhotoWithPNAme(image:File,title:string,photoType:number){
     let formData = new FormData();
     formData.append('image', image);
     formData.append('title', title);
@@ -28,6 +28,27 @@ export class PhotostockService {
     if(photoType==2){
       result=this._httpClient.post<IResponse<PhotoSMO>>(
         `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSaveWithPName`,
+        formData,
+        {context:getPasswordCredential()}
+      );
+    }
+    return result;
+  }
+  savePhoto(image:File,photoType:number){
+    let formData = new FormData();
+    formData.append('photo', image);
+ 
+    let result;
+    if(photoType==1){
+      result=this._httpClient.post<IResponse<PhotoSMO>>(
+        `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSquareSave`,
+        formData,
+        {context:getPasswordCredential()}
+      );
+    }
+    if(photoType==2){
+      result=this._httpClient.post<IResponse<PhotoSMO>>(
+        `${PHOTO_STOCK_API_BASE_URL}/photos/PhotoSaveRectangle`,
         formData,
         {context:getPasswordCredential()}
       );
