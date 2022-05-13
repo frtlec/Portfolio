@@ -54,29 +54,45 @@ namespace Portfolio.IdentityServer
 
           var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
           var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-          if (!userManager.Users.Any())
-          {
-            var userZafer = new ApplicationUser
-            {
-              UserName = "zaferkrk",
-              Email = "zafer.krk@hotmail.com",
-              City = "İstanbul",
 
-            };
-            userManager.CreateAsync(userZafer, "ZK.147olu").Wait();
+          var userZafer = new ApplicationUser
+          {
+            UserName = "zaferkrk",
+            Email = "zafer.krk@hotmail.com",
+            City = "İstanbul",
+
+          };
+          string passwordZafer = "ZK.147olu";
+          string passwordSelin = "SL!x123";
+          var userSelin = new ApplicationUser
+          {
+            UserName = "selino",
+            Email = "selin.ozoglu98@gmail.com",
+            City = "İstanbul",
+          };
+          if (roleManager.Roles.Any(f => f.Name == "admin")==false)
+          {
             roleManager.CreateAsync(new IdentityRole("admin")).Wait();
+          }
+          if (userManager.Users.Any()==false)
+          {
+            userManager.CreateAsync(userZafer, "ZK.147olu").Wait();
             userManager.AddToRoleAsync(userZafer, "admin").Wait();
 
-            var userSelin = new ApplicationUser
-            {
-              UserName = "selino",
-              Email = "selin.ozoglu98@gmail.com",
-              City = "İstanbul",
-
-            };
             userManager.CreateAsync(userSelin, "SL!x123").Wait();
-            roleManager.CreateAsync(new IdentityRole("admin")).Wait();
             userManager.AddToRoleAsync(userSelin, "admin").Wait();
+          }
+
+
+          if (userManager.Users.Any(f => f.Email == userSelin.Email) == false)
+          {
+            userManager.CreateAsync(userSelin, passwordSelin).Wait();
+            userManager.AddToRoleAsync(userSelin, "admin").Wait();
+          }
+          if (userManager.Users.Any(f => f.Email == userZafer.Email) == false)
+          {
+            userManager.CreateAsync(userZafer, passwordZafer).Wait();
+            userManager.AddToRoleAsync(userZafer, "admin").Wait();
           }
         }
 
