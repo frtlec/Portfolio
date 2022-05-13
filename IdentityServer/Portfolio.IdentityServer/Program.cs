@@ -49,14 +49,7 @@ namespace Portfolio.IdentityServer
         {
           var serviceProvider = scope.ServiceProvider;
           var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-
-
-          if (applicationDbContext.Exists() == false)
-          {
-            applicationDbContext.Database.EnsureCreated();
-          }
           applicationDbContext.Database.Migrate();
-
           var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
           var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
