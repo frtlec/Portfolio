@@ -49,7 +49,12 @@ namespace Portfolio.IdentityServer
         {
           var serviceProvider = scope.ServiceProvider;
           var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-          applicationDbContext.Database.EnsureCreated();
+
+
+          if (applicationDbContext.Exists() == false)
+          {
+            applicationDbContext.Database.EnsureCreated();
+          }
           applicationDbContext.Database.Migrate();
 
           var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -70,11 +75,11 @@ namespace Portfolio.IdentityServer
             Email = "selin.ozoglu98@gmail.com",
             City = "İstanbul",
           };
-          if (roleManager.Roles.Any(f => f.Name == "admin")==false)
+          if (roleManager.Roles.Any(f => f.Name == "admin") == false)
           {
             roleManager.CreateAsync(new IdentityRole("admin")).Wait();
           }
-          if (userManager.Users.Any()==false)
+          if (userManager.Users.Any() == false)
           {
             userManager.CreateAsync(userZafer, "ZK.147olu").Wait();
             userManager.AddToRoleAsync(userZafer, "admin").Wait();
