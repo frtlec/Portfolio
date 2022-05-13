@@ -49,6 +49,7 @@ namespace Portfolio.IdentityServer
         {
           var serviceProvider = scope.ServiceProvider;
           var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+          applicationDbContext.Database.EnsureCreated();
           applicationDbContext.Database.Migrate();
 
           var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
