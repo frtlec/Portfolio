@@ -56,16 +56,27 @@ namespace Portfolio.IdentityServer
           var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
           if (!userManager.Users.Any())
           {
-           var user = new ApplicationUser
-           {
-             UserName = "zaferkrk",
-             Email = "zafer.krk@hotmail.com",
-             City = "İstanbul",
+            var userZafer = new ApplicationUser
+            {
+              UserName = "zaferkrk",
+              Email = "zafer.krk@hotmail.com",
+              City = "İstanbul",
 
-           };
-           userManager.CreateAsync(user, "ZK.147olu").Wait();
-           roleManager.CreateAsync(new IdentityRole("admin")).Wait();
-           userManager.AddToRoleAsync(user, "admin").Wait();
+            };
+            userManager.CreateAsync(userZafer, "ZK.147olu").Wait();
+            roleManager.CreateAsync(new IdentityRole("admin")).Wait();
+            userManager.AddToRoleAsync(userZafer, "admin").Wait();
+
+            var userSelin = new ApplicationUser
+            {
+              UserName = "selino",
+              Email = "selin.ozoglu98@gmail.com",
+              City = "İstanbul",
+
+            };
+            userManager.CreateAsync(userSelin, "SL!x123").Wait();
+            roleManager.CreateAsync(new IdentityRole("admin")).Wait();
+            userManager.AddToRoleAsync(userSelin, "admin").Wait();
           }
         }
 
