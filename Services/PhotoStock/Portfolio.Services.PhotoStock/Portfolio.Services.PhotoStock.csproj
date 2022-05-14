@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Attributes\" />
+    <Folder Include="wwwroot\svg\" />
     <Folder Include="wwwroot\photos\" />
   </ItemGroup>
 

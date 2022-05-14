@@ -1,0 +1,14 @@
+.admin-p-line-matter-container{
+    
+}
+.min-height{
+    min-height: 300px;
+}
+.insertbtn{
+    position: absolute;
+    right: 0;
+    top:0;
+}
+.row div{
+    position: relative;
+}

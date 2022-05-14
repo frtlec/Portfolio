@@ -36,6 +36,7 @@ import { ContactService } from './services/contact/contact.service';
 import { PhotostockService } from './services/photostock/photostock.service';
 import { WorkServiceService } from './services/work/work-service.service';
 import { AdminGuard } from './admin/AdminGuard';
+import { Safe } from './pipes/safeHtml';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +54,8 @@ import { AdminGuard } from './admin/AdminGuard';
     AdminCategoriesComponent,
     AdminAboutComponent,
     AdminSettingsComponent,
-    ContactComponent
-
+    ContactComponent,
+    Safe
   ],
   imports: [
     BrowserModule,
@@ -72,6 +73,7 @@ import { AdminGuard } from './admin/AdminGuard';
   providers: [Store,AdminGuard,
                     { provide: ErrorHandler, useClass: HttpClientErrorHandler },
                     { provide: HTTP_INTERCEPTORS, useClass: ApiCredentialInterceptorService,multi:true }
+                    
                 ],
   bootstrap: [AppComponent]
 })

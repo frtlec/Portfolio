@@ -15,6 +15,7 @@ namespace Portfolio.IdentityServer
             new ApiResource("resource_workitem"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
             new ApiResource("resource_photostock"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
             new ApiResource("resource_mailsender"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
+            new ApiResource("resource_settings"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
             new ApiResource("resource_gateway"){Scopes={"selin.ozoglu.com.work.read","selin.ozoglu.com.work.write"}},
            new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };

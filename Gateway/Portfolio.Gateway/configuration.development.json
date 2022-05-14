@@ -74,6 +74,31 @@
           "selin.ozoglu.com.work.write"
         ]
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5014
+        }
+      ],
+      "UpstreamPathTemplate": "/services/Settings/{everything}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post",
+        "Put",
+        "Delete"
+      ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [
+          "selin.ozoglu.com.work.read",
+          "selin.ozoglu.com.work.write"
+        ]
+      }
     }
   ],
   "GlobalConfiguration": {

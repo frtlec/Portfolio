@@ -4,85 +4,49 @@
     <div class="row first">
     
         <div class="col-lg-3 mb-5">
-            <img src="https://mir-s3-cdn-cf.behance.net/user/276/3c5793219359535.5e9586ee9f09b.png" width="100%"
+            <img [src]="PHOTO_STOCK_API_PHOTOS_FILE_URL+aboutPage.portreFileName+'?x12313'" width="100%"
                 class="portre" />
         </div>
         <div class="col-lg-9 mb-3 paddingleft-5">
-            <h1 class="mb-4">Welcome to my portfolio enjoy</h1>
-            <p class="mb-1">Selin(1998) He was born in Istanbul
-            </p>
-            <p>
-                I have been interested in design since my high school education.I am very<br />
-                passionate about creating visually appealing graphics and illustrations<br />
-                I get pleasure. Typography photo editing and short 2d 3d animations<br />
-                I also love to create.
+            <h1 class="mb-4">{{aboutPage.slogan}}</h1>
+            <div [innerHtml]="aboutPage.summary | safeHtml">
 
-            </p>
+            </div>
         </div>
     </div>
     <div class="row mb-5">
         <div class="col-lg-12">
-            <h3 class="mb-3">Software</h3>
+            <h3 class="mb-3">Programlar</h3>
             <div class="softwareIconContainer">
-                <img src="../../assets/about/ai-01.svg" alt="Adobe Illustrator" />
-                <img src="../../assets/about/ps-01.svg" alt="Adobe Photoshop" />
-                <img src="../../assets/about/id-01.svg" alt="Adobe InDesign" />
-                <img src="../../assets/about/lr-01.svg" alt="Adobe Lightroom" />
-                <img src="../../assets/about/ae-01.svg" alt="Adobe AfterEffect" />
-                <img src="../../assets/about/blender-01.svg" alt="Blender" />
-                <img src="../../assets/about/corel_-01.svg" alt="Corel DRAW" />
+                <img [src]="PHOTO_STOCK_API_SVG_FILE_URL+item.svgPath+'?12313'" [title]="item.softwareName" *ngFor="let item of aboutPage.softwares" />
             </div>
         </div>
     </div>
     <div class="row ">
        <div class="col-md-6">
-        <h3 class="mb-4">Work experience</h3>
+        <h3 class="mb-4">İş Deneyimleri</h3>
         <ul class="matters">
-            <li>
-                <span class="big">04/2021 - now</span>
-                <span class="big">Entegre Osgb</span>
-                <span class="normal">Graphic Design & Social Media Specialist</span>
-            </li>
-            <li>
-                <span class="big">10/2018 - 01/2021 </span>
-                <span class="big">Esit Elektronik </span>
-                <span class="normal">Graphic Design Specialist</span>
-            </li>
-            <li>
-                <span class="big">12/2015 - 02/2016</span>
-                <span class="big">Kobi Efor Sanayi Ve Ekonomi Dergisi</span>
-                <span class="normal">Graphic Design Intern</span>
-            </li>
-            <li>
-                <span class="big">6 Yıldır </span>
-                <span class="big">Freelancer</span>
-                <span class="normal">Graphic Design </span>
+            <li *ngFor="let item of aboutPage.businesses">
+                <span class="big">{{item.head}}</span>
+                <span class="big">{{item.value}}</span>
+                <span class="normal">{{item.foot}}</span>
             </li>
         </ul>
        </div>
        <div class="col-md-6">
-        <h3 class="mb-4">Education</h3>
+        <h3 class="mb-4">Eğitim</h3>
         <ul class="matters">
-            <li>
-                <span class="big">2012 - 2016</span>
-                <span class="big">Üsküdar Cumhuriyet Anadolu Lisesi</span>
-                <span class="normal">Grafik tasarım ve fotoğrafçılık</span>
-            </li>
-            <li>
-                <span class="big">2016 - 2018</span>
-                <span class="big">Istanbul Arel Universitesi</span>
-                <span class="normal">Grafik Tasarımı</span>
+            <li *ngFor="let item of aboutPage.educations">
+                <span class="big">{{item.head}}</span>
+                <span class="big">{{item.value}}</span>
+                <span class="normal">{{item.foot}}</span>
             </li>
         </ul>
-        <h3 class="mb-4">Certificate</h3>
+        <h3 class="mb-4">Sertifikalar</h3>
         <ul class="matters">
-            <li>
-                <span class="big">2020</span>
-                <span class="big">Etkili Sunum Teknikleri Eğitimi</span>
-            </li>
-            <li>
-                <span class="big">2020</span>
-                <span class="big">Ürün Fotoğrafçılığı</span>
+            <li *ngFor="let item of aboutPage.certifacates">
+                <span class="big">{{item.head}}</span>
+                <span class="big">{{item.value}}</span>
             </li>
         </ul>
        </div>
@@ -92,20 +56,10 @@
        <div class="col-12 text-center">
         <h3 class="mb-4">Project</h3>
         <ul class="matters">
-            <li>
-                <span class="big mb-4">10/2018 - 12/Ara 2020</span>
-                <span class="big">Türkiye'nin kuşları kitabı</span>
-                <a href="#" class="normal" target="blank">Go To trakus.org</a>
-            </li>
-            <li>
-                <span class="big mb-4">07/2020 </span>
-                <span class="big">Weighfly/Application</span>
-                <a href="https://play.google.com/store/apps/details?id=com.weighfly&hl=tr" class="normal" target="blank">Go To Application</a>
-            </li>
-            <li>
-                <span class="big mb-4">05/2020</span>
-                <span class="big">Xplant/corporate identity</span>
-                <a href="https://www.xplant.com.tr/" class="normal" target="blank">Go To Application</a>
+            <li *ngFor="let item of aboutPage.projects">
+                <span class="big">{{item.head}}</span>
+                <span class="big">{{item.value}}</span>
+                <a [href]="item.link" *ngIf="item.link!=undefined && item.link!=null && item.link!=''  " class="normal" target="blank">Go To</a>
             </li>
         </ul>
        </div>

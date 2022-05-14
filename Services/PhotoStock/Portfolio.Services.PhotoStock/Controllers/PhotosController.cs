@@ -213,5 +213,41 @@ namespace Portfolio.Services.PhotoStock.Controllers
       System.IO.File.Delete(path);
       return CreateActionResultInstance(Response<NoContent>.Success(200));
     }
+
+    [HttpPost("SvgSave")]
+    [Authorize(Policy = "ReadAndWrite")]
+    public async Task<IActionResult> SvgSaveAsync(IFormFile svgFile, CancellationToken cancellationToken)
+    {
+      try
+      {
+        if (svgFile == null || svgFile.Length < 1)
+        {
+          return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
+        }
+
+        if (Path.GetExtension(svgFile.FileName)!=".svg")
+        {
+          return CreateActionResultInstance(Response<PhotoDto>.Fail("only svg file", 400));
+        }
+
+
+        string photoName = Guid.NewGuid().ToString() + Path.GetExtension(svgFile.FileName); ;
+
+
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/svg", photoName);
+        using var stream = new FileStream(path, FileMode.Create);
+        await svgFile.CopyToAsync(stream, cancellationToken);
+
+
+        PhotoDto photoDto = new() { Url = photoName };
+
+        return CreateActionResultInstance(Response<PhotoDto>.Success(photoDto, 200));
+      }
+      catch (System.Exception ex)
+      {
+
+        return CreateActionResultInstance(Response<PhotoDto>.Fail("error:" + ex.Message, 500));
+      }
+    }
   }
 }

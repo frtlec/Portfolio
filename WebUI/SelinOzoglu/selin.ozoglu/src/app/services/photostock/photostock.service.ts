@@ -55,6 +55,16 @@ export class PhotostockService {
     }
     return result;
   }
+  saveSvgFile(image:File,photoType:number){
+    let formData = new FormData();
+    formData.append('svgFile', image);
+    let result=this._httpClient.post<IResponse<PhotoSMO>>(
+      `${PHOTO_STOCK_API_BASE_URL}/photos/SvgSave`,
+      formData,
+      {context:getPasswordCredential()}
+    );
+    return result;
+  }
   deletePhoto(photoName:string){
     
     return this._httpClient.delete(`${PHOTO_STOCK_API_BASE_URL}/photos/photodelete/${photoName}`,{context:getPasswordCredential()});

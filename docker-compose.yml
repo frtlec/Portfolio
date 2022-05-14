@@ -9,6 +9,8 @@ services:
     image: rabbitmq:3.8.14-management
   maildb:
     image: mongo
+  settingdb:
+    image: mongo
   identityserver.api:
     image: identityserver_api_image
     build:
@@ -29,6 +31,11 @@ services:
     build:
       context: .
       dockerfile: Services/WorkItems/Portfolio.Services.WorkItems.API/Dockerfile
+  setting.api:
+      image: setting_image
+      build:
+        context: .
+        dockerfile: Services/Setting/Porfolio.Services.Setting.API/Dockerfile  
   selinozoglu.webui:
     image: selinozoglu_webui_image
     build:
@@ -43,4 +50,5 @@ volumes:
   workitemsdb_volume:
   identity4db_volume:
   maildb_volume:
+  settingdb_volume:
       

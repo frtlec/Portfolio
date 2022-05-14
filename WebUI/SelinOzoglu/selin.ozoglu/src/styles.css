@@ -569,3 +569,20 @@ body {
 .swal2-container{
     z-index: 9999999999 !important;
 }
+.tools{
+    position: fixed;
+    left: -.5%;
+    top:80%;
+    background-color:#f0f0f0;
+    transition: all 0.2s;
+
+}
+.tools .btn{
+    display: block;
+}
+.tools:hover,.tools:focus{
+    left: 0;
+}
+.tool{
+    font-size: 1.7rem;
+}

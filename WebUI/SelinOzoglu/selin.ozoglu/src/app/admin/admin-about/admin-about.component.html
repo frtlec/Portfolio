@@ -1,39 +1,251 @@
 <div class="container py-5">
-    
-<form #aboutForm="ngForm" (ngSubmit)="submit()">
-    <div class="row">
-        <div class="col-6 mb-3">
-            <h4>Portre</h4>
-            <input type="file" />
-            <div class="square image-bg px-3">
-              
+    <form #aboutForm="ngForm" (ngSubmit)="submit()">
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                <h4>Portre</h4>
+                <input class="form-control mb-2" type="file" value="" (change)="portrePhotoChange($event)" />
+                <input type="hidden" name="portreFileName" [(ngModel)]="aboutPage.portreFileName" value=""/>
+                <div class="square">
+                    <img [src]="portreFileSRC" width="100%" />
+                </div>
+                <label class="text-muted">Sadece kare fotoğraf yüklenebilir</label>
+            </div>
+            <div class="col-lg-9">
+                <h4>Slogan</h4>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control"
+                            name="slogan" [(ngModel)]="aboutPage.slogan"   
+                            [value]="aboutPage.slogan==undefined?'':aboutPage.slogan" placeholder="Slogan"
+                             aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <h4>Kısa Özet</h4>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <textarea class="form-control" name="summary" [(ngModel)]="aboutPage.summary"  rows="10">{{aboutPage.summary}}</textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-6 mb-3">
-            <h4>Kısa özet</h4>
-            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
-            name=""></angular-editor>
-        </div>
-        <div class="col-6 mb-3">
-            <h4>Öğrenim</h4>
-            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
-            name=""></angular-editor>
-        </div>
-        <div class="col-6 mb-3">
-            <h4>İş Hayatı</h4>
-            <angular-editor [placeholder]="'Alt Metin girin...'" [config]="editorConfig"
-            name=""></angular-editor>
-        </div>
-       
-    </div>
-  <div class="row mt-4">
-      <div class="col-12 d-flex justify-content-end">
-        <div class="form-group d-flex justify-content-between">
-            <button class="btn btn-success" type="submit">Kaydet</button>
-        </div>
-      </div>
-  </div>
+        <div class="row">
+            <div class="col-lg-6 bg-soft border min-height p-3">
+                <div class="d-block">
+                    <h3 class="mr-3">Programlar </h3>
+                    <button type="button" class="btn btn-danger ml-3 insertbtn" (click)="newSoftware()">
+                        <fa-icon [icon]="faPlus" style="font-size: 1rem;">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="aboutPage.softwares!=null && aboutPage.softwares.length>0">
+                    <div class="form-group bg-border px-4 mb-2" *ngFor="let item of aboutPage.softwares;let i=index">
+                        <input type="file"  class="form-cotrol" accept=".svg" (change)="svgFileChange($event,item.rowId)"/>
+                        <label class="text-muted">sadece svg</label>
+                        <input type="hidden"  [(ngModel)]="item.svgPath" [name]="'svgPath' + i" />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <img [src]="PHOTO_STOCK_API_SVG_FILE_URL+item.svgPath" *ngIf="item.svgPath!=undefined" width="36px" />
+                                    <fa-icon [icon]="faImage" *ngIf="item.svgPath==undefined">
+                                    </fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control"
+                                [value]="item.softwareName==undefined?'':item.softwareName" placeholder="Programın adı"
+                                [(ngModel)]="item.softwareName" [name]="'softwareName' + i"
+                                 aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <button type="button"  class="btn btn-hover " (click)="removeSoftware(item.rowId)">
+                                        <fa-icon [icon]="faTrash" style="color:red"></fa-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 bg-soft border min-height p-3">
+                <div class="d-block">
+                    <h3 class="mr-3">Çalışma Hayatı</h3>
+                    <button type="button" class="btn btn-danger ml-3 insertbtn" (click)="newBusiness()">
+                        <fa-icon [icon]="faPlus" style="font-size: 1rem;">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="aboutPage.businesses!=null && aboutPage.businesses.length>0">
+                    <div class="form-group bg-soft mb-5" *ngFor="let item of aboutPage.businesses;let i=index">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Yıl</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.head==undefined?'':item.head"
+                                [(ngModel)]="item.head" [name]="'businesseshead' + i"
+                                placeholder="Başladığı ve Bittiği yıl örn 2020-2022 (max 50 karakter)"
+                                 aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Firma</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.value==undefined?'':item.value"
+                                [(ngModel)]="item.value" [name]="'businessesvalue' + i"
+                                placeholder="Firma adı (max 50 karakter)" 
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Pozisyon</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.foot==undefined?'':item.foot"
+                                 [(ngModel)]="item.foot" [name]="'businessesfoot' + i"
+                                placeholder="Pozisyon tanımı. (max 50 karakter)" 
+                                aria-describedby="basic-addon1">
+                        </div>
 
-
-</form>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-hover " (click)="removeBusiness(item.rowId)">
+                                <fa-icon [icon]="faTrash" style="color:red"></fa-icon>
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 bg-soft border min-height p-3">
+                <div class="d-block">
+                    <h3 class="mr-3">Eğitim</h3>
+                    <button type="button" class="btn btn-danger ml-3 insertbtn" (click)="newEducation()">
+                        <fa-icon [icon]="faPlus" style="font-size: 1rem;">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="aboutPage.educations!=null && aboutPage.educations.length>0">
+                    <div class="form-group bg-soft mb-5" *ngFor="let item of aboutPage.educations;let i=index;">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Yıl</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.head==undefined?'':item.head"
+                                placeholder="(max 50 karakter)" 
+                                [(ngModel)]="item.head" [name]="'educationshead' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Kurum</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.value==undefined?'':item.value"
+                                placeholder="Sertifika adı (max 50 karakter)" 
+                                [(ngModel)]="item.value" [name]="'educationsvalue' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Bölüm</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.foot==undefined?'':item.foot"
+                                placeholder="Sertifika adı (max 50 karakter)" 
+                                [(ngModel)]="item.foot" [name]="'educationsfoot' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-hover " (click)="removeEducation(item.rowId)">
+                                <fa-icon [icon]="faTrash" style="color:red"></fa-icon>
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 bg-soft border min-height p-3">
+                <div class="d-block">
+                    <h3 class="mr-3">Sertifikalar</h3>
+                    <button type="button" class="btn btn-danger ml-3 insertbtn" (click)="newCerficate()">
+                        <fa-icon [icon]="faPlus" style="font-size: 1rem;">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="aboutPage.certifacates!=null && aboutPage.certifacates.length>0">
+                    <div class="form-group bg-soft mb-5" *ngFor="let item of aboutPage.certifacates;let i=index;">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Yıl</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.head==undefined?'':item.head"
+                                placeholder="Alındığı yıl ve Geçerlilik(max 50 karakter)" 
+                                [(ngModel)]="item.head" [name]="'certifacateshead' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Adı</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.value==undefined?'':item.value"
+                                placeholder="Sertifika adı (max 50 karakter)" 
+                                [(ngModel)]="item.value" [name]="'certifacatesvalue' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-hover " (click)="removeCerficate(item.rowId)">
+                                <fa-icon [icon]="faTrash" style="color:red"></fa-icon>
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 bg-soft border min-height p-3">
+                <div class="d-block">
+                    <h3 class="mr-3">Projeler</h3>
+                    <button type="button" class="btn btn-danger ml-3 insertbtn" (click)="newProject()">
+                        <fa-icon [icon]="faPlus" style="font-size: 1rem;">
+                        </fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="aboutPage.projects!=null && aboutPage.projects.length>0">
+                    <div class="form-group bg-soft mb-5" *ngFor="let item of aboutPage.projects;let i=index">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Yıl</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.head==undefined?'':item.head"
+                                placeholder="Başlangıç-Bitiş (max 50 karakter)" 
+                                [(ngModel)]="item.head" [name]="'projectshead' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Adı</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.value==undefined?'':item.value"
+                                placeholder="Proje adı (max 50 karakter)" 
+                                [(ngModel)]="item.value" [name]="'projectsvalue' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Link</span>
+                            </div>
+                            <input type="text" class="form-control" [value]="item.link==undefined?'':item.value"
+                                placeholder="Link (max 50 karakter)"
+                                [(ngModel)]="item.link" [name]="'projectslink' + i"
+                                aria-describedby="basic-addon1">
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-hover " (click)="removeProject(item.rowId)">
+                                <fa-icon [icon]="faTrash" style="color:red"></fa-icon>
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tools p-2 bg-warning">
+            <button type="submit" title="çalışmayı kaydet" class="btn btn-hover">
+                <fa-icon [icon]="faSave" class="text-danger tool"></fa-icon>
+            </button>
+        </div>
+    </form>
 </div>
