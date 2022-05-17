@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 COPY  Gateway/Portfolio.Gateway/*.csproj  Gateway/Portfolio.Gateway/
 RUN dotnet restore Gateway/Portfolio.Gateway/*.csproj
 COPY . .

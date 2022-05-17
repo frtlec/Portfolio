@@ -1,0 +1,54 @@
+<div class="container-fuild p-5">
+    <div class="row mt-4">
+        <div class="col-3">
+            <form class="form-inline" #localizationForm="ngForm" (ngSubmit)="submit()">
+                <div class="form-group  mb-2">
+                    <label>Türkçesi</label>
+                    <textarea [(ngModel)]="localizationAdd.key" name="key" class="form-control"></textarea>
+                </div>
+                <div class="form-group  mb-2">
+                    <label>Karşılığı</label>
+                    <textarea [(ngModel)]="localizationAdd.value" name="value" class="form-control"></textarea>
+                </div>
+                <div class="form-group mb-2">
+                    <label >Hangi dil</label>
+                    <select class="form-control" [(ngModel)]="localizationAdd.localizationType" name="localizationType">
+                        <option [value]="0">
+                            Dil seç
+                        </option>
+                        <option [value]="i+1" *ngFor="let item of localizationTypes;let i=index;">
+                            {{item}}
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Kaydet</button>
+            </form>
+        </div>
+
+        <div class="col-9">
+            <table class="table table-striped">
+                <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Türkçesi</th>
+                    <th scope="col">Karşılığı</th>
+                    <th scope="col">Hangi dile çevrildi</th>
+                    <th scope="col">İşlem</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of localizationsData;let i=index;">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.key}}</td>
+                        <td>{{item.value}}</td>
+                        <td>{{item.localizationType | getLocalizationName}}</td>
+                        <td>
+                            <button class="btn btn-hover" type="button" (click)="delete(item.id)">
+                                <fa-icon [icon]="faTrash" style="font-size: 1rem;">
+                                </fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

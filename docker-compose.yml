@@ -3,8 +3,8 @@ services:
   workitemsdb:
     image: postgres
   identity4db:
-    # image: mcr.microsoft.com/mssql/server:2019-latest
-    image: justin2004/mssql_server_tiny
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    # image: justin2004/mssql_server_tiny
   portfolio_rabbitmq:
     image: rabbitmq:3.8.14-management
   maildb:

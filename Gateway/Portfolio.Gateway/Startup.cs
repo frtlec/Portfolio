@@ -83,9 +83,12 @@ namespace Portfolio.Gateway
     {
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+       
       }
+      app.UseDeveloperExceptionPage();
       app.UseCors("AllowOrigin");
+      app.UseHttpsRedirection();
+      app.UseHsts();
       await app.UseOcelot();
     }
   }

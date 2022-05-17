@@ -17,6 +17,8 @@ namespace Porfolio.Services.Setting.API.Models
       CreateMap<AboutSoftware, AboutSoftwareDto>().ReverseMap();
       CreateMap<AboutCertifacate, AboutCertifacateDto>().ReverseMap();
       CreateMap<AboutBusiness, AboutBusinessDto>().ReverseMap();
+      CreateMap<Localization, LocalizationAddDto>().ReverseMap();
+      CreateMap<Localization, LocalizationUpdateDto>().ReverseMap();
 
 
 

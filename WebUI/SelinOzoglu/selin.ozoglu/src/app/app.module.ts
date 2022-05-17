@@ -37,6 +37,9 @@ import { PhotostockService } from './services/photostock/photostock.service';
 import { WorkServiceService } from './services/work/work-service.service';
 import { AdminGuard } from './admin/AdminGuard';
 import { Safe } from './pipes/safeHtml';
+import { AdminLocalizationComponent } from './admin/admin-localization/admin-localization.component';
+import { GetLocalizationName } from './pipes/getEnumKeyString';
+import { GetValueFromLocalization } from './pipes/_localization';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,13 +52,17 @@ import { Safe } from './pipes/safeHtml';
     LoginComponent,
     AdminWorksComponent,
     AdminWorkAddComponent,
+    AdminLocalizationComponent,
     PortfolioComponent,
     AboutComponent,
     AdminCategoriesComponent,
     AdminAboutComponent,
     AdminSettingsComponent,
     ContactComponent,
-    Safe
+    Safe,
+    GetLocalizationName,
+    GetValueFromLocalization,
+    AdminLocalizationComponent
   ],
   imports: [
     BrowserModule,
