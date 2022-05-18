@@ -8,15 +8,15 @@
                 class="portre" />
         </div>
         <div class="col-lg-9 mb-3 paddingleft-5">
-            <h1 class="mb-4">{{aboutPage.slogan}}</h1>
-            <div [innerHtml]="aboutPage.summary | safeHtml">
+            <h1 class="mb-4">{{aboutPage.slogan |  getValueFromLocalization | async}}</h1>
+            <div [innerHtml]="aboutPage.summary | safeHtml | getValueFromLocalization | async">
 
             </div>
         </div>
     </div>
     <div class="row mb-5">
         <div class="col-lg-12">
-            <h3 class="mb-3">Programlar</h3>
+            <h3 class="mb-3">{{'Programlar' | getValueFromLocalization | async}}</h3>
             <div class="softwareIconContainer">
                 <img [src]="PHOTO_STOCK_API_SVG_FILE_URL+item.svgPath+'?12313'" [title]="item.softwareName" *ngFor="let item of aboutPage.softwares" />
             </div>
@@ -24,7 +24,7 @@
     </div>
     <div class="row ">
        <div class="col-md-6">
-        <h3 class="mb-4">İş Deneyimleri</h3>
+        <h3 class="mb-4">{{'is Deneyimleri' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
             <li *ngFor="let item of aboutPage.businesses">
                 <span class="big">{{item.head}}</span>

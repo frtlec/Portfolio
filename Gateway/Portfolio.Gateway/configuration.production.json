@@ -2,8 +2,12 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
+        {
+          "Host": "workitem.api",
+          "Port": 443
+        },
         {
           "Host": "workitem.api",
           "Port": 80
@@ -16,7 +20,8 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "http",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamScheme": "https",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
@@ -27,8 +32,12 @@
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
+        {
+          "Host": "photostock.api",
+          "Port": 443
+        },
         {
           "Host": "photostock.api",
           "Port": 80
@@ -41,19 +50,24 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "http",
+      "UpstreamScheme": "https",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
+        {
+          "Host": "mailsender.api",
+          "Port": 443
+        },
         {
           "Host": "mailsender.api",
           "Port": 80
@@ -66,19 +80,24 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "http",
+      "UpstreamScheme": "https",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
+        {
+          "Host": "setting.api",
+          "Port": 443
+        },
         {
           "Host": "setting.api",
           "Port": 80
@@ -91,17 +110,18 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "http",
+      "UpstreamScheme": "https",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://gateway.api"
+    "BaseUrl": "https://gateway.api"
   }
 }

@@ -68,6 +68,7 @@ namespace Porfolio.Services.Setting.API
       });
       services.AddAutoMapper(typeof(Startup));
       services.AddTransient<IAboutPageSettingService, AboutPageSettingService>();
+      services.AddTransient<ILocalizationService, LocalizationService>();
       services.Configure<DataBaseSettings>(Configuration.GetSection("DatabaseSettings"));
       services.AddSingleton<IDataBaseSettings>(sp =>
       {
@@ -85,6 +86,8 @@ namespace Porfolio.Services.Setting.API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Porfolio.Services.Setting.API v1"));
       }
       app.UseCors("AllowOrigin");
+      app.UseHttpsRedirection();
+      app.UseHsts();
       app.UseRouting();
 
       app.UseAuthentication();

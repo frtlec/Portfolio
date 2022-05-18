@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
 using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.API
@@ -32,7 +34,7 @@ namespace Portfolio.Services.WorkItems.API
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-  
+
       services.AddAuthorization(opts =>
       {
         opts.AddPolicy("ReadAndWrite", policy =>
@@ -61,7 +63,7 @@ namespace Portfolio.Services.WorkItems.API
                   {
                     opt.Authority = Configuration["IdentityServerURL"];
                     opt.Audience = "resource_workitem";
-                    opt.RequireHttpsMetadata = false;
+                    opt.RequireHttpsMetadata = Configuration["IdentityServerURL"].StartsWith("https://");
                     //opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                     //{
                     //  ValidateIssuer = false,
@@ -121,9 +123,9 @@ namespace Portfolio.Services.WorkItems.API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
       }
 
+      app.UseHsts();
       app.UseCors("AllowOrigin");
-      //app.UseHttpsRedirection();
-
+      app.UseHttpsRedirection();
       app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();

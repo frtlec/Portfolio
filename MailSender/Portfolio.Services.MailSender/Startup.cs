@@ -109,7 +109,8 @@ namespace Portfolio.Services.MailSender
       }
 
       app.UseCors("AllowOrigin");
-      //app.UseHttpsRedirection();
+      app.UseHttpsRedirection();
+      app.UseHsts();
       app.UseMiddleware<AntiForgeryTokenMiddleware>();
       app.UseMiddleware<CreateMailLimiterMiddleware>();
       app.UseRouting();

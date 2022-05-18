@@ -23,7 +23,8 @@
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -48,7 +49,8 @@
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -73,7 +75,8 @@
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -98,8 +101,10 @@
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"

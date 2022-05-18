@@ -5,6 +5,7 @@ import { AdminAboutComponent } from './admin/admin-about/admin-about.component';
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+import { AdminLocalizationComponent } from './admin/admin-localization/admin-localization.component';
 import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 import { AdminWorkAddComponent } from './admin/admin-work-add/admin-work-add.component';
 import { AdminWorksComponent } from './admin/admin-works/admin-works.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminLayoutComponent,children: [{ path: 'categories', component:AdminCategoriesComponent }],canActivate:[AdminGuard] },
   {path: 'admin', component: AdminLayoutComponent,children: [{ path: 'about', component:AdminAboutComponent }],canActivate:[AdminGuard] },
   {path: 'admin', component: AdminLayoutComponent,children: [{ path: 'settings', component:AdminSettingsComponent }],canActivate:[AdminGuard] },
+  {path: 'admin', component: AdminLayoutComponent,children: [{ path: 'localization', component:AdminLocalizationComponent }],canActivate:[AdminGuard] },
 ];
 
 @NgModule({

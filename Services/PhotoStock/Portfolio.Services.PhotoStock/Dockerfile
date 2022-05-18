@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+RUN dotnet dev-certs https --trust
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 COPY Shared/Portfolio.Shared/*.csproj Shared/Portfolio.Shared/
 COPY Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj Services/PhotoStock/Portfolio.Services.PhotoStock/ 
 RUN dotnet restore Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj

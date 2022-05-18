@@ -96,9 +96,10 @@ namespace Portfolio.IdentityServer
         app.UseDeveloperExceptionPage();
         app.UseDatabaseErrorPage();
       }
+      //app.UseHsts();
       app.UseCors("AllowOrigin");
+      //app.UseHttpsRedirection();
       app.UseStaticFiles();
-
       app.UseRouting();
       app.UseIdentityServer();
       app.UseAuthentication();

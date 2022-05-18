@@ -1,5 +1,6 @@
 ﻿using IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Portfolio.Gateway.DelegateHandlers
     }
     public async Task<string> GetToken(string requestToken)
     {
+      Console.WriteLine("asdasdasdadasdasds");
       if (!string.IsNullOrEmpty(_accessToken))
       {
         return _accessToken;
@@ -26,7 +28,7 @@ namespace Portfolio.Gateway.DelegateHandlers
       var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
       {
         Address = _configuration["IdentityServerURL"],
-        Policy = new DiscoveryPolicy { RequireHttps = false }
+        Policy = new DiscoveryPolicy { RequireHttps = true }
       });
 
       if (disco.IsError)

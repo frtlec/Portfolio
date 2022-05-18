@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   workitemsdb:
     container_name: workitemsdb
@@ -52,8 +53,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19055
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
       - "5104:80"
+      - "19055:443"
     restart: on-failure
     volumes:
       - type: bind
@@ -64,6 +70,7 @@ services:
         source: /root/opt/app_data/portfolio_photostock_data
         # source: C:\Users\zafer\Desktop\photos
         target: /app/wwwroot/svg
+      - ~/.aspnet/https:/https:ro
   mailsender.api:
     container_name: mailsender.api
     environment:
@@ -71,20 +78,34 @@ services:
       - RabbitMQUrl=portfolio_rabbitmq
       - IdentityServerURL=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://maildb:27017
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19054
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     restart: on-failure
     ports:
       - "5103:80"
+      - "19054:443"
     depends_on:
       - maildb
+    volumes:
+      - ~/.aspnet/https:/https:ro
   setting.api:
     container_name: setting.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://settingdb
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19052
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     restart: on-failure
     ports:
       - "5105:80"
+      - "19052:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
     depends_on:
       - settingdb
   workitem.api:
@@ -93,8 +114,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
       - "ConnectionStrings:PostgreSql=User ID=admin; Password=zk147olu; Server=workitemsdb; Port=5432;Database=workitemsdb;Integrated Security=true;Pooling=true"
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19053
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
       - "5102:80"
+      - "19053:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
     restart: on-failure
     depends_on:
       - workitemsdb
@@ -105,8 +133,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=identity4db,1433;Database=Identity4DbDeploy;User=sa;Password=zk147olu"
       - TokenOptions:IssuerUri=http://identityserver.api
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19051
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
       - "5101:80"
+      - "19051:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
     depends_on:
       - identity4db
   gateway.api:
@@ -114,14 +149,22 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - IdentityServerURL=http://identityserver.api
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=19050
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     restart: on-failure
     ports:
       - "5100:80"
+      - "19050:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
   selinozoglu.webui:
     container_name: selinozoglu.webui
     restart: on-failure
     ports:
       - "5110:80"
+      - "9392:443"
     depends_on:
       - identityserver.api
       - mailsender.api
