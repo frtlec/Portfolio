@@ -63,7 +63,7 @@ namespace Portfolio.Services.WorkItems.API
                   {
                     opt.Authority = Configuration["IdentityServerURL"];
                     opt.Audience = "resource_workitem";
-                    opt.RequireHttpsMetadata = true;
+                    opt.RequireHttpsMetadata = Configuration["IdentityServerURL"].StartsWith("https://");
                     //opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                     //{
                     //  ValidateIssuer = false,
@@ -123,9 +123,9 @@ namespace Portfolio.Services.WorkItems.API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
       }
 
+      app.UseHsts();
       app.UseCors("AllowOrigin");
       app.UseHttpsRedirection();
-      app.UseHsts();
       app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();

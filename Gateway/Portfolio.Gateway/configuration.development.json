@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -16,18 +16,19 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "https",
+      "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -41,18 +42,19 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "https",
+      "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -66,18 +68,19 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "https",
+      "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -91,17 +94,19 @@
         "Put",
         "Delete"
       ],
-      "UpstreamScheme": "https",
+      "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [
           "selin.ozoglu.com.work.read",
           "selin.ozoglu.com.work.write"
         ]
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": false
     }
+
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000"
+    "BaseUrl": "http://localhost:5000"
   }
 }

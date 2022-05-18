@@ -28,22 +28,23 @@
 
 //localdocker
 
-const PHOTO_STOCK_API_BASE_URL="http://localhost:5100/services/PhotoStock";
-const WORK_API_BASE_URL="http://localhost:5100/services/workitems";
-const SETTING_API_BASE_URL="http://localhost:5100/services/Settings";
-const PHOTO_STOCK_API_PHOTOS_FILE_URL="http://localhost:5104/photos/";
-const PHOTO_STOCK_API_SVG_FILE_URL="http://localhost:5104/svg/";
-const MAIL_SENDER_API_BASE_URL="https://localhost:5100/services/MailSender";
-const IDENTITY4_SERVER_BASE_URL="https://localhost:19051";
+// const PHOTO_STOCK_API_BASE_URL="https://localhost:19050/services/PhotoStock";
+// const WORK_API_BASE_URL="https://localhost:19050/services/workitems";
+// const SETTING_API_BASE_URL="https://localhost:19050/services/Settings";
+// const PHOTO_STOCK_API_PHOTOS_FILE_URL="https://localhost:19055/photos/";
+// const PHOTO_STOCK_API_SVG_FILE_URL="https://localhost:19055/svg/";
+// const MAIL_SENDER_API_BASE_URL="https://localhost:19050/services/MailSender";
+// const IDENTITY4_SERVER_BASE_URL="https://localhost:19051";
+
 
 // deploy docker
-// const PHOTO_STOCK_API_BASE_URL="http://107.173.251.36:5100/services/PhotoStock";
-// const WORK_API_BASE_URL="http://107.173.251.36:5100/services/workitems";
-// const SETTING_API_BASE_URL="http://107.173.251.36:5100/services/Settings";
-// const PHOTO_STOCK_API_PHOTOS_FILE_URL="http://107.173.251.36:5104/photos/";
-// const PHOTO_STOCK_API_SVG_FILE_URL="http://107.173.251.36:5104/svg/";
-// const MAIL_SENDER_API_BASE_URL="http://107.173.251.36:5100/services/MailSender";
-// const IDENTITY4_SERVER_BASE_URL="http://107.173.251.36:5101";
+const PHOTO_STOCK_API_BASE_URL="https://107.173.251.36:5100/services/PhotoStock";
+const WORK_API_BASE_URL="https://107.173.251.36:5100/services/workitems";
+const SETTING_API_BASE_URL="https://107.173.251.36:5100/services/Settings";
+const PHOTO_STOCK_API_PHOTOS_FILE_URL="https://107.173.251.36:5104/photos/";
+const PHOTO_STOCK_API_SVG_FILE_URL="https://107.173.251.36:5104/svg/";
+const MAIL_SENDER_API_BASE_URL="https://107.173.251.36:5100/services/MailSender";
+const IDENTITY4_SERVER_BASE_URL="https://107.173.251.36:5101";
 
 export {
     PHOTO_STOCK_API_BASE_URL,

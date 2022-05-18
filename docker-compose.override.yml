@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   workitemsdb:
     container_name: workitemsdb
@@ -51,7 +52,7 @@ services:
     container_name: photostock.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=https://identityserver.api
+      - IdentityServerURL=http://identityserver.api
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19055
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
@@ -75,7 +76,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMQUrl=portfolio_rabbitmq
-      - IdentityServerURL=https://identityserver.api
+      - IdentityServerURL=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://maildb:27017
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19054
@@ -93,7 +94,7 @@ services:
     container_name: setting.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=https://identityserver.api
+      - IdentityServerURL=http://identityserver.api
       - DatabaseSettings:ConnectionString=mongodb://settingdb
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19052
@@ -111,7 +112,7 @@ services:
     container_name: workitem.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=https://identityserver.api
+      - IdentityServerURL=http://identityserver.api
       - "ConnectionStrings:PostgreSql=User ID=admin; Password=zk147olu; Server=workitemsdb; Port=5432;Database=workitemsdb;Integrated Security=true;Pooling=true"
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19053
@@ -131,7 +132,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DefaultConnection=Server=identity4db,1433;Database=Identity4DbDeploy;User=sa;Password=zk147olu"
-      - TokenOptions:IssuerUri=https://identityserver.api
+      - TokenOptions:IssuerUri=http://identityserver.api
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19051
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
@@ -147,7 +148,7 @@ services:
     container_name: gateway.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - IdentityServerURL=https://identityserver.api
+      - IdentityServerURL=http://identityserver.api
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19050
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
@@ -163,6 +164,7 @@ services:
     restart: on-failure
     ports:
       - "5110:80"
+      - "9392:443"
     depends_on:
       - identityserver.api
       - mailsender.api
