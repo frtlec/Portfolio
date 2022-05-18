@@ -105,7 +105,8 @@ services:
       - "5105:80"
       - "19052:443"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      # - ~/.aspnet/https:/https:ro
+      - ${HOME}/.aspnet/https:/https:ro
     depends_on:
       - settingdb
   workitem.api:
