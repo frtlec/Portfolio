@@ -106,7 +106,8 @@ services:
       - "19052:443"
     volumes:
       # - ~/.aspnet/https:/https:ro
-      - ${HOME}/.aspnet/https:/https:ro
+      # - ${HOME}/.aspnet/https:/https:ro
+      - ${HOME}/https/aspnetapp.pfx:/https/dev_cert.pfx:ro
     depends_on:
       - settingdb
   workitem.api:
@@ -123,7 +124,7 @@ services:
       - "5102:80"
       - "19053:443"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/dev_cert.pfx:ro
     restart: on-failure
     depends_on:
       - workitemsdb
