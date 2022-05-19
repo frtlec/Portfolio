@@ -38,13 +38,13 @@
 
 
 // deploy docker
-const PHOTO_STOCK_API_BASE_URL="https://107.173.251.36:19050/services/PhotoStock";
-const WORK_API_BASE_URL="https://107.173.251.36:19050/services/workitems";
-const SETTING_API_BASE_URL="https://107.173.251.36:19050/services/Settings";
-const PHOTO_STOCK_API_PHOTOS_FILE_URL="https://107.173.251.36:19055/photos/";
-const PHOTO_STOCK_API_SVG_FILE_URL="https://107.173.251.36:19055/svg/";
-const MAIL_SENDER_API_BASE_URL="https://107.173.251.36:19050/services/MailSender";
-const IDENTITY4_SERVER_BASE_URL="https://107.173.251.36:19051";
+const PHOTO_STOCK_API_BASE_URL="https://gateway.selinozoglu.com/services/PhotoStock";
+const WORK_API_BASE_URL="https://gateway.selinozoglu.com/services/workitems";
+const SETTING_API_BASE_URL="https://gateway.selinozoglu.com/services/Settings";
+const PHOTO_STOCK_API_PHOTOS_FILE_URL="https://photostock.selinozoglu.com/photos/";
+const PHOTO_STOCK_API_SVG_FILE_URL="https://photostock.selinozoglu.com/svg/";
+const MAIL_SENDER_API_BASE_URL="https://gateway.selinozoglu.com/services/MailSender";
+const IDENTITY4_SERVER_BASE_URL="https://identity.selinozoglu.com";
 
 export {
     PHOTO_STOCK_API_BASE_URL,

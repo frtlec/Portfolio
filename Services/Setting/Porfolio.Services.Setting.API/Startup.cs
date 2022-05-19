@@ -86,8 +86,8 @@ namespace Porfolio.Services.Setting.API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Porfolio.Services.Setting.API v1"));
       }
       app.UseCors("AllowOrigin");
-      app.UseHttpsRedirection();
-      app.UseHsts();
+      //app.UseHttpsRedirection();
+      //app.UseHsts();
       app.UseRouting();
 
       app.UseAuthentication();

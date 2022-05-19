@@ -125,8 +125,8 @@ namespace Portfolio.Services.WorkItems.API
 
       app.UseHsts();
       app.UseCors("AllowOrigin");
-      app.UseHttpsRedirection();
-      app.UseRouting();
+      //app.UseHttpsRedirection();
+      //app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>

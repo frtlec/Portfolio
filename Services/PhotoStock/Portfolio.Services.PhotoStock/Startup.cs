@@ -76,8 +76,8 @@ namespace Portfolio.Services.PhotoStock
       }
 
       app.UseCors("AllowOrigin");
-      app.UseHttpsRedirection();
-      app.UseHsts();
+      //app.UseHttpsRedirection();
+      //app.UseHsts();
       app.UseStaticFiles();
       
 
