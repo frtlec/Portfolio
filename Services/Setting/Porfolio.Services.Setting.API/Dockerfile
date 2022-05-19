@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 USER root
-RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p zk147olu
 RUN dotnet dev-certs https --trust
 WORKDIR /app
 EXPOSE 80

@@ -99,13 +99,13 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=19052
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev_cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     restart: on-failure
     ports:
       - "5105:80"
       - "19052:443"
     volumes:
-      - ~/.aspnet/https:/https/dev_cert.pfx:ro
+      - ~/.aspnet/https:/https:ro
       # - ${HOME}/.aspnet/https:/https:ro
       # - ${HOME}/.aspnet/https:/https/dev_cert.pfx:ro
     depends_on:
