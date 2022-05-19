@@ -7,7 +7,6 @@ COPY Services/Setting/Porfolio.Services.Setting.API/*.csproj Services/Setting/Po
 RUN dotnet restore  Services/Setting/Porfolio.Services.Setting.API/*.csproj
 COPY . .
 RUN dotnet publish Services/Setting/Porfolio.Services.Setting.API/*.csproj -c Release -o out
-RUN dotnet dev-certs https -ep ~/.aspnet/https/aspnetapp.pfx -p zk147olu
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 COPY --from=build /app/out .
