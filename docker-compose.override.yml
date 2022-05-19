@@ -7,7 +7,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - workitemsdb_volume:/var/lib/postgresql/data2
+      - workitemsdb_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=zk147olu
