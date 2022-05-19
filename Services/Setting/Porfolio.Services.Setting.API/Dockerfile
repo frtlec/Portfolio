@@ -1,6 +1,7 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 USER root
-RUN dotnet dev-certs https
+RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https --trust
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
