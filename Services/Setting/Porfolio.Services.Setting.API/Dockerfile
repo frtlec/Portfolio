@@ -1,4 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+USER root
 RUN dotnet dev-certs https
 WORKDIR /app
 EXPOSE 80
