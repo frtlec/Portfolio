@@ -123,10 +123,10 @@ namespace Portfolio.Services.WorkItems.API
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Portfolio.Services.WorkItems.API v1"));
       }
 
-      app.UseHsts();
+      //app.UseHsts();
       app.UseCors("AllowOrigin");
       //app.UseHttpsRedirection();
-      //app.UseRouting();
+      app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>
