@@ -35,7 +35,7 @@ import { Safe } from './pipes/safeHtml';
 import { AdminLocalizationComponent } from './admin/admin-localization/admin-localization.component';
 import { GetLocalizationName } from './pipes/getEnumKeyString';
 import { GetValueFromLocalization } from './pipes/_localization';
-import { AddUIDphotoUrl } from './pipes/AddUIDphotoUrl';
+import { AddUIDphotoUrl } from './pipes/addUIDphotoUrl';
 @NgModule({
   declarations: [
     AppComponent,
