@@ -67,6 +67,7 @@ namespace Porfolio.Services.Setting.API
                   });
       });
       services.AddAutoMapper(typeof(Startup));
+      services.AddMemoryCache();
       services.AddTransient<IAboutPageSettingService, AboutPageSettingService>();
       services.AddTransient<ILocalizationService, LocalizationService>();
       services.Configure<DataBaseSettings>(Configuration.GetSection("DatabaseSettings"));

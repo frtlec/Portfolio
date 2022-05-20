@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.Extensions.Caching.Memory;
 using MongoDB.Driver;
 using Porfolio.Services.Setting.API.Models.DbModels;
 using Porfolio.Services.Setting.API.Models.Dtos;
@@ -20,12 +21,15 @@ namespace Porfolio.Services.Setting.API.Services
   {
     private readonly IMongoCollection<Localization> _localizationCollection;
     private readonly IMapper _mapper;
-    public LocalizationService(IDataBaseSettings dataBaseSettings, IMapper mapper)
+    private readonly IMemoryCache _memoryCache;
+    private const string CACHE_KEY = "SelinOzogluLocalization";
+    public LocalizationService(IDataBaseSettings dataBaseSettings, IMapper mapper, IMemoryCache memoryCache)
     {
       var client = new MongoClient(dataBaseSettings.ConnectionString);
       var dataBase = client.GetDatabase(dataBaseSettings.DatabaseName);
       _localizationCollection = dataBase.GetCollection<Localization>(dataBaseSettings.LocalizationCollectionName);
       _mapper = mapper;
+      _memoryCache = memoryCache;
     }
     public async Task<Response<Localization>> Add(LocalizationAddDto localization)
     {
@@ -46,7 +50,7 @@ namespace Porfolio.Services.Setting.API.Services
         insertModel.CreatedDate = DateTime.Now;
         insertModel.CreatedUserId = 1;
         await _localizationCollection.InsertOneAsync(insertModel);
-
+        _memoryCache.Remove(CACHE_KEY);
         return Response<Localization>.Success(insertModel, 200);
       }
       catch (System.Exception ex)
@@ -60,7 +64,7 @@ namespace Porfolio.Services.Setting.API.Services
       try
       {
         await _localizationCollection.DeleteOneAsync(f=>f.Id== id);
-
+        _memoryCache.Remove(CACHE_KEY);
         return Response<NoContent>.Success(200);
       }
       catch (System.Exception ex)
@@ -74,6 +78,9 @@ namespace Porfolio.Services.Setting.API.Services
       try
       {
         List<Localization> localizations = await _localizationCollection.Find(_=>true).ToListAsync();
+
+        _memoryCache.Remove(CACHE_KEY);
+        _memoryCache.Set(CACHE_KEY, localizations);
 
         return Response<List<Localization>>.Success(localizations, 200);
       }
@@ -94,7 +101,16 @@ namespace Porfolio.Services.Setting.API.Services
           return Response<LocalizationGetByCultureDtoResponse>.Success(localizationGetByCultureDtoResponse, 200);
         }
         //x => x.Key.ToLower().StripHTML() == getByCultureDto.Key.ToLower().StripHTML() && x.LocalizationType == getByCultureDto.LocalizationType;
-        List<Localization> localizations = await _localizationCollection.Find(x => x.Key!=null).ToListAsync();
+
+
+        List<Localization> cachedlocalizations=_memoryCache.Get<List<Localization>>(CACHE_KEY);
+
+        List<Localization> localizations = cachedlocalizations;
+        if (localizations == null || localizations.Count()<0)
+        {
+          localizations= await _localizationCollection.Find(x => x.Key != null).ToListAsync();
+        }
+          
         IQueryable<Localization> query = localizations.AsQueryable();
         Localization localization = query.Where(x =>
         x.Key.ToLower().RemoveHtmlTags().RemoveLines().RemoveSpaces() == getByCultureDto.Key.ToLower().RemoveHtmlTags().RemoveLines().RemoveSpaces() && 
