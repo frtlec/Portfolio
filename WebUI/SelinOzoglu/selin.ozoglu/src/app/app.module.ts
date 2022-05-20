@@ -40,6 +40,7 @@ import { Safe } from './pipes/safeHtml';
 import { AdminLocalizationComponent } from './admin/admin-localization/admin-localization.component';
 import { GetLocalizationName } from './pipes/getEnumKeyString';
 import { GetValueFromLocalization } from './pipes/_localization';
+import { AddUIDphotoUrl } from './pipes/AddUIDphotoUrl';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { GetValueFromLocalization } from './pipes/_localization';
     Safe,
     GetLocalizationName,
     GetValueFromLocalization,
-    AdminLocalizationComponent
+    AdminLocalizationComponent,
+    AddUIDphotoUrl
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,7 @@ import { GetValueFromLocalization } from './pipes/_localization';
     NgbModule,
     AngularEditorModule
   ],
-  providers: [Store,AdminGuard,
+  providers: [Store,AdminGuard,GetValueFromLocalization,
                     { provide: ErrorHandler, useClass: HttpClientErrorHandler },
                     { provide: HTTP_INTERCEPTORS, useClass: ApiCredentialInterceptorService,multi:true }
                     

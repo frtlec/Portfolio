@@ -44,4 +44,8 @@ export class RightMenuComponent implements OnInit {
   closeRightMenu(){
     this.store.dispatch(closeRightMenu());
   }
+  changeLang(langId:number){
+    localStorage.setItem("lang",JSON.stringify(langId))
+    location.reload();
+  }
 }

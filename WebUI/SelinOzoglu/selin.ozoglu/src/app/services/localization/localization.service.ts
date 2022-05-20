@@ -23,7 +23,9 @@ export class LocalizationService {
 
     const inputModel=new LocalizationGetByCultureDto();
     const headers = { 'content-type': 'application/json' }
-    inputModel.localizationType=1;
+
+    let localStorageLang=localStorage.getItem("lang");
+    inputModel.localizationType=<number>JSON.parse(localStorageLang)==null?0:<number>JSON.parse(localStorageLang);
     inputModel.key=key;
     const body = JSON.stringify(inputModel);
     let result= await this._httpClient.post<IResponse<LocalizationGetByCultureDtoResponse>>(
@@ -77,6 +79,5 @@ export class LocalizationGetByCultureDtoResponse{
   message:string;
 }
 export enum LocalizationType {
-  EN = 1,
-  FR = 2
+  EN = 1
 }

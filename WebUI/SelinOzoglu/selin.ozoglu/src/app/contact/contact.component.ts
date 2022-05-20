@@ -1,10 +1,13 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { faUserLarge ,faUserTie,faUserCheck} from '@fortawesome/free-solid-svg-icons';
+import { siteTitle } from 'src/shared/constants/general';
 import Swal from 'sweetalert2';
 import { ContactModel } from '../models/inputModels/MailSenderContactInput';
 import { CategorySMO } from '../models/serviceModels/CategorySMO';
+import { GetValueFromLocalization } from '../pipes/_localization';
 import { CategoryService } from '../services/category/category.service';
 import { ContactService } from '../services/contact/contact.service';
 
@@ -38,11 +41,21 @@ export class ContactComponent implements OnInit {
 
   categories:CategorySMO[]=new Array<CategorySMO>();
   isSubmit:boolean=false;
-  constructor(private contactService:ContactService,private categoryService:CategoryService) { }
+
+  constructor(private contactService:ContactService,private categoryService:CategoryService,private getValueFromLocalization:GetValueFromLocalization, private titleService:Title) { 
+    this.getValueFromLocalization.transform("İletişim").then(f=>this.titleService.setTitle(f+siteTitle));
+
+
+  }
 
   ngOnInit(): void {
     this.categoryService.getCategoriesByFilter().subscribe(res=>{
       this.categories=res.data;
+
+      let other=new CategorySMO();
+      other.description="Diğer";
+      other.title="Diğer"
+      this.categories.push(other)
     })
 
     this.contactModel.categoryId=-1;
@@ -103,8 +116,12 @@ export class ContactComponent implements OnInit {
       });
 
       this.resetForm();
+    },
+    null,
+    ()=>{
       this.isSubmit=false;
-    });
+    }
+    );
   }
   resetForm(){
     this.contactModel=new ContactModel();

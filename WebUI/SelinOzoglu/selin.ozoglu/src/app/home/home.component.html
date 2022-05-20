@@ -1,6 +1,5 @@
 <app-default-header></app-default-header>
 <div  class="container-fuild">
-
     <div class="row">
         <ng-template #content let-modal>
             <div class="modal-header ">
@@ -10,16 +9,16 @@
                 </a>
               </div>
             <div class="modal-body p-0 min100hv" >
-                   <div class="spinner-wrapper">
-                    <div class="spinner-border"  [hidden]="imageLoading==false" role="status">
-                        <span class="sr-only">Loading...</span>
+                   <div class="spinner-wrapper" [hidden]="imageLoading==false">
+                    <div class="spinner-border"   role="status">
+                        <span class="sr-only"></span>
                       </div>
                    </div>
 
                   <img [src]="currentPicture" [hidden]="imageLoading==true"  (load)="onImageLoad()"  width="100%" />
                
 
-                  <div class="text-left bg-dark py-5 px-4 text-light" [hidden]="currentDescription==undefined || currentDescription=='' " innerHTML="{{currentDescription}}">
+                  <div class="text-left bg-dark py-5 px-4 text-light" [hidden]="currentDescription==undefined || currentDescription=='' || imageLoading==true " innerHTML="{{currentDescription | getValueFromLocalization | async}}">
          
                  
                 </div>
@@ -28,9 +27,9 @@
         <div *ngFor="let work of works"  class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
             <a (click)="open(content,work.id)">
                 <div class="texts">
-                    <h4>{{work.title}}</h4>
+                    <h4>{{work.title | getValueFromLocalization | async}}</h4>
                     <p>
-                        {{work.description}}
+                        {{work.description | getValueFromLocalization | async}}
                     </p>
                 </div>
             </a>

@@ -6,22 +6,23 @@
     <div class="right-menu-items">
         <div class="right-menu-item">
             <a class="right-menu-link" routerLink="/">
-                Home
+                {{'Anasayfa'| getValueFromLocalization | async}}
             </a>
         </div>
         <div class="right-menu-item">
             <a class="right-menu-link" routerLink="/portfolio">
-                Portfolio
+                {{'Portfolyo'| getValueFromLocalization | async}}
             </a>
         </div>
         <div class="right-menu-item">
             <a class="right-menu-link" routerLink="/about">
-                About
+                {{'Ben kimim?'| getValueFromLocalization | async}}
             </a>
         </div>
         <div class="right-menu-item">
             <a class="right-menu-link" routerLink="/contact">
-                Contact
+                
+                {{'İletişim'| getValueFromLocalization | async}}
             </a>
         </div>
     </div>
@@ -35,5 +36,9 @@
         <a href="https://www.linkedin.com/in/selin-%C3%B6zo%C4%9Flu-093b46153" target="_blank" id="linkedin">
             <fa-icon [icon]="faLinkedin" class="social-media-icon"></fa-icon>
         </a>
+    </div>
+    <div class="col-12 text-center mt-5">
+        <button class="btn btn-hover text-light" (click)="changeLang(0)" title="TR"><b>TR</b></button>
+        <button class="btn btn-hover text-light" (click)="changeLang(1)" title="EN"><b>EN</b></button>
     </div>
 </div>

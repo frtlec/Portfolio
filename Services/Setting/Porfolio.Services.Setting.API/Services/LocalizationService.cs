@@ -10,6 +10,8 @@ using Portfolio.Shared.Dtos;
 using Portfolio.Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Porfolio.Services.Setting.API.Services
@@ -86,12 +88,18 @@ namespace Porfolio.Services.Setting.API.Services
       LocalizationGetByCultureDtoResponse localizationGetByCultureDtoResponse = new();
       try
       {
-        if (getByCultureDto.LocalizationType==0)
+        if (getByCultureDto.LocalizationType==0 || string.IsNullOrEmpty(getByCultureDto.Key) )
         {
           localizationGetByCultureDtoResponse.Value = getByCultureDto.Key;
           return Response<LocalizationGetByCultureDtoResponse>.Success(localizationGetByCultureDtoResponse, 200);
         }
-        Localization localization = await _localizationCollection.Find(x=>x.Key.ToLower() == getByCultureDto.Key.ToLower() && x.LocalizationType==getByCultureDto.LocalizationType).FirstOrDefaultAsync();
+        //x => x.Key.ToLower().StripHTML() == getByCultureDto.Key.ToLower().StripHTML() && x.LocalizationType == getByCultureDto.LocalizationType;
+        List<Localization> localizations = await _localizationCollection.Find(x => x.Key!=null).ToListAsync();
+        IQueryable<Localization> query = localizations.AsQueryable();
+        Localization localization = query.Where(x =>
+        x.Key.ToLower().RemoveHtmlTags().RemoveLines().RemoveSpaces() == getByCultureDto.Key.ToLower().RemoveHtmlTags().RemoveLines().RemoveSpaces() && 
+        x.LocalizationType == getByCultureDto.LocalizationType
+        ).FirstOrDefault();
         if (localization==null)
         {
           localizationGetByCultureDtoResponse.Value=getByCultureDto.Key;
@@ -112,5 +120,7 @@ namespace Porfolio.Services.Setting.API.Services
     {
       throw new System.NotImplementedException();
     }
+   
+
   }
 }

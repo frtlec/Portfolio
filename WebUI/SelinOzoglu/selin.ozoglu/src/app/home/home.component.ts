@@ -4,6 +4,9 @@ import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
 import { WorkServiceService } from '../services/work/work-service.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { WorkFilterModel } from '../models/inputModels/WorkAddModel';
+import { Title } from '@angular/platform-browser';
+import { GetValueFromLocalization } from '../pipes/_localization';
+import { siteTitle } from 'src/shared/constants/general';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +20,11 @@ export class HomeComponent implements OnInit {
   currentDescription:string="";
   closeResult: string = '';
   imageLoading:boolean=false;
-  constructor(private workService: WorkServiceService, private modalService: NgbModal) {
+  constructor(private workService: WorkServiceService, private modalService: NgbModal,private titleService:Title,private getValueFromLocalization:GetValueFromLocalization) {
+   
+    getValueFromLocalization.transform("Anasayfa").then(f=>titleService.setTitle(f+siteTitle));
+    
+   
     const filter=new WorkFilterModel();
     filter.isActive=true;
     filter.limit=9999;

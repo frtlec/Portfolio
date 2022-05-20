@@ -14,8 +14,11 @@ export class AboutService {
   }
 
   getAllByActive(active:boolean=null){
+     
+    
+    const query=active==null?'':`?isActive=${active}`;
     return this._httpClient.get<IResponse<AboutPage>>(
-      `${SETTING_API_BASE_URL}/aboutsetting?isActive${active}`,
+      `${SETTING_API_BASE_URL}/aboutsetting${query}`,
       {  observe: 'response' ,context: getClientCredential()}
     );
   }

@@ -59,7 +59,7 @@ namespace Portfolio.IdentityServer
                     ClientSecrets= {new Secret("7sxQ54123!.19DSs23".Sha256())},
                     AllowedGrantTypes= GrantTypes.ResourceOwnerPassword,
                     AllowedScopes={ "selin.ozoglu.com.work.read", "selin.ozoglu.com.work.write", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
-                    AccessTokenLifetime=1*60*60,
+                    AccessTokenLifetime=48*60*60,
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime= (int) (DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
                     RefreshTokenUsage= TokenUsage.ReUse

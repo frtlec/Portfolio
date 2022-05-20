@@ -35,10 +35,10 @@ namespace Porfolio.Services.Setting.API.Services
 
         if (isActive != null)
         {
-          aboutPage.Softwares = aboutPage.Softwares.Where(f => f.Active == isActive).ToList();
-          aboutPage.Projects = aboutPage.Projects.Where(f => f.Active == isActive).ToList();
-          aboutPage.Educations = aboutPage.Educations.Where(f => f.Active == isActive).ToList();
-          aboutPage.Certifacates = aboutPage.Certifacates.Where(f => f.Active == isActive).ToList();
+          aboutPage.Softwares = aboutPage.Softwares.ToList();
+          aboutPage.Projects = aboutPage.Projects.ToList();
+          aboutPage.Educations = aboutPage.Educations.ToList();
+          aboutPage.Certifacates = aboutPage.Certifacates.ToList();
         }
 
         return Response<AboutPage>.Success(aboutPage, 200);
@@ -53,7 +53,7 @@ namespace Porfolio.Services.Setting.API.Services
     {
       try
       {
-        AboutPage aboutPage = await _aboutPageCollection.Find(x => x.Id==aboutPageDto.Id).FirstOrDefaultAsync();
+        AboutPage aboutPage = await _aboutPageCollection.Find(_=>true).FirstOrDefaultAsync();
     
         if (aboutPage == null)
         {

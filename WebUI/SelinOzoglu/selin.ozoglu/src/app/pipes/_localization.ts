@@ -9,16 +9,17 @@ export class GetValueFromLocalization {
   }
 
   async transform(value: any, args?: any): Promise<any> {
- 
+
     let val=value;
-    if(typeof(value)=='object'){
+    if(val==null){
+      val="";
+    }
+    if(typeof(val)=='object'){
+      
         val=value.changingThisBreaksApplicationSecurity;
     }
-
-
     let result= await (await this.localizationService.getByCulture(val)).toPromise();
     val=result.body.data.value;
- 
     return val;
   }
 }

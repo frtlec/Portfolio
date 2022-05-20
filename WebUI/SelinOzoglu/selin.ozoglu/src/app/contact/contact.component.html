@@ -2,7 +2,7 @@
 <div class="container-fuild">
     <div class="row">
         <div class="col-xl-8 m-auto py-3">
-            <h2 class="heading mb-5">Contact Form</h2>
+            <h2 class="heading mb-5">{{'İletişim Formu' | getValueFromLocalization | async}}</h2>
             <form #contactForm="ngForm" (ngSubmit)="submit()">
                 <div class="row">
                     <div class="col-md-6 p-2">
@@ -24,25 +24,25 @@
 
                         <div class="form-group mb-4">
                             <input type="text" class="form-control" aria-label="Sizing example input"
-                                placeholder="Full Name" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off" [disabled]="isSubmit">
+                                [placeholder]="'Ad ve soyad' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off" [disabled]="isSubmit">
                         </div>
                         <div class="form-group mb-4">
                             <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" [disabled]="isSubmit" >
-                                <option value=''>Gender</option>
-                                <option value="women">Women</option>
-                                <option value="men">Men</option>
+                                <option value=''>{{'Cinsiyetiniz' | getValueFromLocalization | async}}</option>
+                                <option value="women">{{'Kadın' | getValueFromLocalization | async}}</option>
+                                <option value="men">{{'Men' | getValueFromLocalization | async}}</option>
                             </select>
                         </div>
                         <div class="form-group mb-4">
                             <input type="email" class="form-control" aria-label="Sizing example input"
-                                placeholder="Email" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off" [disabled]="isSubmit">
+                                [placeholder]="'Email adresiniz' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off" [disabled]="isSubmit">
                                <div class="text-right">
                                 <small class="text-muted">example@exdomain.com</small>
                                </div>
                         </div>
 
                         <div class="form-group mb-4">
-                            <input type="tel" class="form-control" aria-label="Sizing example input" placeholder="Phone"
+                            <input type="tel" class="form-control" aria-label="Sizing example input" [placeholder]="'Telefon numaranız' | getValueFromLocalization | async"
                                 aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off" [disabled]="isSubmit">
                         </div>
                     </div>
@@ -52,16 +52,16 @@
                     <div class="col-12">
                         <div class="form-group mb-4">
                             <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon" [disabled]="isSubmit">
-                                <option selected value="-1">Subject Category</option>
-                                <option *ngFor="let cat of categories" [value]="cat.id">{{cat.title}}</option>
+                                <option selected value="-1">{{'Konu' | getValueFromLocalization | async}}</option>
+                                <option *ngFor="let cat of categories" [value]="cat.id">{{cat.title | getValueFromLocalization | async}}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" placeholder="enter your message"></textarea>
+                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" [placeholder]="'mesajınızı giriniz' | getValueFromLocalization | async"></textarea>
                         </div>
                         <div class="submitbtn mt-4">
                             <button class="btn btn-primary" type="submit" [disabled]="isSubmit">
-                                <span  [hidden]="isSubmit">Forward</span>
+                                <span  [hidden]="isSubmit">{{'İlet' | getValueFromLocalization | async }}</span>
                                 <div class="spinner-border"  [hidden]="!isSubmit" role="status">
                                     <span class="sr-only"></span>
                                   </div>

@@ -1,12 +1,15 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
+import { siteTitle } from 'src/shared/constants/general';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 import { WorkFilterModel } from '../models/inputModels/WorkAddModel';
 import { CategorySMO } from '../models/serviceModels/CategorySMO';
 import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
+import { GetValueFromLocalization } from '../pipes/_localization';
 import { CategoryService } from '../services/category/category.service';
 import { WorkServiceService } from '../services/work/work-service.service';
 import { closeRightMenu } from '../state/defaultMenu/defaultMenu.actions';
@@ -34,8 +37,8 @@ export class PortfolioComponent implements OnInit {
   closeResult: string = '';
   currentCategoryId:number=0;
   imageLoading:boolean=false;
-  constructor(private workService: WorkServiceService, private modalService: NgbModal,private categoryService:CategoryService) {
-
+  constructor(private workService: WorkServiceService, private modalService: NgbModal,private categoryService:CategoryService,private getValueFromLocalization:GetValueFromLocalization,private titleService:Title) {
+    getValueFromLocalization.transform("Portfolyo").then(f=>titleService.setTitle(f+siteTitle));
     this.categoryService.getCategoriesByFilter().subscribe(
       res=>{
         this.categories=res.data;

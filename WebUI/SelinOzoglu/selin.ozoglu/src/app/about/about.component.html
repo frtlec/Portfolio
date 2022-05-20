@@ -1,14 +1,20 @@
 <app-default-header [whiteNavbar]="false"></app-default-header>
 
-<div class="container pt-5 about px-5">
+<div class="spinner-wrapper"  [hidden]="refresh==false">
+    <div class="spinner-border"  role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+   </div>
+
+<div class="container pt-5 about px-5" [hidden]="refresh==true">
     <div class="row first">
     
         <div class="col-lg-3 mb-5">
-            <img [src]="PHOTO_STOCK_API_PHOTOS_FILE_URL+aboutPage.portreFileName+'?x12313'" width="100%"
+            <img [src]="(PHOTO_STOCK_API_PHOTOS_FILE_URL+aboutPage.portreFileName) | addUIDphotoUrl" width="100%"
                 class="portre" />
         </div>
         <div class="col-lg-9 mb-3 paddingleft-5">
-            <h1 class="mb-4">{{aboutPage.slogan |  getValueFromLocalization | async}}</h1>
+            <h1 class="mb-4">{{aboutPage.slogan | getValueFromLocalization | async}}</h1>
             <div [innerHtml]="aboutPage.summary | safeHtml | getValueFromLocalization | async">
 
             </div>
@@ -18,35 +24,35 @@
         <div class="col-lg-12">
             <h3 class="mb-3">{{'Programlar' | getValueFromLocalization | async}}</h3>
             <div class="softwareIconContainer">
-                <img [src]="PHOTO_STOCK_API_SVG_FILE_URL+item.svgPath+'?12313'" [title]="item.softwareName" *ngFor="let item of aboutPage.softwares" />
+                <img [src]="PHOTO_STOCK_API_SVG_FILE_URL+item.svgPath | addUIDphotoUrl " class="cursor-pointer" [title]="item.softwareName" *ngFor="let item of aboutPage.softwares" />
             </div>
         </div>
     </div>
     <div class="row ">
        <div class="col-md-6">
-        <h3 class="mb-4">{{'is Deneyimleri' | getValueFromLocalization | async}}</h3>
+        <h3 class="mb-4">{{'İş Deneyimleri' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
             <li *ngFor="let item of aboutPage.businesses">
-                <span class="big">{{item.head}}</span>
-                <span class="big">{{item.value}}</span>
-                <span class="normal">{{item.foot}}</span>
+                <span class="big">{{item.head | getValueFromLocalization | async}}</span>
+                <span class="big">{{item.value | getValueFromLocalization | async}}</span>
+                <span class="normal">{{item.foot | getValueFromLocalization | async}}</span>
             </li>
         </ul>
        </div>
        <div class="col-md-6">
-        <h3 class="mb-4">Eğitim</h3>
+        <h3 class="mb-4">{{'Eğitim' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
             <li *ngFor="let item of aboutPage.educations">
-                <span class="big">{{item.head}}</span>
-                <span class="big">{{item.value}}</span>
-                <span class="normal">{{item.foot}}</span>
+                <span class="big">{{item.head | getValueFromLocalization | async}}</span>
+                <span class="big">{{item.value | getValueFromLocalization | async}}</span>
+                <span class="normal">{{item.foot | getValueFromLocalization | async}}</span>
             </li>
         </ul>
-        <h3 class="mb-4">Sertifikalar</h3>
+        <h3 class="mb-4">{{'Sertifikalar' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
             <li *ngFor="let item of aboutPage.certifacates">
-                <span class="big">{{item.head}}</span>
-                <span class="big">{{item.value}}</span>
+                <span class="big">{{item.head | getValueFromLocalization | async}}</span>
+                <span class="big">{{item.value | getValueFromLocalization | async}}</span>
             </li>
         </ul>
        </div>
@@ -54,12 +60,12 @@
 
     <div class="row project">
        <div class="col-12 text-center">
-        <h3 class="mb-4">Project</h3>
+        <h3 class="mb-4">{{'Projeler' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
             <li *ngFor="let item of aboutPage.projects">
-                <span class="big">{{item.head}}</span>
-                <span class="big">{{item.value}}</span>
-                <a [href]="item.link" *ngIf="item.link!=undefined && item.link!=null && item.link!=''  " class="normal" target="blank">Go To</a>
+                <span class="big">{{item.head | getValueFromLocalization | async}}</span>
+                <span class="big">{{item.value | getValueFromLocalization | async}}</span>
+                <a [href]="item.link" *ngIf="item.link!=undefined && item.link!=null && item.link!=''  " class="normal" target="blank">{{'Link' | getValueFromLocalization | async}}</a>
             </li>
         </ul>
        </div>

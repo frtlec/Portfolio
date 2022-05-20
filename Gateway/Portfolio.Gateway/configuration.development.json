@@ -24,7 +24,7 @@
           "selin.ozoglu.com.work.write"
         ]
       },
-      "DangerousAcceptAnyServerCertificateValidator": false
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -50,7 +50,7 @@
           "selin.ozoglu.com.work.write"
         ]
       },
-      "DangerousAcceptAnyServerCertificateValidator": false
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -76,7 +76,7 @@
           "selin.ozoglu.com.work.write"
         ]
       },
-      "DangerousAcceptAnyServerCertificateValidator": false
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -102,7 +102,7 @@
           "selin.ozoglu.com.work.write"
         ]
       },
-      "DangerousAcceptAnyServerCertificateValidator": false
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
 
   ],
