@@ -38,6 +38,8 @@ export class ContactComponent implements OnInit {
   faUserCheck=faUserCheck;
 
   contactModel:ContactModel=new ContactModel();
+  availableMessageCount:number=1000;
+  messageCount:number=this.availableMessageCount;
 
   categories:CategorySMO[]=new Array<CategorySMO>();
   isSubmit:boolean=false;
@@ -62,6 +64,9 @@ export class ContactComponent implements OnInit {
     this.contactModel.gender="";
   
   }
+  messageCounter(){
+    this.messageCount=this.availableMessageCount-this.contactModel.message?.length;
+  }
   errorMessageWriter(errorMessage: string) {
     Swal.fire({
       icon: "error",
@@ -79,25 +84,42 @@ export class ContactComponent implements OnInit {
     let errors:Array<string>=[];
 
     if(this.contactModel.categoryId==undefined || this.contactModel.categoryId==0){
-      errors.push("Please enter category subject");
+      errors.push("Konu boş bırakılamaz!")
     }
     if(this.contactModel.email==undefined || this.contactModel.email==""){
-      errors.push("Please enter your mail");
+      errors.push("Email alanı boş bırakılamaz!")
+    }else if(this.contactModel.email?.length>=150){
+      errors.push("Email alanı en fazla 150 karakter olabilir ")
     }
-    if(this.contactModel.fullName==undefined || this.contactModel.fullName==""){
-      errors.push("Please enter your fullname");
+    if(this.contactModel.fullName==undefined || this.contactModel.fullName==""){;
+      errors.push("Ad ve soyad alanı boş bırakılamaz!")
+    }else if(this.contactModel.fullName?.length>=100){
+      errors.push("Ad ve soyad alanı en fazla 100 karakter olabilir ")
     }
     if(this.contactModel.message==undefined || this.contactModel.message==""){
-      errors.push("Please enter your message");
+      errors.push("Mesaj alanı boş bıraklamaz!")
+    }
+    else if(this.contactModel.message?.length>1000){
+      errors.push("Mesaj alanı en fazla 1000 karakter olabilir!")
     }
     if(this.validateEmail(this.contactModel.email)==null){
-      errors.push("your email address is invalid");
+      errors.push("Email adresi geçersiz!")
     }
+
+
+    
+
+
     if(errors.length>0){
-      Swal.fire({
-        icon: "error",
-        html: errors.join('<br/>')
-      });
+      errors.forEach(f=>{
+        this.getValueFromLocalization.transform(f).then(x=>{
+          Swal.fire({
+            icon: "error",
+            html: x
+          });
+        });
+      })
+  
       return false;
     }
     return true;

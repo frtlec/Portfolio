@@ -172,8 +172,17 @@ textarea.form-control{
 textarea{
     background-color: #C38CBD !important;
 }
+
 @media  screen and (min-width: 800px) {
     .pr-5{
         padding-right: 40%;
     }
+}
+
+.messageCount{
+    padding: 5px;
+    width: 50px;
+    text-align: center;
+    background-color: #caa7c6;
+    
 }

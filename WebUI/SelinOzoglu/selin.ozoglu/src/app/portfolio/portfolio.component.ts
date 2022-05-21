@@ -45,7 +45,7 @@ export class PortfolioComponent implements OnInit {
 
         let All=new CategorySMO();
         All.id=0;
-        All.title="All";
+        getValueFromLocalization.transform("Tümü").then( f=>All.title=f);
         this.categories.splice(0,0,All);
         this.currentCategoryId=res.data[0]?.id;
       }

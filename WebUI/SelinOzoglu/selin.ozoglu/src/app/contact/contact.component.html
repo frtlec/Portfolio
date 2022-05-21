@@ -57,7 +57,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" [placeholder]="'mesajınızı giriniz' | getValueFromLocalization | async"></textarea>
+                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" [placeholder]="'mesajınızı giriniz' | getValueFromLocalization | async" (keyup)="messageCounter()"></textarea>
+                            <label class="messageCount" [style.color]="this.messageCount<0?'red':'white'">{{messageCount}}</label>
                         </div>
                         <div class="submitbtn mt-4">
                             <button class="btn btn-primary" type="submit" [disabled]="isSubmit">

@@ -13,7 +13,9 @@ export class GetValueFromLocalization {
     let localStorageLang=localStorage.getItem("lang");
     let localizationType=<number>JSON.parse(localStorageLang)==null?0:<number>JSON.parse(localStorageLang);
     if(localizationType==0)
-     return value;
+    {
+      return value;
+    }
 
     let val=value;
     if(val==null){
