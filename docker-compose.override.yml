@@ -125,7 +125,6 @@ services:
       - "19053:443"
     volumes:
       - ~/.aspnet/https:/https:ro
-    restart: on-failure
     depends_on:
       - workitemsdb
   identityserver.api:
