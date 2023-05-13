@@ -63,11 +63,11 @@ services:
     restart: on-failure
     volumes:
       - type: bind
-        source: /root/opt/app_data/portfolio_photostock_data
+        source: /opt/app_data/portfolio_photostock_data
         # source: C:\Users\zafer\Desktop\photos
         target: /app/wwwroot/photos
       - type: bind
-        source: /root/opt/app_data/portfolio_photostock_data
+        source: /opt/app_data/portfolio_photostock_data
         # source: C:\Users\zafer\Desktop\photos
         target: /app/wwwroot/svg
       - ~/.aspnet/https:/https:ro
