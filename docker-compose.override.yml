@@ -70,7 +70,7 @@ services:
         source: /opt/app_data/portfolio_photostock_data
         # source: C:\Users\zafer\Desktop\photos
         target: /app/wwwroot/svg
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
   mailsender.api:
     container_name: mailsender.api
     environment:
@@ -89,7 +89,7 @@ services:
     depends_on:
       - maildb
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
   setting.api:
     container_name: setting.api
     environment:
@@ -105,7 +105,7 @@ services:
       - "5105:80"
       - "19052:443"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
       # - ${HOME}/.aspnet/https:/https:ro
       # - ${HOME}/.aspnet/https:/https/dev_cert.pfx:ro
     depends_on:
@@ -125,7 +125,7 @@ services:
       - "5102:80"
       - "19053:443"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
     depends_on:
       - workitemsdb
   identityserver.api:
@@ -160,7 +160,7 @@ services:
       - "5100:80"
       - "19050:443"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
   selinozoglu.webui:
     container_name: selinozoglu.webui
     restart: on-failure
