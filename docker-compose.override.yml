@@ -112,6 +112,7 @@ services:
       - settingdb
   workitem.api:
     container_name: workitem.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identityserver.api
