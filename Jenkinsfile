@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Start container') {
       steps {
-        sh 'docker-compose up --build -d'
+        sh 'docker-compose up -d'
         sh 'docker-compose ps'
       }
     }
