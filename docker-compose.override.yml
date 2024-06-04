@@ -48,8 +48,6 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=zk147olu
-    networks:
-      - closed_network
   photostock.api:
     container_name: photostock.api
     environment:
@@ -148,8 +146,6 @@ services:
       - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
     depends_on:
       - identity4db
-    networks:
-      - closed_network
   gateway.api:
     container_name: gateway.api
     environment:
