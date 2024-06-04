@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   workitemsdb:
-    image: postgres
+    image: postgres:15-alpine
   identity4db:
     # image: mcr.microsoft.com/mssql/server:2019-latest
     image: justin2004/mssql_server_tiny
