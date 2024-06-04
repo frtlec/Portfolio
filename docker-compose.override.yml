@@ -39,10 +39,6 @@ services:
     container_name: identity4db
     user: root
     restart: always
-    ports:
-      - "1433:1433"
-    expose:
-      - 1433
     volumes:
       - identity4db_volume:/var/opt/mssql
     environment:
