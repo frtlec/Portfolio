@@ -6,7 +6,7 @@ services:
     # image: mcr.microsoft.com/mssql/server:2019-latest
     image: justin2004/mssql_server_tiny
     networks:
-      - mynetwork
+      - myothernetwork
   portfolio_rabbitmq:
     image: rabbitmq:3.8.14-management
   maildb:
@@ -54,6 +54,6 @@ volumes:
   maildb_volume:
   settingdb_volume:
 networks:
-  mynetwork:
+  myothernetwork:
     external: true
       
