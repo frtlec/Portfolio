@@ -10,11 +10,6 @@ pipeline {
         '''
       }
     }
-    stage('Prune Docker data') {
-      steps {
-
-      }
-    }
     stage('Start container') {
       steps {
         sh 'docker-compose down'
