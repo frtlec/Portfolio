@@ -148,6 +148,8 @@ services:
       - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
     depends_on:
       - identity4db
+    networks:
+      - closed_network
   gateway.api:
     container_name: gateway.api
     environment:
