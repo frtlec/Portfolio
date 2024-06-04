@@ -5,6 +5,8 @@ services:
   identity4db:
     # image: mcr.microsoft.com/mssql/server:2019-latest
     image: justin2004/mssql_server_tiny
+    networks:
+      - mynetwork
   portfolio_rabbitmq:
     image: rabbitmq:3.8.14-management
   maildb:
@@ -51,4 +53,7 @@ volumes:
   identity4db_volume:
   maildb_volume:
   settingdb_volume:
+networks:
+  mynetwork:
+    external: true
       
