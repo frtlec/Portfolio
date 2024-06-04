@@ -51,7 +51,4 @@ volumes:
   identity4db_volume:
   maildb_volume:
   settingdb_volume:
-networks:
-  myothernetwork:
-    external: true
       

@@ -174,3 +174,6 @@ services:
       - mailsender.api
       - workitem.api
       - photostock.api
+networks:
+  myothernetwork:
+    external: true
