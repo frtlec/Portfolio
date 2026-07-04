@@ -12,37 +12,37 @@ services:
   settingdb:
     image: mongo
   identityserver.api:
-    image: identityserver_api_image
+    image: ghcr.io/frtlec/portfolio-identityserver:latest
     build:
       context: .
       dockerfile: IdentityServer/Portfolio.IdentityServer/Dockerfile
   photostock.api:
-    image: photostock_image
+    image: ghcr.io/frtlec/portfolio-photostock:latest
     build:
       context: .
-      dockerfile: Services/PhotoStock/Portfolio.Services.PhotoStock/Dockerfile  
+      dockerfile: Services/PhotoStock/Portfolio.Services.PhotoStock/Dockerfile
   mailsender.api:
-    image: mailsender_image
+    image: ghcr.io/frtlec/portfolio-mailsender:latest
     build:
       context: .
-      dockerfile: MailSender/Portfolio.Services.MailSender/Dockerfile  
+      dockerfile: MailSender/Portfolio.Services.MailSender/Dockerfile
   workitem.api:
-    image: workitem_image
+    image: ghcr.io/frtlec/portfolio-workitem:latest
     build:
       context: .
       dockerfile: Services/WorkItems/Portfolio.Services.WorkItems.API/Dockerfile
   setting.api:
-      image: setting_image
+      image: ghcr.io/frtlec/portfolio-setting:latest
       build:
         context: .
-        dockerfile: Services/Setting/Porfolio.Services.Setting.API/Dockerfile  
+        dockerfile: Services/Setting/Porfolio.Services.Setting.API/Dockerfile
   selinozoglu.webui:
-    image: selinozoglu_webui_image
+    image: ghcr.io/frtlec/portfolio-selinozoglu-webui:latest
     build:
       context: .
       dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
   gateway.api:
-    image: gateway_api_image
+    image: ghcr.io/frtlec/portfolio-gateway:latest
     build:
       context: .
       dockerfile: Gateway/Portfolio.Gateway/Dockerfile
@@ -54,4 +54,3 @@ volumes:
 networks:
   closed_network:
     driver: bridge
-      
