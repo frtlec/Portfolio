@@ -16,20 +16,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: identityserver
-            dockerfile: IdentityServer/Portfolio.IdentityServer/Dockerfile
-          - name: photostock
-            dockerfile: Services/PhotoStock/Portfolio.Services.PhotoStock/Dockerfile
-          - name: mailsender
-            dockerfile: MailSender/Portfolio.Services.MailSender/Dockerfile
-          - name: workitem
-            dockerfile: Services/WorkItems/Portfolio.Services.WorkItems.API/Dockerfile
-          - name: setting
-            dockerfile: Services/Setting/Porfolio.Services.Setting.API/Dockerfile
+          - name: api
+            dockerfile: Portfolio.Api/Dockerfile
           - name: selinozoglu-webui
             dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
-          - name: gateway
-            dockerfile: Gateway/Portfolio.Gateway/Dockerfile
     steps:
       - uses: actions/checkout@v4
 
@@ -65,7 +55,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml,docker-compose.override.yml"
+          source: "docker-compose.yml,https/aspnetapp.pfx"
           target: "/opt/Portfolio"
 
       - name: Pull images and restart
