@@ -23,7 +23,7 @@ namespace Portfolio.Services.MailSender.Middlewares
 
     public async Task Invoke(HttpContext context)
     {
-      if (context.Request.Path.Value.IndexOf("/api/contacts/create", StringComparison.OrdinalIgnoreCase) != -1)
+      if (context.Request.Path.Value.IndexOf("/services/mailsender/contacts/create", StringComparison.OrdinalIgnoreCase) != -1)
       {
         string token = AuthenticationHeaderValue.Parse(context.Request.Headers["Authorization"])?.Parameter;
         bool isValid = LimitManager(token);

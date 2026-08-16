@@ -18,7 +18,7 @@ namespace Portfolio.Services.MailSender.Middlewares
 
     public Task Invoke(HttpContext context)
     {
-      if (context.Request.Path.Value.IndexOf("/api/contacts/create", StringComparison.OrdinalIgnoreCase) != -1)
+      if (context.Request.Path.Value.IndexOf("/services/mailsender/contacts/create", StringComparison.OrdinalIgnoreCase) != -1)
       {
         var tokens = _antiforgery.GetAndStoreTokens(context);
         context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false, Secure = false });

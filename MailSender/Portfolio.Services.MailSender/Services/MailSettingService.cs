@@ -1,50 +1,51 @@
-﻿using AutoMapper;
-using MongoDB.Driver;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Services.MailSender.Dtos;
+using Portfolio.Services.MailSender.Infrastructure;
 using Portfolio.Services.MailSender.Models;
-using Portfolio.Services.MailSender.Settings;
 using Portfolio.Shared.Dtos;
+using System;
 using System.Threading.Tasks;
 
 namespace Portfolio.Services.MailSender.Services
 {
   public class MailSettingService : IMailSettingService
   {
-    private readonly IMongoCollection<MailSetting> _mailSettingCollection;
+    private readonly MailDbContext _dbContext;
     private readonly IMapper _mapper;
-    public MailSettingService(IDataBaseSettings dataBaseSettings, IMapper mapper)
+    public MailSettingService(MailDbContext dbContext, IMapper mapper)
     {
-      var client = new MongoClient(dataBaseSettings.ConnectionString);
-      var dataBase = client.GetDatabase(dataBaseSettings.DatabaseName);
-      _mailSettingCollection = dataBase.GetCollection<MailSetting>(dataBaseSettings.MailSettingCollectionName);
-
+      _dbContext = dbContext;
       _mapper = mapper;
     }
 
     public async Task<Response<MailSettingDto>> GetById(string mailSettingId)
     {
 
-      MailSetting mailSetting = await _mailSettingCollection.Find(f => f.Id == mailSettingId).FirstOrDefaultAsync();
+      MailSetting mailSetting = await _dbContext.MailSettings.FirstOrDefaultAsync(f => f.Id == mailSettingId);
 
       return Response<MailSettingDto>.Success(_mapper.Map<MailSettingDto>(mailSetting), 200);
     }
     public async Task<Response<NoContent>> Create(CreateMailSettingDto createMailSettingDto)
     {
-      bool isExistsMailSetting = await _mailSettingCollection.Find(f => f.Mail == createMailSettingDto.Mail).AnyAsync();
+      bool isExistsMailSetting = await _dbContext.MailSettings.AnyAsync(f => f.Mail == createMailSettingDto.Mail);
 
       if (isExistsMailSetting)
       {
         return Response<NoContent>.Fail("This record already exists", 400);
       }
 
-      await _mailSettingCollection.InsertOneAsync(_mapper.Map<MailSetting>(createMailSettingDto));
+      MailSetting newMailSetting = _mapper.Map<MailSetting>(createMailSettingDto);
+      newMailSetting.Id = Guid.NewGuid().ToString();
+      _dbContext.MailSettings.Add(newMailSetting);
+      await _dbContext.SaveChangesAsync();
 
       return Response<NoContent>.Success(200);
     }
 
     public async Task<Response<MailSettingDto>> GetByEmail(string email)
     {
-      MailSetting mailSetting = await _mailSettingCollection.Find(f => f.Mail == email).FirstOrDefaultAsync();
+      MailSetting mailSetting = await _dbContext.MailSettings.FirstOrDefaultAsync(f => f.Mail == email);
       if (mailSetting==null)
       {
         return Response<MailSettingDto>.Fail($"{email} Mail Settings notfound!", 404);

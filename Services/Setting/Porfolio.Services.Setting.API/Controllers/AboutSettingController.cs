@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Porfolio.Services.Setting.API.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("services/Settings/[controller]")]
   [ApiController]
   public class AboutSettingController : CustomBaseController
   {

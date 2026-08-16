@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using MongoDB.Driver;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Porfolio.Services.Setting.API.Infrastructure;
 using Porfolio.Services.Setting.API.Models.DbModels;
 using Porfolio.Services.Setting.API.Models.Dtos;
 using Porfolio.Services.Setting.API.Services.Interfaces;
-using Porfolio.Services.Setting.API.Settings;
 using Portfolio.Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -14,20 +14,18 @@ namespace Porfolio.Services.Setting.API.Services
 {
   public class AboutPageSettingService : IAboutPageSettingService
   {
-    private readonly IMongoCollection<AboutPage> _aboutPageCollection;
+    private readonly SettingsDbContext _dbContext;
     private readonly IMapper _mapper;
-    public AboutPageSettingService(IDataBaseSettings dataBaseSettings, IMapper mapper)
+    public AboutPageSettingService(SettingsDbContext dbContext, IMapper mapper)
     {
-      var client = new MongoClient(dataBaseSettings.ConnectionString);
-      var dataBase = client.GetDatabase(dataBaseSettings.DatabaseName);
-      _aboutPageCollection = dataBase.GetCollection<AboutPage>(dataBaseSettings.AboutPageCollectionName);
+      _dbContext = dbContext;
       _mapper = mapper;
     }
     public async Task<Response<AboutPage>> GetAllByActive(bool? isActive)
     {
       try
       {
-        AboutPage aboutPage = await _aboutPageCollection.Find(_ => true).FirstOrDefaultAsync();
+        AboutPage aboutPage = await _dbContext.AboutPages.FirstOrDefaultAsync();
         if (aboutPage==null)
         {
           return Response<AboutPage>.Success(new AboutPage(), 200);
@@ -53,15 +51,16 @@ namespace Porfolio.Services.Setting.API.Services
     {
       try
       {
-        AboutPage aboutPage = await _aboutPageCollection.Find(_=>true).FirstOrDefaultAsync();
-    
+        AboutPage aboutPage = await _dbContext.AboutPages.FirstOrDefaultAsync();
+
         if (aboutPage == null)
         {
           aboutPage = _mapper.Map<AboutPage>(aboutPageDto);
 
+          aboutPage.Id = Guid.NewGuid().ToString();
           aboutPage.CreatedDate = DateTime.Now;
           aboutPage.CreatedUserId = 1;
-          await _aboutPageCollection.InsertOneAsync(aboutPage);
+          _dbContext.AboutPages.Add(aboutPage);
         }
         else
         {
@@ -76,9 +75,9 @@ namespace Porfolio.Services.Setting.API.Services
           aboutPage.UpdatedUserId = 1;
           aboutPage.Active=aboutPageDto.Active;
           aboutPage.PortreFileName= aboutPageDto.PortreFileName;
-          await _aboutPageCollection.FindOneAndReplaceAsync(f=>f.Id== aboutPageDto.Id, aboutPage);
         }
-       
+
+        await _dbContext.SaveChangesAsync();
 
         return Response<AboutPage>.Success(aboutPage, 200);
       }

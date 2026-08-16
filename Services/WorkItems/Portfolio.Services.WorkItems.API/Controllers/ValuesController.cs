@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Portfolio.Services.WorkItems.API.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("services/workitems/[controller]")]
   [ApiController]
   public class ValuesController : ControllerBase
   {

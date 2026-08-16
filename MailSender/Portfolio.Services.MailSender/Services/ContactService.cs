@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation.Results;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Services.MailSender.Dtos;
+using Portfolio.Services.MailSender.Infrastructure;
 using Portfolio.Services.MailSender.Models;
-using Portfolio.Services.MailSender.Settings;
 using Portfolio.Services.MailSender.Validations.FluentValidation;
 using Portfolio.Shared.Dtos;
 using Portfolio.Shared.Extensions;
@@ -11,7 +11,6 @@ using Portfolio.Shared.RabbitMQ.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Mass = MassTransit;
 
@@ -19,24 +18,20 @@ namespace Portfolio.Services.MailSender.Services
 {
   public class ContactService : IContactService
   {
-    private readonly IMongoCollection<Contact> _contactCollection;
+    private readonly MailDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly Mass.IPublishEndpoint _publishEndpoint;
     private readonly IMailSettingService _mailSettingService;
-    public ContactService(IDataBaseSettings dataBaseSettings, IMapper mapper, Mass.IPublishEndpoint publishEndpoint, IMailSettingService mailSettingService)
+    public ContactService(MailDbContext dbContext, IMapper mapper, Mass.IPublishEndpoint publishEndpoint, IMailSettingService mailSettingService)
     {
-      var client = new MongoClient(dataBaseSettings.ConnectionString);
-      var dataBase = client.GetDatabase(dataBaseSettings.DatabaseName);
-      _contactCollection = dataBase.GetCollection<Contact>(dataBaseSettings.ContactCollectionName);
-
-
+      _dbContext = dbContext;
       _mapper = mapper;
       _publishEndpoint = publishEndpoint;
       _mailSettingService = mailSettingService;
     }
     public async Task<Response<List<ContactDto>>> GetAll()
     {
-      var contacts = await _contactCollection.Find(_ => true).ToListAsync();
+      var contacts = await _dbContext.Contacts.ToListAsync();
 
       if (contacts.Any() == false)
       {
@@ -58,8 +53,10 @@ namespace Portfolio.Services.MailSender.Services
       }
 
       var newContact = _mapper.Map<Contact>(addContactDto);
+      newContact.Id = Guid.NewGuid().ToString();
       newContact.CreatedDate = DateTime.Now;
-      await _contactCollection.InsertOneAsync(newContact);
+      _dbContext.Contacts.Add(newContact);
+      await _dbContext.SaveChangesAsync();
 
       await _publishEndpoint.Publish<ContactMailSendCommand>(
          new ContactMailSendCommand
@@ -71,17 +68,17 @@ namespace Portfolio.Services.MailSender.Services
 
     public async Task<Response<ContactDto>> GetById(string contactId)
     {
-      Contact contact = await _contactCollection.Find(x => x.Id == contactId).FirstOrDefaultAsync();
+      Contact contact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == contactId);
       ContactDto mappedContact = _mapper.Map<ContactDto>(contact);
       return Response<ContactDto>.Success(mappedContact, 200);
     }
 
     public async Task<Response<NoContent>> SuccessSentMailAfterContactUpdate(string contactId)
     {
-      Contact contact = await _contactCollection.Find(x => x.Id == contactId).FirstOrDefaultAsync();
+      Contact contact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == contactId);
       contact.IsSent = true;
       contact.SuccessFullSentDate = DateTime.Now;
-      await _contactCollection.FindOneAndReplaceAsync(x => x.Id == contactId, contact);
+      await _dbContext.SaveChangesAsync();
 
       return Response<NoContent>.Success(200);
     }

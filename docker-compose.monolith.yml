@@ -1,49 +1,33 @@
 version: "3.8"
 
 # Paralel test stack (feature/monolith-migration branch icin).
-# Mevcut prod stack'ten (master -> /opt/Portfolio) tamamen izole calisir:
-#  - image tag'i ":latest" degil ":monolith" (master'in image'ini asla ezmez)
-#  - host portlari orijinalin +3000'i (asagidaki tablo)
-#  - container_name verilmiyor, compose bunlari proje adina (dizin adina)
-#    gore otomatik uretir; ayni sekilde volume/network isimleri de
-#    "/opt/Portfolio-monolith" dizin adindan turetildigi icin master'in
-#    volume/network'leriyle hic karismaz.
+# Artik gercek monolit mimariyi yansitiyor: tek API + tek Postgres + WebUI
+# (+ RabbitMQ, kullanicinin tercihiyle korundu). Mevcut prod stack'ten
+# (master -> /opt/Portfolio) tamamen izole calisir: image tag'i ":monolith",
+# ayri host portlari, ayri volume/network (proje dizini adindan turetiliyor).
 #
-# Port tablosu (orijinal -> monolith):
-#  gateway.api        5100/19050 -> 8100/22050
-#  identityserver.api 5101/19051 -> 8101/22051
-#  workitem.api       5102/19053 -> 8102/22053
-#  mailsender.api     5103/19054 -> 8103/22054
-#  photostock.api     5104/19055 -> 8104/22055
-#  setting.api        5105/19052 -> 8105/22052
-#  selinozoglu.webui  5110/9392  -> 8110/12392
-#  workitemsdb        5432       -> 8432
-#  portfolio_rabbitmq 5672/15672 -> 8672/8673
-#  maildb             27017      -> 30017
-#  settingdb          27018      -> 30018
+# ZORUNLU: sunucuda /opt/Portfolio-monolith/.env dosyasinda JWT_SIGNING_KEY
+# tanimli olmali (rastgele, uzun bir secret) -- yoksa Portfolio.Api acilista
+# hata verip kapanir (bkz. Portfolio.Api/Identity/TokenService.cs).
+#
+# Port tablosu:
+#  portfolio.api      -> 8100 (http) / 8143 (https)
+#  selinozoglu.webui  -> 8110 (http) / 12392 (https)
+#  portfoliodb        -> 8432
+#  portfolio_rabbitmq -> 8672 (amqp) / 8673 (mgmt)
 
 services:
-  workitemsdb:
+  portfoliodb:
     image: postgres:15-alpine
     restart: always
     ports:
       - "8432:5432"
     volumes:
-      - workitemsdb_volume:/var/lib/postgresql/data
+      - portfoliodb_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=zk147olu
-      - POSTGRES_DB=workitemsdb
-
-  identity4db:
-    image: justin2004/mssql_server_tiny
-    user: root
-    restart: always
-    volumes:
-      - identity4db_volume:/var/opt/mssql
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=zk147olu
+      - POSTGRES_DB=portfoliodb
 
   portfolio_rabbitmq:
     image: rabbitmq:3.8.14-management
@@ -55,54 +39,25 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
 
-  maildb:
-    image: mongo
-    restart: always
-    ports:
-      - "30017:27017"
-    volumes:
-      - maildb_volume:/data/db
-
-  settingdb:
-    image: mongo
-    restart: always
-    ports:
-      - "30018:27017"
-    volumes:
-      - settingdb_volume:/data/db
-
-  identityserver.api:
-    image: ghcr.io/frtlec/portfolio-identityserver:monolith
+  portfolio.api:
+    image: ghcr.io/frtlec/portfolio-api:monolith
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=identity4db,1433;Database=Identity4DbDeploy;User=sa;Password=zk147olu"
-      - TokenOptions:IssuerUri=http://identityserver.api
+      - ASPNETCORE_ENVIRONMENT=Production
+      - "ConnectionStrings:PostgreSql=User ID=admin;Password=zk147olu;Server=portfoliodb;Port=5432;Database=portfoliodb;Pooling=true"
+      - RabbitMQUrl=portfolio_rabbitmq
+      - Jwt__SigningKey=${JWT_SIGNING_KEY}
+      - Jwt__Issuer=https://portfolio-monolith.selinozoglu.com
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22051
+      - ASPNETCORE_HTTPS_PORT=8143
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
-      - "8101:80"
-      - "22051:443"
-    volumes:
-      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
+      - "8100:80"
+      - "8143:443"
     depends_on:
-      - identity4db
-
-  photostock.api:
-    image: ghcr.io/frtlec/portfolio-photostock:monolith
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=http://identityserver.api
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22055
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    ports:
-      - "8104:80"
-      - "22055:443"
-    restart: on-failure
+      - portfoliodb
+      - portfolio_rabbitmq
     volumes:
       # Gercek foto verisiyle test edebilmek icin ayni klasore bagliyoruz,
       # ama read_only:true ile bu stack'in prod veriye yazmasini engelliyoruz.
@@ -116,80 +71,6 @@ services:
         read_only: true
       - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
 
-  mailsender.api:
-    image: ghcr.io/frtlec/portfolio-mailsender:monolith
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - RabbitMQUrl=portfolio_rabbitmq
-      - IdentityServerURL=http://identityserver.api
-      - DatabaseSettings:ConnectionString=mongodb://maildb:27017
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22054
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    restart: on-failure
-    ports:
-      - "8103:80"
-      - "22054:443"
-    depends_on:
-      - maildb
-    volumes:
-      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
-
-  setting.api:
-    image: ghcr.io/frtlec/portfolio-setting:monolith
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - IdentityServerURL=http://identityserver.api
-      - DatabaseSettings:ConnectionString=mongodb://settingdb
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22052
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    restart: on-failure
-    ports:
-      - "8105:80"
-      - "22052:443"
-    volumes:
-      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
-    depends_on:
-      - settingdb
-
-  workitem.api:
-    image: ghcr.io/frtlec/portfolio-workitem:monolith
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServerURL=http://identityserver.api
-      - "ConnectionStrings:PostgreSql=User ID=admin; Password=zk147olu; Server=workitemsdb; Port=5432;Database=workitemsdb;Integrated Security=true;Pooling=true"
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22053
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    ports:
-      - "8102:80"
-      - "22053:443"
-    volumes:
-      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
-    depends_on:
-      - workitemsdb
-
-  gateway.api:
-    image: ghcr.io/frtlec/portfolio-gateway:monolith
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - IdentityServerURL=http://identityserver.api
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=22050
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    restart: on-failure
-    ports:
-      - "8100:80"
-      - "22050:443"
-    volumes:
-      - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
-
   selinozoglu.webui:
     image: ghcr.io/frtlec/portfolio-selinozoglu-webui:monolith
     restart: on-failure
@@ -197,13 +78,7 @@ services:
       - "8110:80"
       - "12392:443"
     depends_on:
-      - identityserver.api
-      - mailsender.api
-      - workitem.api
-      - photostock.api
+      - portfolio.api
 
 volumes:
-  workitemsdb_volume:
-  identity4db_volume:
-  maildb_volume:
-  settingdb_volume:
+  portfoliodb_volume:

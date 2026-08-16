@@ -1,4 +1,4 @@
-﻿namespace Porfolio.Services.Setting.API.Models.DbModels
+namespace Porfolio.Services.Setting.API.Models.DbModels
 {
   public class Localization:CommonDbModel
   {
@@ -8,7 +8,7 @@
   }
   public enum LocalizationType
   {
-    
+
     EN=1,
     FR=2
 

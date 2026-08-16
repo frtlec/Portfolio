@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.MailSender.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("services/MailSender/[controller]")]
   [ApiController]
   public class ContactsController : CustomBaseController
   {

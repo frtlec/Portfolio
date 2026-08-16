@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Services.WorkItems.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("services/workitems/[controller]")]
     [ApiController]
     public class CategoriesController : CustomBaseController
     {
