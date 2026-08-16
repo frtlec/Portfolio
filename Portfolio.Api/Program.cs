@@ -3,10 +3,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi;
 using Portfolio.Api.Identity;
 using Portfolio.Api.Mail.Consumers;
@@ -141,7 +143,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowOrigin");
-app.UseStaticFiles();
+
+// /photos ve /svg dosyalari GUID/sabit adla saklaniyor ve pratikte hic
+// degismiyor -- eskiden Cache-Control cok kisa kaliyordu (Cloudflare edge
+// cache'ini surekli origin'e geri dondururdu). 1 yila cikariyoruz; ETag
+// hala gonderiliyor, o yuzden bir hard-refresh/cache temizligi durumunda
+// nadiren degisen bir dosya yine de dogrulanabilir.
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=31536000";
+    }
+});
 
 app.UseRouting();
 

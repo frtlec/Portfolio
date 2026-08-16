@@ -36,6 +36,7 @@ import { AdminLocalizationComponent } from './admin/admin-localization/admin-loc
 import { GetLocalizationName } from './pipes/getEnumKeyString';
 import { GetValueFromLocalization } from './pipes/_localization';
 import { AddUIDphotoUrl } from './pipes/addUIDphotoUrl';
+import { LazyBackgroundDirective } from './directives/lazy-background.directive';
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
@@ -58,7 +59,8 @@ import { AddUIDphotoUrl } from './pipes/addUIDphotoUrl';
         GetLocalizationName,
         GetValueFromLocalization,
         AdminLocalizationComponent,
-        AddUIDphotoUrl
+        AddUIDphotoUrl,
+        LazyBackgroundDirective
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         FormsModule,

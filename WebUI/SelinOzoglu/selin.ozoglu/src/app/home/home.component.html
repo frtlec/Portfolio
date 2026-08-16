@@ -25,7 +25,7 @@
       </div>
     </ng-template>
     @for (work of works; track work) {
-      <div  class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+      <div  class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [appLazyBg]="photoStockPhotosFile + work.mainPicture" >
         <a (click)="open(content,work.id)">
           <div class="texts">
             <h4>{{work.title | getValueFromLocalization | async}}</h4>
