@@ -21,6 +21,8 @@ jobs:
             dockerfile: Portfolio.Api/Dockerfile
           - name: selinozoglu-webui
             dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
+          - name: datamigration
+            dockerfile: Portfolio.DataMigration/Dockerfile
     steps:
       - uses: actions/checkout@v4
 
