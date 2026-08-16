@@ -1,25 +1,27 @@
 version: "3.8"
 
-# Monolit prod stack. Eski 7 mikroservis + 4 ayri DB + Gateway + IdentityServer
-# yerine: tek API (portfolio.api) + tek Postgres (portfoliodb) + WebUI
-# (+ RabbitMQ, mail kuyrugu icin korundu).
+# Paralel test stack (feature/monolith-migration branch icin).
+# Artik gercek monolit mimariyi yansitiyor: tek API + tek Postgres + WebUI
+# (+ RabbitMQ, kullanicinin tercihiyle korundu). Mevcut prod stack'ten
+# (master -> /opt/Portfolio) tamamen izole calisir: image tag'i ":monolith",
+# ayri host portlari, ayri volume/network (proje dizini adindan turetiliyor).
 #
-# ZORUNLU: sunucuda /opt/Portfolio/.env dosyasinda JWT_SIGNING_KEY tanimli
-# olmali (rastgele, uzun bir secret) -- yoksa portfolio.api acilista hata
-# verip kapanir (bkz. Portfolio.Api/Identity/TokenService.cs).
+# ZORUNLU: sunucuda /opt/Portfolio-monolith/.env dosyasinda JWT_SIGNING_KEY
+# tanimli olmali (rastgele, uzun bir secret) -- yoksa Portfolio.Api acilista
+# hata verip kapanir (bkz. Portfolio.Api/Identity/TokenService.cs).
 #
-# NOT (cutover oncesi yapilacak): identity.selinozoglu.com ve
-# photostock.selinozoglu.com alt domain'leri artik ayri container'lara degil,
-# ayni portfolio.api'ye (bu dosyadaki gateway.api ile ayni port) yonlendirilmeli.
-# Ters proxy (nginx/Caddy) config'i bu repo disinda, sunucuda elle guncellenmeli.
+# Port tablosu:
+#  portfolio.api      -> 8100 (http) / 8143 (https)
+#  selinozoglu.webui  -> 8110 (http) / 12392 (https)
+#  portfoliodb        -> 8432
+#  portfolio_rabbitmq -> 8672 (amqp) / 8673 (mgmt)
 
 services:
   portfoliodb:
-    container_name: portfoliodb
     image: postgres:15-alpine
     restart: always
     ports:
-      - "5432:5432"
+      - "8432:5432"
     volumes:
       - portfoliodb_volume:/var/lib/postgresql/data
     environment:
@@ -28,63 +30,55 @@ services:
       - POSTGRES_DB=portfoliodb
 
   portfolio_rabbitmq:
-    container_name: portfolio_rabbitmq
     image: rabbitmq:3.8.14-management
     restart: always
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "8672:5672"
+      - "8673:15672"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
 
   portfolio.api:
-    container_name: portfolio.api
-    image: ghcr.io/frtlec/portfolio-api:latest
-    build:
-      context: .
-      dockerfile: Portfolio.Api/Dockerfile
+    image: ghcr.io/frtlec/portfolio-api:monolith
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - "ConnectionStrings:PostgreSql=User ID=admin;Password=zk147olu;Server=portfoliodb;Port=5432;Database=portfoliodb;Pooling=true"
       - RabbitMQUrl=portfolio_rabbitmq
       - Jwt__SigningKey=${JWT_SIGNING_KEY}
-      - Jwt__Issuer=https://gateway.selinozoglu.com
+      - Jwt__Issuer=https://portfolio-monolith.selinozoglu.com
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=19050
+      - ASPNETCORE_HTTPS_PORT=8143
       - ASPNETCORE_Kestrel__Certificates__Default__Password=zk147olu
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
-      - "5100:80"
-      - "19050:443"
+      - "8100:80"
+      - "8143:443"
     depends_on:
       - portfoliodb
       - portfolio_rabbitmq
     volumes:
+      # Gercek foto verisiyle test edebilmek icin ayni klasore bagliyoruz,
+      # ama read_only:true ile bu stack'in prod veriye yazmasini engelliyoruz.
       - type: bind
         source: /opt/app_data/portfolio_photostock_data
         target: /app/wwwroot/photos
+        read_only: true
       - type: bind
         source: /opt/app_data/portfolio_photostock_data
         target: /app/wwwroot/svg
+        read_only: true
       - ./https/aspnetapp.pfx:/https/aspnetapp.pfx:ro
 
   selinozoglu.webui:
-    container_name: selinozoglu.webui
-    image: ghcr.io/frtlec/portfolio-selinozoglu-webui:latest
-    build:
-      context: .
-      dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
+    image: ghcr.io/frtlec/portfolio-selinozoglu-webui:monolith
     restart: on-failure
     ports:
-      - "5110:80"
-      - "9392:443"
+      - "8110:80"
+      - "12392:443"
     depends_on:
       - portfolio.api
 
 volumes:
   portfoliodb_volume:
-networks:
-  closed_network:
-    driver: bridge

@@ -1,8 +1,9 @@
-name: Build and Deploy
+name: Build and Deploy (monolith test stack)
 
 on:
   push:
-    branches: [master]
+    branches: [feature/monolith-migration]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -20,6 +21,8 @@ jobs:
             dockerfile: Portfolio.Api/Dockerfile
           - name: selinozoglu-webui
             dockerfile: WebUI/SelinOzoglu/selin.ozoglu/Dockerfile
+          - name: datamigration
+            dockerfile: Portfolio.DataMigration/Dockerfile
     steps:
       - uses: actions/checkout@v4
 
@@ -31,15 +34,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push ${{ matrix.name }}
+      - name: Build and push ${{ matrix.name }} (monolith tag)
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/portfolio-${{ matrix.name }}:latest
-          cache-from: type=gha,scope=${{ matrix.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
+          # ":latest" degil ":monolith" -- master'in prod image'ini asla ezmez.
+          tags: ghcr.io/${{ github.repository_owner }}/portfolio-${{ matrix.name }}:monolith
+          cache-from: type=gha,scope=monolith-${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=monolith-${{ matrix.name }}
 
   deploy:
     needs: build-and-push
@@ -47,18 +51,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Sunucu artik sadece compose dosyalarina ihtiyac duyar (image'lar
-      # onceden build edilip ghcr.io'ya push edildi, sunucuda build YOK).
-      - name: Copy compose files to server
+      - name: Ensure target directory exists on server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: mkdir -p /opt/Portfolio-monolith
+
+      # Sunucuda ayri bir dizin (/opt/Portfolio-monolith) kullaniyoruz,
+      # boylece prod stack'in dizini (/opt/Portfolio) hic dokunulmadan kalir.
+      - name: Copy compose file and cert to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml,https/aspnetapp.pfx"
-          target: "/opt/Portfolio"
+          source: "docker-compose.monolith.yml,https/aspnetapp.pfx"
+          target: "/opt/Portfolio-monolith"
 
-      - name: Pull images and restart
+      - name: Pull images and restart (monolith test stack)
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -66,8 +78,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            cd /opt/Portfolio
+            cd /opt/Portfolio-monolith
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker-compose pull
-            docker-compose up -d --remove-orphans
+            docker-compose -f docker-compose.monolith.yml pull
+            docker-compose -f docker-compose.monolith.yml up -d --remove-orphans
             docker image prune -f
