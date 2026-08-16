@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Portfolio.Api.WorkItems.Controllers
+namespace Portfolio.Api.Controllers
 {
     [Route("services/workitems/[controller]")]
     [ApiController]

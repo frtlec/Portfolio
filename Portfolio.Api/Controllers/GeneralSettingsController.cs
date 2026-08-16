@@ -6,7 +6,7 @@ using Portfolio.Services.WorkItems.Application.Commands;
 using Portfolio.Services.WorkItems.Application.Queries;
 using System.Threading.Tasks;
 
-namespace Portfolio.Api.WorkItems.Controllers
+namespace Portfolio.Api.Controllers
 {
     [Route("services/workitems/[controller]")]
     [ApiController]

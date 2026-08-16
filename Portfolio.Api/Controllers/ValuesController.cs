@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Portfolio.Api.WorkItems.Controllers
+namespace Portfolio.Api.Controllers
 {
   [Route("services/workitems/[controller]")]
   [ApiController]

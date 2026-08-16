@@ -6,7 +6,7 @@ using Portfolio.Api.Settings.Services.Interfaces;
 using Portfolio.Shared.ControllerBases;
 using System.Threading.Tasks;
 
-namespace Portfolio.Api.Settings.Controllers
+namespace Portfolio.Api.Controllers
 {
   [Route("services/Settings/[controller]")]
   [ApiController]

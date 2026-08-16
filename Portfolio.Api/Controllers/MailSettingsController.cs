@@ -6,7 +6,7 @@ using Portfolio.Api.Mail.Services;
 using Portfolio.Shared.ControllerBases;
 using System.Threading.Tasks;
 
-namespace Portfolio.Api.Mail.Controllers
+namespace Portfolio.Api.Controllers
 {
     [Route("services/MailSender/[controller]")]
     [ApiController]
