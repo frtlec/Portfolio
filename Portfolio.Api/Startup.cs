@@ -44,13 +44,6 @@ namespace Portfolio.Api
 
       services.AddSingleton<TokenService>();
 
-      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(opt =>
-        {
-          var tokenService = new TokenService(Configuration);
-          opt.TokenValidationParameters = tokenService.GetValidationParameters();
-        });
-
       services.AddAuthorization(opts =>
       {
         opts.AddPolicy("ReadAndWrite", policy =>
@@ -77,9 +70,24 @@ namespace Portfolio.Api
 
       services.AddDbContext<SettingsDbContext>(opt => opt.UseNpgsql(connectionString));
 
+      // AddIdentity kendi icinde AddAuthentication cagirip cookie semasini
+      // varsayilan yapar; JWT bearer'in gercek varsayilan sema olarak kalmasi
+      // icin AddAuthentication().AddJwtBearer() BURADAN SONRA, en son cagriliyor.
       services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<IdentityDataContext>()
         .AddDefaultTokenProviders();
+
+      services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+      .AddJwtBearer(opt =>
+      {
+        var tokenService = new TokenService(Configuration);
+        opt.TokenValidationParameters = tokenService.GetValidationParameters();
+      });
 
       services.AddMediatR(typeof(Portfolio.Services.WorkItems.Application.Handlers.GetAllWorkByFilterHandler).Assembly);
 
