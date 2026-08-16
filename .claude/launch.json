@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "webui",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "WebUI/SelinOzoglu/selin.ozoglu", "start"],
+      "port": 4200
+    },
+    {
+      "name": "portfolio-api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "Portfolio.Api"],
+      "port": 5000,
+      "url": "http://localhost:5000"
+    }
+  ]
+}

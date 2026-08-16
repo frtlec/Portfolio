@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="row ">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <h3 class="mb-4">{{'İş Deneyimleri' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
           @for (item of aboutPage.businesses; track item) {
@@ -43,17 +43,7 @@
           }
         </ul>
       </div>
-      <div class="col-md-6">
-        <h3 class="mb-4">{{'Eğitim' | getValueFromLocalization | async}}</h3>
-        <ul class="matters">
-          @for (item of aboutPage.educations; track item) {
-            <li>
-              <span class="big">{{item.head | getValueFromLocalization | async}}</span>
-              <span class="big">{{item.value | getValueFromLocalization | async}}</span>
-              <span class="normal">{{item.foot | getValueFromLocalization | async}}</span>
-            </li>
-          }
-        </ul>
+      <div class="col-md-4">
         <h3 class="mb-4">{{'Sertifikalar' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
           @for (item of aboutPage.certifacates; track item) {
@@ -64,10 +54,17 @@
           }
         </ul>
       </div>
-    </div>
-
-    <div class="row project">
-      <div class="col-12 text-center">
+      <div class="col-md-4">
+        <h3 class="mb-4">{{'Eğitim' | getValueFromLocalization | async}}</h3>
+        <ul class="matters">
+          @for (item of aboutPage.educations; track item) {
+            <li>
+              <span class="big">{{item.head | getValueFromLocalization | async}}</span>
+              <span class="big">{{item.value | getValueFromLocalization | async}}</span>
+              <span class="normal">{{item.foot | getValueFromLocalization | async}}</span>
+            </li>
+          }
+        </ul>
         <h3 class="mb-4">{{'Projeler' | getValueFromLocalization | async}}</h3>
         <ul class="matters">
           @for (item of aboutPage.projects; track item) {
@@ -81,7 +78,6 @@
           }
         </ul>
       </div>
-
     </div>
 
   </div>

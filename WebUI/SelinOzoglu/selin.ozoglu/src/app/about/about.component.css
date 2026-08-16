@@ -22,9 +22,6 @@
     font-size: 2.2rem;
 }
 
-.first.row{
-    margin-bottom: 9rem;
-}
 h1{
     font-weight: bold;
 }
@@ -52,32 +49,34 @@ h1{
 
 }
 .matters span.big{
-    font-size: 1.8rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+.matters span.big:nth-of-type(2){
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #6b6b6b;
 }
 .matters span.normal{
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 .matters a{
     text-decoration: none;
     color:#aa2fb5;
 }
-.project{
-    margin-top: 5rem;
-}
-.project .matters li{
-    background-position: center 0 !important;
-    padding: 40px 0 64px 0;
-}
-
 @media only screen and (min-width: 1280px) {
     .paddingleft-5{
         padding-left: 5rem;
     }
-    .about .row .col-md-6:nth-child(1){
-        padding-right: 2.5rem;
+    .about .row .col-md-4:nth-child(1){
+        padding-right: 1.5rem;
       }
-      .about .row .col-md-6:nth-child(2){
-          padding-left: 2.5rem;
+      .about .row .col-md-4:nth-child(2){
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+      .about .row .col-md-4:nth-child(3){
+          padding-left: 1.5rem;
         }
 }
 @media only screen and (max-width: 1280px) {
