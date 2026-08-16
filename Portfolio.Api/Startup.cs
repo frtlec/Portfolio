@@ -9,12 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Porfolio.Services.Setting.API.Infrastructure;
 using Portfolio.Api.Identity;
-using Portfolio.Services.MailSender.Consumers;
-using Portfolio.Services.MailSender.Infrastructure;
-using Portfolio.Services.MailSender.Middlewares;
-using Portfolio.Services.MailSender.Services;
+using Portfolio.Api.Mail.Consumers;
+using Portfolio.Api.Mail.Infrastructure;
+using Portfolio.Api.Mail.Middlewares;
+using Portfolio.Api.Mail.Services;
+using Portfolio.Api.Settings.Infrastructure;
 using Portfolio.Services.WorkItems.Infrastructure;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -63,11 +63,7 @@ namespace Portfolio.Api
         });
       });
 
-      services.AddControllers()
-        .AddApplicationPart(typeof(Portfolio.Services.WorkItems.API.Controllers.WorksController).Assembly)
-        .AddApplicationPart(typeof(Portfolio.Services.PhotoStock.Controllers.PhotosController).Assembly)
-        .AddApplicationPart(typeof(Portfolio.Services.MailSender.Controllers.ContactsController).Assembly)
-        .AddApplicationPart(typeof(Porfolio.Services.Setting.API.Controllers.AboutSettingController).Assembly);
+      services.AddControllers();
 
       // Tek Postgres instance, modul basina ayri schema.
       string connectionString = Configuration.GetConnectionString("PostgreSql");
@@ -75,14 +71,11 @@ namespace Portfolio.Api
       services.AddDbContext<WorkItemsDbContext>(opt =>
         opt.UseNpgsql(connectionString, sql => sql.MigrationsAssembly("Portfolio.Services.WorkItems.Infrastructure")));
 
-      services.AddDbContext<IdentityDataContext>(opt =>
-        opt.UseNpgsql(connectionString, sql => sql.MigrationsAssembly("Portfolio.Api")));
+      services.AddDbContext<IdentityDataContext>(opt => opt.UseNpgsql(connectionString));
 
-      services.AddDbContext<MailDbContext>(opt =>
-        opt.UseNpgsql(connectionString, sql => sql.MigrationsAssembly("Portfolio.Services.MailSender")));
+      services.AddDbContext<MailDbContext>(opt => opt.UseNpgsql(connectionString));
 
-      services.AddDbContext<SettingsDbContext>(opt =>
-        opt.UseNpgsql(connectionString, sql => sql.MigrationsAssembly("Porfolio.Services.Setting.API")));
+      services.AddDbContext<SettingsDbContext>(opt => opt.UseNpgsql(connectionString));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
         .AddEntityFrameworkStores<IdentityDataContext>()
@@ -91,13 +84,13 @@ namespace Portfolio.Api
       services.AddMediatR(typeof(Portfolio.Services.WorkItems.Application.Handlers.GetAllWorkByFilterHandler).Assembly);
 
       services.AddAutoMapper(
-        typeof(Portfolio.Services.MailSender.Mapping.GeneralMapping),
-        typeof(Porfolio.Services.Setting.API.Models.GeneralMapping));
+        typeof(Portfolio.Api.Mail.Mapping.GeneralMapping),
+        typeof(Portfolio.Api.Settings.Models.GeneralMapping));
 
       services.AddMemoryCache();
 
-      services.AddTransient<Porfolio.Services.Setting.API.Services.Interfaces.IAboutPageSettingService, Porfolio.Services.Setting.API.Services.AboutPageSettingService>();
-      services.AddTransient<Porfolio.Services.Setting.API.Services.Interfaces.ILocalizationService, Porfolio.Services.Setting.API.Services.LocalizationService>();
+      services.AddTransient<Portfolio.Api.Settings.Services.Interfaces.IAboutPageSettingService, Portfolio.Api.Settings.Services.AboutPageSettingService>();
+      services.AddTransient<Portfolio.Api.Settings.Services.Interfaces.ILocalizationService, Portfolio.Api.Settings.Services.LocalizationService>();
       services.AddTransient<IMailSettingService, MailSettingService>();
       services.AddTransient<IContactService, ContactService>();
       services.AddTransient<IMailSenderService, MailSenderService>();

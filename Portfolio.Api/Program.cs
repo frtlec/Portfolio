@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Porfolio.Services.Setting.API.Infrastructure;
 using Portfolio.Api.Identity;
-using Portfolio.Services.MailSender.Infrastructure;
+using Portfolio.Api.Mail.Infrastructure;
+using Portfolio.Api.Settings.Infrastructure;
 using Portfolio.Services.WorkItems.Infrastructure;
 using System;
 

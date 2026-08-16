@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MailSender\Portfolio.Services.MailSender\Portfolio.Services.MailSender.csproj" />
-    <ProjectReference Include="..\Services\Setting\Porfolio.Services.Setting.API\Porfolio.Services.Setting.API.csproj" />
+    <ProjectReference Include="..\Portfolio.Api\Portfolio.Api.csproj" />
   </ItemGroup>
 
 </Project>

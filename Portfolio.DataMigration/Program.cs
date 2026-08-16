@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using Porfolio.Services.Setting.API.Infrastructure;
-using Porfolio.Services.Setting.API.Models.DbModels;
+using Portfolio.Api.Mail.Infrastructure;
+using Portfolio.Api.Mail.Models;
+using Portfolio.Api.Settings.Infrastructure;
+using Portfolio.Api.Settings.Models.DbModels;
 using Portfolio.DataMigration.MongoModels;
-using Portfolio.Services.MailSender.Infrastructure;
-using Portfolio.Services.MailSender.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

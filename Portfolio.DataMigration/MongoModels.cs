@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 // Eski Mongo dokumanlarinin okunmasi icin sadece bu projeye ozel POCO'lar.
-// Portfolio.Services.MailSender / Setting.API projelerindeki modeller artik
+// Portfolio.Api.Mail / Portfolio.Api.Settings altindaki modeller artik
 // EF/Postgres hedefli oldugu icin (BsonId yok), onlari Mongo okumasi icin
 // tekrar kullanmiyoruz.
 namespace Portfolio.DataMigration.MongoModels

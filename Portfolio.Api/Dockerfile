@@ -8,10 +8,6 @@ COPY Services/WorkItems/Portfolio.Services.WorkItems.Application/*.csproj Servic
 COPY Services/WorkItems/Portfolio.Services.WorkItems.Domain/*.csproj Services/WorkItems/Portfolio.Services.WorkItems.Domain/
 COPY Services/WorkItems/Portfolio.Services.WorkItems.Domain.Core/*.csproj Services/WorkItems/Portfolio.Services.WorkItems.Domain.Core/
 COPY Services/WorkItems/Portfolio.Services.WorkItems.Infrastructure/*.csproj Services/WorkItems/Portfolio.Services.WorkItems.Infrastructure/
-COPY Services/WorkItems/Portfolio.Services.WorkItems.API/*.csproj Services/WorkItems/Portfolio.Services.WorkItems.API/
-COPY Services/PhotoStock/Portfolio.Services.PhotoStock/*.csproj Services/PhotoStock/Portfolio.Services.PhotoStock/
-COPY Services/Setting/Porfolio.Services.Setting.API/*.csproj Services/Setting/Porfolio.Services.Setting.API/
-COPY MailSender/Portfolio.Services.MailSender/*.csproj MailSender/Portfolio.Services.MailSender/
 COPY Portfolio.Api/*.csproj Portfolio.Api/
 RUN dotnet restore Portfolio.Api/*.csproj
 COPY . .

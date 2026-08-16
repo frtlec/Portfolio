@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+    <PackageReference Include="MailKit" Version="3.2.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.15" />
@@ -19,16 +27,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MimeKit" Version="3.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Services\WorkItems\Portfolio.Services.WorkItems.API\Portfolio.Services.WorkItems.API.csproj" />
-    <ProjectReference Include="..\Services\PhotoStock\Portfolio.Services.PhotoStock\Portfolio.Services.PhotoStock.csproj" />
-    <ProjectReference Include="..\MailSender\Portfolio.Services.MailSender\Portfolio.Services.MailSender.csproj" />
-    <ProjectReference Include="..\Services\Setting\Porfolio.Services.Setting.API\Porfolio.Services.Setting.API.csproj" />
+    <ProjectReference Include="..\Services\WorkItems\Portfolio.Services.WorkItems.Application\Portfolio.Services.WorkItems.Application.csproj" />
+    <ProjectReference Include="..\Services\WorkItems\Portfolio.Services.WorkItems.Infrastructure\Portfolio.Services.WorkItems.Infrastructure.csproj" />
     <ProjectReference Include="..\Shared\Portfolio.Shared\Portfolio.Shared.csproj" />
   </ItemGroup>
 
