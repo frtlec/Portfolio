@@ -2,7 +2,10 @@ import { Pipe } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { LocalizationService, LocalizationType } from "../services/localization/localization.service";
 
-@Pipe({name: 'getValueFromLocalization'})
+@Pipe({
+    name: 'getValueFromLocalization',
+    standalone: false
+})
 export class GetValueFromLocalization {
   constructor(private localizationService:LocalizationService){
    

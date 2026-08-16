@@ -1,7 +1,7 @@
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:latest as build
+FROM node:latest AS build
 
 # Set the working directory
 WORKDIR /usr/local/app
@@ -10,7 +10,9 @@ WORKDIR /usr/local/app
 COPY WebUI/SelinOzoglu/selin.ozoglu /usr/local/app/
 
 # Install all the dependencies
-RUN npm install
+# --legacy-peer-deps: @ngrx/store's latest release (21.x) hasn't caught up to
+# Angular 22's peer dependency range yet; it works fine at runtime.
+RUN npm install --legacy-peer-deps
 
 # Generate the build of the application
 RUN npm run build --prod 
@@ -22,7 +24,7 @@ RUN npm run build --prod
 FROM nginx:latest
 COPY WebUI/SelinOzoglu/selin.ozoglu/nginx.conf /etc/nginx/nginx.conf
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/selin.ozoglu /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/selin.ozoglu/browser /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80

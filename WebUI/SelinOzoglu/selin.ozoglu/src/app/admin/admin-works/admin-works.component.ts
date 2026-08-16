@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faEdit, faTrash, faPlusSquare, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { WorkFilterModel } from 'src/app/models/inputModels/WorkAddModel';
 import { WorkSMO } from 'src/app/models/serviceModels/WorkServiceModel';
@@ -7,9 +7,11 @@ import { WorkServiceService } from 'src/app/services/work/work-service.service';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-admin-works',
-  templateUrl: './admin-works.component.html',
-  styleUrls: ['./admin-works.component.css']
+    selector: 'app-admin-works',
+    templateUrl: './admin-works.component.html',
+    styleUrls: ['./admin-works.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminWorksComponent implements OnInit {
   faEdit = faEdit;

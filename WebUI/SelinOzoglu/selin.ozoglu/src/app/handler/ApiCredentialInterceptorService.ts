@@ -1,9 +1,8 @@
 import { HttpClient, HttpContext, HttpContextToken, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpXhrBackend } from "@angular/common/http";
-import { nullSafeIsEquivalent } from "@angular/compiler/src/output/output_ast";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { from } from "rxjs";
-import * as moment from 'moment';
+import moment from 'moment';
 import { AuthService, ClientCredentialTokenModel, PasswordTokenModel } from "../services/auth/auth.service";
 import { IDENTITY4_SERVER_BASE_URL, WORK_API_BASE_URL } from "src/shared/constants/urlConstants";
 const CLIENTCREDENTIAL = new HttpContextToken<boolean>(() => false);

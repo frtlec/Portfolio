@@ -1,39 +1,41 @@
 <app-default-header></app-default-header>
 <div  class="container-fuild">
-    <div class="row">
-        <ng-template #content let-modal>
-            <div class="modal-header ">
-                <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
-                <a class="btn btn-hover right-menu-btn close-btn" (click)="modal.dismiss('Cross click')">
-                    <span class="x"></span>
-                </a>
-              </div>
-            <div class="modal-body p-0 min100hv" >
-                   <div class="spinner-wrapper" [hidden]="imageLoading==false">
-                    <div class="spinner-border"   role="status">
-                        <span class="sr-only"></span>
-                      </div>
-                   </div>
-
-                  <img [src]="currentPicture" [hidden]="imageLoading==true"  (load)="onImageLoad()"  width="100%" />
-               
-
-                  <div class="text-left bg-dark py-5 px-4 text-light" [hidden]="currentDescription==undefined || currentDescription=='' || imageLoading==true " innerHTML="{{currentDescription | getValueFromLocalization | async}}">
-         
-                 
-                </div>
-            </div>
-        </ng-template>
-        <div *ngFor="let work of works"  class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
-            <a (click)="open(content,work.id)">
-                <div class="texts">
-                    <h4>{{work.title | getValueFromLocalization | async}}</h4>
-                    <p>
-                        {{work.description | getValueFromLocalization | async}}
-                    </p>
-                </div>
-            </a>
+  <div class="row">
+    <ng-template #content let-modal>
+      <div class="modal-header ">
+        <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+        <a class="btn btn-hover right-menu-btn close-btn" (click)="modal.dismiss('Cross click')">
+          <span class="x"></span>
+        </a>
+      </div>
+      <div class="modal-body p-0 min100hv" >
+        <div class="spinner-wrapper" [hidden]="imageLoading==false">
+          <div class="spinner-border"   role="status">
+            <span class="sr-only"></span>
+          </div>
         </div>
-       
-    </div>
+
+        <img [src]="currentPicture" [hidden]="imageLoading==true"  (load)="onImageLoad()"  width="100%" />
+
+
+        <div class="text-left bg-dark py-5 px-4 text-light" [hidden]="currentDescription==undefined || currentDescription=='' || imageLoading==true " innerHTML="{{currentDescription | getValueFromLocalization | async}}">
+
+
+        </div>
+      </div>
+    </ng-template>
+    @for (work of works; track work) {
+      <div  class="col-md-4 text-center image-bg square border portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+        <a (click)="open(content,work.id)">
+          <div class="texts">
+            <h4>{{work.title | getValueFromLocalization | async}}</h4>
+            <p>
+              {{work.description | getValueFromLocalization | async}}
+            </p>
+          </div>
+        </a>
+      </div>
+    }
+
+  </div>
 </div>

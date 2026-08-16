@@ -1,54 +1,58 @@
 <app-default-header [whiteNavbar]="false"></app-default-header>
 <div class="container mb-4">
-    <div class="row">
-        <ng-template #content let-modal>
-            <div class="modal-header ">
-                <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
-                <a class="btn btn-hover right-menu-btn close-btn" (click)="modal.dismiss('Cross click')">
-                    <span class="x"></span>
-                </a>
-              </div>
-            <div class="modal-body p-0 min100hv">
-                <div class="spinner-wrapper">
-                    <div class="spinner-border"  [hidden]="imageLoading==false" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                   </div>
-                <img [src]="currentPicture" [hidden]="imageLoading==true" width="100%" (load)="onImageLoad()"  />
-         
+  <div class="row">
+    <ng-template #content let-modal>
+      <div class="modal-header ">
+        <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+        <a class="btn btn-hover right-menu-btn close-btn" (click)="modal.dismiss('Cross click')">
+          <span class="x"></span>
+        </a>
+      </div>
+      <div class="modal-body p-0 min100hv">
+        <div class="spinner-wrapper">
+          <div class="spinner-border"  [hidden]="imageLoading==false" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <img [src]="currentPicture" [hidden]="imageLoading==true" width="100%" (load)="onImageLoad()"  />
 
-                <div [hidden]="currentDescription==undefined || currentDescription=='' || imageLoading==true " innerHTML="{{currentDescription | getValueFromLocalization | async}}"></div>
-            </div>
-        </ng-template>
-        <!-- <div *ngFor="let work of works" class="col-md-4 text-center image-bg square portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
-            <a (click)="open(content,work.id)">
-                <div class="texts">
-                    <h4>{{work.title}}</h4>
-                    <p>
-                        {{work.description}}
-                    </p>
-                </div>
-            </a>
-        </div> -->
 
-        <div class="col-md-8 px-2 py-3">
-            <button *ngFor="let category of categories" [ngClass]="category.id!=currentCategoryId ?'btn btn-secondary slnBtn':'btn btn-secondary slnBtn slnActive'" (click)="filterCategory(category.id)">{{category.title | getValueFromLocalization | async}}</button> 
+        <div [hidden]="currentDescription==undefined || currentDescription=='' || imageLoading==true " innerHTML="{{currentDescription | getValueFromLocalization | async}}"></div>
+      </div>
+    </ng-template>
+    <!-- <div *ngFor="let work of works" class="col-md-4 text-center image-bg square portfolio-div-size" [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+    <a (click)="open(content,work.id)">
+      <div class="texts">
+        <h4>{{work.title}}</h4>
+        <p>
+          {{work.description}}
+        </p>
+      </div>
+    </a>
+  </div> -->
+
+  <div class="col-md-8 px-2 py-3">
+    @for (category of categories; track category) {
+      <button [ngClass]="category.id!=currentCategoryId ?'btn btn-secondary slnBtn':'btn btn-secondary slnBtn slnActive'" (click)="filterCategory(category.id)">{{category.title | getValueFromLocalization | async}}</button>
+    }
+  </div>
+  <div class="col-md-4 py-3 text-right d-flex flex-column justify-content-end align-items-end">
+    <input type="text" (keyup)="search($event)" [placeholder]="'ara..' | getValueFromLocalization | async" class="form-control searchBar"/>
+  </div>
+
+</div>
+<div class="row mt-3">
+  @for (work of works; track work) {
+    <div class="col-md-3 text-center image-bg square border portfolio-div-size" [@slideInOut] [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
+      <a (click)="open(content,work.id)">
+        <div class="texts">
+          <h4>{{work.title | getValueFromLocalization | async}}</h4>
+          <p>
+            {{work.description | getValueFromLocalization | async}}
+          </p>
         </div>
-        <div class="col-md-4 py-3 text-right d-flex flex-column justify-content-end align-items-end">
-            <input type="text" (keyup)="search($event)" [placeholder]="'ara..' | getValueFromLocalization | async" class="form-control searchBar"/>
-        </div>
-      
+      </a>
     </div>
-    <div class="row mt-3">
-        <div *ngFor="let work of works" class="col-md-3 text-center image-bg square border portfolio-div-size" [@slideInOut] [attr.data-id]="work.id"  [ngStyle]="{'background-image': 'url(' +photoStockPhotosFile + work.mainPicture + ')'}" >
-            <a (click)="open(content,work.id)">
-                <div class="texts">
-                    <h4>{{work.title | getValueFromLocalization | async}}</h4>
-                    <p>
-                        {{work.description | getValueFromLocalization | async}}
-                    </p>
-                </div>
-            </a>
-        </div>
-    </div>
+  }
+</div>
 </div>

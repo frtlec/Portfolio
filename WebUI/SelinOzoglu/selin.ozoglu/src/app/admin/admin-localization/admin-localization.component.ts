@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faImage, faPlus, faPlusSquare, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { LocalizationAddDto, LocalizationDto, LocalizationService, LocalizationType } from 'src/app/services/localization/localization.service';
 
 @Component({
-  selector: 'app-admin-localization',
-  templateUrl: './admin-localization.component.html',
-  styleUrls: ['./admin-localization.component.css']
+    selector: 'app-admin-localization',
+    templateUrl: './admin-localization.component.html',
+    styleUrls: ['./admin-localization.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminLocalizationComponent implements OnInit {
   faImage = faImage;
@@ -18,7 +20,7 @@ export class AdminLocalizationComponent implements OnInit {
   localizationAdd:LocalizationAddDto=new LocalizationAddDto();
   constructor(private localizationService:LocalizationService) {
     this.getAll();
-    this.localizationAdd.localizationType=0;
+    this.localizationAdd.localizationType=0 as LocalizationType;
    this.localizationTypes= Object.keys(LocalizationType).map(key => LocalizationType[key]).filter(value => typeof value === 'string') as string[];
     
   }

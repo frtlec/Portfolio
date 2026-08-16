@@ -1,4 +1,4 @@
-import { Component, ErrorHandler, OnInit, Pipe } from '@angular/core';
+import { Component, ErrorHandler, OnInit, Pipe, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { siteTitle } from 'src/shared/constants/general';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL, PHOTO_STOCK_API_SVG_FILE_URL } from 'src/shared/constants/urlConstants';
@@ -6,9 +6,11 @@ import { GetValueFromLocalization } from '../pipes/_localization';
 import { AboutPage, AboutService } from '../services/about/about.service';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+    selector: 'app-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AboutComponent implements OnInit {
 

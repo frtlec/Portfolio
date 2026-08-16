@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CategorySMO } from 'src/app/models/serviceModels/CategorySMO';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
@@ -6,9 +6,11 @@ import { CategoryInput } from 'src/app/models/inputModels/CategoryInput';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-admin-categories',
-  templateUrl: './admin-categories.component.html',
-  styleUrls: ['./admin-categories.component.css']
+    selector: 'app-admin-categories',
+    templateUrl: './admin-categories.component.html',
+    styleUrls: ['./admin-categories.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminCategoriesComponent implements OnInit {
   faGear = faGear;

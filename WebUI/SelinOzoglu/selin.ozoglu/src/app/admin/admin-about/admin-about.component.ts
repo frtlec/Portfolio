@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { faImage, faSave, faPlus, faTrash, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import {  AboutPage, AboutService, Business, Software,Certifacate, Project, Education } from 'src/app/services/about/about.service';
@@ -14,9 +14,11 @@ const groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
     return previous;
   }, {} as Record<K, T[]>);
 @Component({
-  selector: 'app-admin-about',
-  templateUrl: './admin-about.component.html',
-  styleUrls: ['./admin-about.component.css']
+    selector: 'app-admin-about',
+    templateUrl: './admin-about.component.html',
+    styleUrls: ['./admin-about.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 
 export class AdminAboutComponent implements OnInit {

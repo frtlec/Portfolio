@@ -1,5 +1,5 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { faUserLarge ,faUserTie,faUserCheck} from '@fortawesome/free-solid-svg-icons';
@@ -12,25 +12,27 @@ import { CategoryService } from '../services/category/category.service';
 import { ContactService } from '../services/contact/contact.service';
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css'],
-  animations: [
-    trigger('gender', [
-      // ...
-      transition(':enter', animate('500ms linear', keyframes([
-        // style({ opacity: 0 }),
-        // style({ opacity: 0 }),
-        // style({ opacity: 0.25 }),
-        // style({ opacity: 0.30 }),
-        // style({ opacity: 0.50 }),
-        // style({ opacity: 1 }),
-        style({ transform: "rotateY(0)", color: "transparent" }),
-        style({ transform: "rotateY(180deg)", color: "transparent"}),
-        style({ transform: "rotateY(360deg)",color: "#f8f8f8" }),
-      ])))
-    ]),
-  ],
+    selector: 'app-contact',
+    templateUrl: './contact.component.html',
+    styleUrls: ['./contact.component.css'],
+    animations: [
+        trigger('gender', [
+            // ...
+            transition(':enter', animate('500ms linear', keyframes([
+                // style({ opacity: 0 }),
+                // style({ opacity: 0 }),
+                // style({ opacity: 0.25 }),
+                // style({ opacity: 0.30 }),
+                // style({ opacity: 0.50 }),
+                // style({ opacity: 1 }),
+                style({ transform: "rotateY(0)", color: "transparent" }),
+                style({ transform: "rotateY(180deg)", color: "transparent" }),
+                style({ transform: "rotateY(360deg)", color: "#f8f8f8" }),
+            ])))
+        ]),
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ContactComponent implements OnInit {
   faUserLarge=faUserLarge;

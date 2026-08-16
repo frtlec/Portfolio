@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 import { WorkSMO } from '../models/serviceModels/WorkServiceModel';
 import { WorkServiceService } from '../services/work/work-service.service';
@@ -9,9 +9,11 @@ import { GetValueFromLocalization } from '../pipes/_localization';
 import { siteTitle } from 'src/shared/constants/general';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   works: WorkSMO[] = [];

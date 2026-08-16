@@ -1,10 +1,10 @@
-import { CanActivate, ActivatedRouteSnapshot, RouterState, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterState, RouterStateSnapshot, Router } from '@angular/router';
 import {Injectable} from '@angular/core';
 import { PasswordTokenModel } from '../services/auth/auth.service';
 import { TokenSaveModel } from '../handler/ApiCredentialInterceptorService';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class AdminGuard  {
 
     constructor(private router:Router) {
      

@@ -1,6 +1,6 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -36,51 +36,42 @@ import { AdminLocalizationComponent } from './admin/admin-localization/admin-loc
 import { GetLocalizationName } from './pipes/getEnumKeyString';
 import { GetValueFromLocalization } from './pipes/_localization';
 import { AddUIDphotoUrl } from './pipes/addUIDphotoUrl';
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    DefaultNavBarComponent,
-    DefaultHeaderComponent,
-    RightMenuComponent,
-    AdminDashboardComponent,
-    AdminLayoutComponent,
-    LoginComponent,
-    AdminWorksComponent,
-    AdminWorkAddComponent,
-    AdminLocalizationComponent,
-    PortfolioComponent,
-    AboutComponent,
-    AdminCategoriesComponent,
-    AdminAboutComponent,
-    AdminSettingsComponent,
-    ContactComponent,
-    Safe,
-    GetLocalizationName,
-    GetValueFromLocalization,
-    AdminLocalizationComponent,
-    AddUIDphotoUrl
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    StoreModule.forRoot({
-      rightMenu: rightMenuReducer
-    }),
-    FontAwesomeModule,
-    NgbModule,
-    AngularEditorModule
-  ],
-  providers: [Store,AdminGuard,GetValueFromLocalization,
-                    { provide: ErrorHandler, useClass: HttpClientErrorHandler },
-                    { provide: HTTP_INTERCEPTORS, useClass: ApiCredentialInterceptorService,multi:true }
-                    
-                ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        DefaultNavBarComponent,
+        DefaultHeaderComponent,
+        RightMenuComponent,
+        AdminDashboardComponent,
+        AdminLayoutComponent,
+        LoginComponent,
+        AdminWorksComponent,
+        AdminWorkAddComponent,
+        AdminLocalizationComponent,
+        PortfolioComponent,
+        AboutComponent,
+        AdminCategoriesComponent,
+        AdminAboutComponent,
+        AdminSettingsComponent,
+        ContactComponent,
+        Safe,
+        GetLocalizationName,
+        GetValueFromLocalization,
+        AdminLocalizationComponent,
+        AddUIDphotoUrl
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        StoreModule.forRoot({
+            rightMenu: rightMenuReducer
+        }),
+        FontAwesomeModule,
+        NgbModule,
+        AngularEditorModule], providers: [Store, AdminGuard, GetValueFromLocalization,
+        { provide: ErrorHandler, useClass: HttpClientErrorHandler },
+        { provide: HTTP_INTERCEPTORS, useClass: ApiCredentialInterceptorService, multi: true }, provideHttpClient(withXhr(), withInterceptorsFromDi())] })
 export class AppModule {
 
   constructor(private router: Router, private store: Store) {

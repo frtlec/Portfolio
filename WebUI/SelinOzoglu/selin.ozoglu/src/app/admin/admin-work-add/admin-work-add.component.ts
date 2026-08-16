@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PhotostockService } from 'src/app/services/photostock/photostock.service';
 import { faImage, faSave, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -13,9 +13,11 @@ import { ActivatedRoute } from '@angular/router';
 import { WorkItemUpdateModel, WorkUpdateModel } from 'src/app/models/inputModels/WorkUpdateModel';
 import { PHOTO_STOCK_API_PHOTOS_FILE_URL } from 'src/shared/constants/urlConstants';
 @Component({
-  selector: 'app-admin-work-add',
-  templateUrl: './admin-work-add.component.html',
-  styleUrls: ['./admin-work-add.component.css']
+    selector: 'app-admin-work-add',
+    templateUrl: './admin-work-add.component.html',
+    styleUrls: ['./admin-work-add.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminWorkAddComponent implements OnInit {
 

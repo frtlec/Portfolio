@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
@@ -15,17 +15,19 @@ import { WorkServiceService } from '../services/work/work-service.service';
 import { closeRightMenu } from '../state/defaultMenu/defaultMenu.actions';
 
 @Component({
-  selector: 'app-portfolio',
-  templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css'],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({transform: 'translateY(10%)'}),
-        animate('200ms ease-in-out', style({transform: 'translateY(0%)'}))
-      ])
-    ])
-  ]
+    selector: 'app-portfolio',
+    templateUrl: './portfolio.component.html',
+    styleUrls: ['./portfolio.component.css'],
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({ transform: 'translateY(10%)' }),
+                animate('200ms ease-in-out', style({ transform: 'translateY(0%)' }))
+            ])
+        ])
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PortfolioComponent implements OnInit {
   photoStockPhotosFile: string = PHOTO_STOCK_API_PHOTOS_FILE_URL;

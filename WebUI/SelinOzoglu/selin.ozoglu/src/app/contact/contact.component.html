@@ -1,80 +1,88 @@
 <app-default-header></app-default-header>
 <div class="container-fuild">
-    <div class="row">
-        <div class="col-xl-8 m-auto py-3">
-            <h2 class="heading mb-5">{{'İletişim Formu' | getValueFromLocalization | async}}</h2>
-            <form #contactForm="ngForm" (ngSubmit)="submit()">
-                <div class="row">
-                    <div class="col-md-6 p-2">
-                        <div class="contact-card h100">
-                            <div class="contact-card-image p-4">
-                                <fa-icon *ngIf="contactModel.gender==''" [@gender]="true" [icon]="faUserLarge" class="people-icon"></fa-icon>
-                                <img *ngIf="contactModel.gender=='men'"  src="../../assets/characters/char-man.svg" class="people-icon-svg" [@gender]="true" />
-                                <!-- <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon> -->
-                                <img *ngIf="contactModel.gender=='women'"  src="../../assets/characters/char-women.svg" class="people-icon-svg" [@gender]="true" />
-                            </div>
-                            <div class="contact-card-content py-4 px-4">
-                                <div><span>{{contactModel.fullName}}</span></div>
-                                <div><span>{{contactModel.email}}</span></div>
-                                <div><span>{{contactModel.phone}}</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 p-2 px-4">
+  <div class="row">
+    <div class="col-xl-8 m-auto py-3">
+      <h2 class="heading mb-5">{{'İletişim Formu' | getValueFromLocalization | async}}</h2>
+      <form #contactForm="ngForm" (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-md-6 p-2">
+            <div class="contact-card h100">
+              <div class="contact-card-image p-4">
+                @if (contactModel.gender=='') {
+                  <fa-icon [@gender]="true" [icon]="faUserLarge" class="people-icon"></fa-icon>
+                }
+                @if (contactModel.gender=='men') {
+                  <img  src="../../assets/characters/char-man.svg" class="people-icon-svg" [@gender]="true" />
+                }
+                <!-- <fa-icon *ngIf="contactModel.gender=='women'" [@gender]="true" [icon]="faUserCheck" class="people-icon"></fa-icon> -->
+                @if (contactModel.gender=='women') {
+                  <img  src="../../assets/characters/char-women.svg" class="people-icon-svg" [@gender]="true" />
+                }
+              </div>
+              <div class="contact-card-content py-4 px-4">
+                <div><span>{{contactModel.fullName}}</span></div>
+                <div><span>{{contactModel.email}}</span></div>
+                <div><span>{{contactModel.phone}}</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 p-2 px-4">
 
-                        <div class="form-group mb-4">
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                [placeholder]="'Ad ve soyad' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off" [disabled]="isSubmit">
-                        </div>
-                        <div class="form-group mb-4">
-                            <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" [disabled]="isSubmit" >
-                                <option value=''>{{'Cinsiyetiniz' | getValueFromLocalization | async}}</option>
-                                <option value="women">{{'Kadın' | getValueFromLocalization | async}}</option>
-                                <option value="men">{{'Men' | getValueFromLocalization | async}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-4">
-                            <input type="email" class="form-control" aria-label="Sizing example input"
-                                [placeholder]="'Email adresiniz' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off" [disabled]="isSubmit">
-                               <div class="text-right">
-                                <small class="text-muted">example@exdomain.com</small>
-                               </div>
-                        </div>
-
-                        <div class="form-group mb-4">
-                            <input type="tel" class="form-control" aria-label="Sizing example input" [placeholder]="'Telefon numaranız' | getValueFromLocalization | async"
-                                aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off" [disabled]="isSubmit">
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="row  mt-4">
-                    <div class="col-12">
-                        <div class="form-group mb-4">
-                            <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon" [disabled]="isSubmit">
-                                <option selected value="-1">{{'Konu' | getValueFromLocalization | async}}</option>
-                                <option *ngFor="let cat of categories" [value]="cat.id">{{cat.title | getValueFromLocalization | async}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" [placeholder]="'mesajınızı giriniz' | getValueFromLocalization | async" (keyup)="messageCounter()"></textarea>
-                            <label class="messageCount" [style.color]="this.messageCount<0?'red':'white'">{{messageCount}}</label>
-                        </div>
-                        <div class="submitbtn mt-4">
-                            <button class="btn btn-primary" type="submit" [disabled]="isSubmit">
-                                <span  [hidden]="isSubmit">{{'İlet' | getValueFromLocalization | async }}</span>
-                                <div class="spinner-border"  [hidden]="!isSubmit" role="status">
-                                    <span class="sr-only"></span>
-                                  </div>
-                            </button>
-                       
-                        </div>
-                    </div>
+            <div class="form-group mb-4">
+              <input type="text" class="form-control" aria-label="Sizing example input"
+                [placeholder]="'Ad ve soyad' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.fullName" name="fullName" autocomplete="off" [disabled]="isSubmit">
+              </div>
+              <div class="form-group mb-4">
+                <select class="form-select w-50" [(ngModel)]="contactModel.gender" name="gender" [disabled]="isSubmit" >
+                  <option value=''>{{'Cinsiyetiniz' | getValueFromLocalization | async}}</option>
+                  <option value="women">{{'Kadın' | getValueFromLocalization | async}}</option>
+                  <option value="men">{{'Men' | getValueFromLocalization | async}}</option>
+                </select>
+              </div>
+              <div class="form-group mb-4">
+                <input type="email" class="form-control" aria-label="Sizing example input"
+                  [placeholder]="'Email adresiniz' | getValueFromLocalization | async" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.email" name="email" autocomplete="off" [disabled]="isSubmit">
+                  <div class="text-right">
+                    <small class="text-muted">example&#64;exdomain.com</small>
+                  </div>
                 </div>
 
-                
+                <div class="form-group mb-4">
+                  <input type="tel" class="form-control" aria-label="Sizing example input" [placeholder]="'Telefon numaranız' | getValueFromLocalization | async"
+                    aria-describedby="inputGroup-sizing-sm" [(ngModel)]="contactModel.phone" name="phone" autocomplete="off" [disabled]="isSubmit">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row  mt-4">
+                <div class="col-12">
+                  <div class="form-group mb-4">
+                    <select class="form-select w-50" [(ngModel)]="contactModel.categoryId" name="categoryId" id="inputGroupSelect03" aria-label="Example select with button addon" [disabled]="isSubmit">
+                      <option selected value="-1">{{'Konu' | getValueFromLocalization | async}}</option>
+                      @for (cat of categories; track cat) {
+                        <option [value]="cat.id">{{cat.title | getValueFromLocalization | async}}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control"  [(ngModel)]="contactModel.message" name="message" [placeholder]="'mesajınızı giriniz' | getValueFromLocalization | async" (keyup)="messageCounter()"></textarea>
+                    <label class="messageCount" [style.color]="this.messageCount<0?'red':'white'">{{messageCount}}</label>
+                  </div>
+                  <div class="submitbtn mt-4">
+                    <button class="btn btn-primary" type="submit" [disabled]="isSubmit">
+                      <span  [hidden]="isSubmit">{{'İlet' | getValueFromLocalization | async }}</span>
+                      <div class="spinner-border"  [hidden]="!isSubmit" role="status">
+                        <span class="sr-only"></span>
+                      </div>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
             </form>
+          </div>
         </div>
-    </div>
 
-</div>
+      </div>

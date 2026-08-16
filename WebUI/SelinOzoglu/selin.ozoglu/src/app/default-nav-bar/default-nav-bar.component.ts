@@ -1,12 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { openRightMenu } from '../state/defaultMenu/defaultMenu.actions';
 
 @Component({
-  selector: 'app-default-nav-bar',
-  templateUrl: './default-nav-bar.component.html',
-  styleUrls: ['./default-nav-bar.component.css']
+    selector: 'app-default-nav-bar',
+    templateUrl: './default-nav-bar.component.html',
+    styleUrls: ['./default-nav-bar.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DefaultNavBarComponent implements OnInit {
   isOpenRightMenu$: Observable<number>;
