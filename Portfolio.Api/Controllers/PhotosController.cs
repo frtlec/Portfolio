@@ -5,8 +5,8 @@ using Portfolio.Api.PhotoStock.Dtos;
 using Portfolio.Shared.ControllerBases;
 using Portfolio.Shared.Dtos;
 using Portfolio.Shared.Helper;
+using SkiaSharp;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,13 +57,11 @@ namespace Portfolio.Api.Controllers
         {
           return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
-        using (var image = Image.FromStream(dto.Image.OpenReadStream()))
+        var imageInfo = SKBitmap.DecodeBounds(dto.Image.OpenReadStream());
+        short acceptedWith = 2160;
+        if (imageInfo.Width > acceptedWith)
         {
-          short acceptedWith = 2160;
-          if (image.Width > acceptedWith)
-          {
-            return CreateActionResultInstance(Response<PhotoDto>.Fail($"Maximum limit for photo width exceeded.Accepted {acceptedWith}", 400));
-          }
+          return CreateActionResultInstance(Response<PhotoDto>.Fail($"Maximum limit for photo width exceeded.Accepted {acceptedWith}", 400));
         }
         string photoName = StringConverter.ConvertSpaceToDashAndTrToEnd(dto.Title) + Path.GetExtension(dto.Image.FileName); ;
 
@@ -95,12 +93,10 @@ namespace Portfolio.Api.Controllers
           return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
 
-        using (var image = Image.FromStream(photo.OpenReadStream()))
+        var imageInfo = SKBitmap.DecodeBounds(photo.OpenReadStream());
+        if (imageInfo.Width != imageInfo.Height)
         {
-          if (image.Width != image.Height)
-          {
-            return CreateActionResultInstance(Response<PhotoDto>.Fail("Only square photo", 400));
-          }
+          return CreateActionResultInstance(Response<PhotoDto>.Fail("Only square photo", 400));
         }
 
         string name = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName); ;
@@ -133,13 +129,11 @@ namespace Portfolio.Api.Controllers
         {
           return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
-        using (var image = Image.FromStream(photo.OpenReadStream()))
+        var imageInfo = SKBitmap.DecodeBounds(photo.OpenReadStream());
+        short acceptedWith = 2160;
+        if (imageInfo.Width > acceptedWith)
         {
-          short acceptedWith = 2160;
-          if (image.Width > acceptedWith)
-          {
-            return CreateActionResultInstance(Response<PhotoDto>.Fail($"Maximum limit for photo width exceeded.Accepted {acceptedWith}", 400));
-          }
+          return CreateActionResultInstance(Response<PhotoDto>.Fail($"Maximum limit for photo width exceeded.Accepted {acceptedWith}", 400));
         }
         string photoName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName); ;
 
@@ -171,12 +165,10 @@ namespace Portfolio.Api.Controllers
           return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
 
-        using (var image = Image.FromStream(dto.Image.OpenReadStream()))
+        var imageInfo = SKBitmap.DecodeBounds(dto.Image.OpenReadStream());
+        if (imageInfo.Width != imageInfo.Height)
         {
-          if (image.Width != image.Height)
-          {
-            return CreateActionResultInstance(Response<PhotoDto>.Fail("Only square photo", 400));
-          }
+          return CreateActionResultInstance(Response<PhotoDto>.Fail("Only square photo", 400));
         }
 
         string name = StringConverter.ConvertSpaceToDashAndTrToEnd(dto.Title) + Path.GetExtension(dto.Image.FileName); ;

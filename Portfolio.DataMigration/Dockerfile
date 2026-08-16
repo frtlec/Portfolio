@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 as build
 WORKDIR /app
 COPY Shared/Portfolio.Shared/*.csproj Shared/Portfolio.Shared/
 COPY Services/WorkItems/Portfolio.Services.WorkItems.Application/*.csproj Services/WorkItems/Portfolio.Services.WorkItems.Application/
@@ -10,7 +10,7 @@ COPY Portfolio.DataMigration/*.csproj Portfolio.DataMigration/
 RUN dotnet restore Portfolio.DataMigration/*.csproj
 COPY . .
 RUN dotnet publish Portfolio.DataMigration/*.csproj -c Release -o out
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 as runtime
 WORKDIR /app
 COPY --from=build /app/out .
 ENTRYPOINT [ "dotnet","Portfolio.DataMigration.dll" ]

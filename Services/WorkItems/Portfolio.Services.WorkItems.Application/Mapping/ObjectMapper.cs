@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Portfolio.Services.WorkItems.Application.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<CustomMapping>();
-            });
+            }, NullLoggerFactory.Instance);
             return config.CreateMapper();
         });
         public static IMapper Mapper => lazy.Value;
